@@ -892,8 +892,8 @@ header {
   <div style="max-width:1000px;margin:1.5rem auto;padding:0 1.5rem 2rem;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
       <div>
-        <h2 style="font-size:1.3rem;font-weight:800;">📨 الشكاوي والاقتراحات</h2>
-        <div style="font-size:0.82rem;color:var(--text-muted);margin-top:0.2rem;">الشكاوي المقدمة من الموظفين</div>
+        <h2 style="font-size:1.3rem;font-weight:800;" id="complaints-h2">📨 الشكاوي والاقتراحات</h2>
+        <div style="font-size:0.82rem;color:var(--text-muted);margin-top:0.2rem;" id="complaints-sub">الشكاوي المقدمة من الموظفين</div>
       </div>
       <div style="display:flex;gap:0.7rem;align-items:center;flex-wrap:wrap;">
         <a href="complaint.html" target="_blank" style="background:var(--red);color:white;padding:0.5rem 1rem;border-radius:8px;font-weight:700;font-size:0.85rem;text-decoration:none;">🔗 لينك الشكاوي</a>
@@ -912,10 +912,10 @@ header {
 
     <!-- filter row -->
     <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;" id="complaintFilters">
-      <button class="cmp-filter-btn active" onclick="filterComplaints('all',this)">الكل</button>
-      <button class="cmp-filter-btn" onclick="filterComplaints('new',this)">🆕 جديدة</button>
-      <button class="cmp-filter-btn" onclick="filterComplaints('high',this)">🔴 عاجلة</button>
-      <button class="cmp-filter-btn" onclick="filterComplaints('resolved',this)">✅ تم الحل</button>
+      <button class="cmp-filter-btn active" onclick="filterComplaints('all',this)" id="cf-all">الكل</button>
+      <button class="cmp-filter-btn" onclick="filterComplaints('new',this)" id="cf-new">🆕 جديدة</button>
+      <button class="cmp-filter-btn" onclick="filterComplaints('high',this)" id="cf-high">🔴 عاجلة</button>
+      <button class="cmp-filter-btn" onclick="filterComplaints('resolved',this)" id="cf-resolved">✅ تم الحل</button>
     </div>
 
     <div id="complaintsList"></div>
@@ -927,8 +927,8 @@ header {
   <div style="max-width:1000px;margin:1.5rem auto;padding:0 1.5rem 2rem;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
       <div>
-        <h2 style="font-size:1.3rem;font-weight:800;">📋 طلبات تسجيل الموظفين</h2>
-        <div style="font-size:0.82rem;color:var(--text-muted);margin-top:0.2rem;">الطلبات المقدمة عبر لينك التسجيل</div>
+        <h2 style="font-size:1.3rem;font-weight:800;" id="regs-h2">📋 طلبات تسجيل الموظفين</h2>
+        <div style="font-size:0.82rem;color:var(--text-muted);margin-top:0.2rem;" id="regs-sub">الطلبات المقدمة عبر لينك التسجيل</div>
       </div>
       <div style="display:flex;gap:0.7rem;align-items:center;flex-wrap:wrap;">
         <a href="register.html" target="_blank" style="background:var(--red);color:white;padding:0.5rem 1rem;border-radius:8px;font-weight:700;font-size:0.85rem;text-decoration:none;">🔗 لينك التسجيل</a>
@@ -1301,6 +1301,69 @@ function toggleLang() {
   renderList();
   if(selectedId) selectEmployee(selectedId);
 
+  // translate hardcoded page elements
+  const isEn2 = window.currentLang==='en';
+
+  // payroll
+  const pt = document.getElementById('payroll-title');
+  if(pt) pt.textContent = isEn2?'💰 Payroll':'💰 الرواتب والبايرول';
+  const ps2 = document.getElementById('payroll-subtitle');
+  if(ps2) ps2.textContent = isEn2?'Total monthly salaries for all branches':'إجمالي الرواتب الشهرية لجميع الفروع';
+  const ptt = document.getElementById('payroll-table-title');
+  if(ptt) ptt.textContent = isEn2?'Payroll Sheet':'كشف الرواتب';
+
+  // complaints
+  const ch = document.getElementById('complaints-h2');
+  if(ch) ch.textContent = isEn2?'📨 Complaints & Suggestions':'📨 الشكاوي والاقتراحات';
+  const cs = document.getElementById('complaints-sub');
+  if(cs) cs.textContent = isEn2?'Complaints submitted by employees':'الشكاوي المقدمة من الموظفين';
+  const cfAll = document.getElementById('cf-all');
+  if(cfAll) cfAll.textContent = isEn2?'All':'الكل';
+  const cfNew = document.getElementById('cf-new');
+  if(cfNew) cfNew.textContent = isEn2?'🆕 New':'🆕 جديدة';
+  const cfHigh = document.getElementById('cf-high');
+  if(cfHigh) cfHigh.textContent = isEn2?'🔴 Urgent':'🔴 عاجلة';
+  const cfRes = document.getElementById('cf-resolved');
+  if(cfRes) cfRes.textContent = isEn2?'✅ Resolved':'✅ تم الحل';
+  const clinkLabel = document.querySelector('#page-complaints .intro-card .intro-title');
+  const complaintLinkLabel = document.querySelector('#page-complaints [style*="قم بإرساله"]');
+
+  // registrations
+  const rh = document.getElementById('regs-h2');
+  if(rh) rh.textContent = isEn2?'📋 Employee Registration Requests':'📋 طلبات تسجيل الموظفين';
+  const rs = document.getElementById('regs-sub');
+  if(rs) rs.textContent = isEn2?'Requests submitted via registration link':'الطلبات المقدمة عبر لينك التسجيل';
+
+  // settings
+  const st = document.getElementById('settings-title');
+  if(st) st.textContent = isEn2?'⚙️ System Settings':'⚙️ إعدادات النظام';
+  const sc = document.getElementById('s-cred-title');
+  if(sc) sc.textContent = isEn2?'🔐 Login Credentials':'🔐 بيانات تسجيل الدخول';
+  const si2 = document.getElementById('s-info-title');
+  if(si2) si2.textContent = isEn2?'📊 System Info':'📊 معلومات النظام';
+  const sa = document.getElementById('s-alerts-title');
+  if(sa) sa.textContent = isEn2?'⚠️ Document Expiry Alerts':'⚠️ تنبيهات انتهاء الوثائق';
+
+  // branches
+  const bh = document.getElementById('branches-title');
+  if(bh) bh.textContent = isEn2?'🏪 Branches & Departments':'🏪 الفروع والأقسام';
+  const bsub = document.getElementById('branches-sub');
+  if(bsub) bsub.textContent = isEn2?'Manage Prosto branches':'إدارة فروع بروستو';
+  const abt = document.getElementById('add-branch-title');
+  if(abt) abt.textContent = isEn2?'➕ Add New Branch':'➕ إضافة فرع جديد';
+  const abb = document.getElementById('add-branch-btn');
+  if(abb) abb.textContent = isEn2?'➕ Add':'➕ إضافة';
+  const bnl = document.getElementById('branch-name-label');
+  if(bnl) bnl.textContent = isEn2?'Branch Name (AR)':'اسم الفرع (عربي)';
+  const bel = document.getElementById('branch-en-label');
+  if(bel) bel.textContent = isEn2?'Branch Name (EN)':'Branch Name (EN)';
+  const bpl = document.getElementById('branch-prefix-label');
+  if(bpl) bpl.textContent = isEn2?'Short Code':'الكود المختصر';
+
+  // login screen
+  const ls = document.querySelector('.login-subtitle');
+  if(ls) ls.textContent = isEn2?'Employee Management System':'نظام إدارة الموظفين';
+
   // re-render current page
   const activePage = document.querySelector('.page.active');
   if(activePage) {
@@ -1354,7 +1417,8 @@ function filterByCard(type) {
   document.getElementById('filterBannerText').textContent = '🔍 '+bannerTexts[type];
   document.getElementById('filterBanner').style.display='block';
   document.querySelector('#filterBanner button').textContent=t('clearFilter');
-  activeFilter='الكل'; buildDeptFilter(); renderList();
+  // keep dept filter as is, just re-render
+  buildDeptFilter(); renderList();
 }
 function clearCardFilter() {
   activeCardFilter=null;
@@ -1384,13 +1448,13 @@ function getFiltered() {
 
 // ─── RENDER LIST ──────────────────────────────────────────────────────────────
 function renderList() {
-  const list     = document.getElementById('staffList');
-  const filtered = getFiltered();
-  const isEn     = window.currentLang==='en';
-  document.getElementById('listCount').textContent = filtered.length;
+  const list = document.getElementById('staffList');
+  const isEn = window.currentLang==='en';
 
-  // If a specific dept is selected OR searching — flat list
-  if(activeFilter !== 'الكل' || searchQuery || activeCardFilter) {
+  // If searching — flat filtered list
+  if(searchQuery) {
+    const filtered = getFiltered();
+    document.getElementById('listCount').textContent = filtered.length;
     if(!filtered.length){
       list.innerHTML=`<div style="padding:2rem;text-align:center;color:var(--text-muted);font-size:0.88rem;">${isEn?'No results':'لا توجد نتائج'}</div>`;
       return;
@@ -1399,18 +1463,38 @@ function renderList() {
     return;
   }
 
-  // DEFAULT: show grouped by branch/dept
-  let html2 = '';
+  // Build grouped list — respecting card filter and dept filter
   const branchOrder = [...branches.map(b=>b.ar)];
-  // also include any dept not in branches list
   const extraDepts = [...new Set(employees.map(e=>e.dept))].filter(d=>!branchOrder.includes(d));
   const allGroups = [...branchOrder, ...extraDepts];
 
-  allGroups.forEach(dept => {
+  // If specific dept selected — show only that dept grouped
+  const groupsToShow = activeFilter === 'الكل' ? allGroups : [activeFilter];
+
+  let html2 = '';
+  let totalShown = 0;
+
+  groupsToShow.forEach(dept => {
     const brObj = branches.find(b=>b.ar===dept);
     const deptName = brObj ? (isEn?brObj.en:brObj.ar) : dept;
     const deptType = brObj ? (isEn?(brObj.type==='فرع'?'Branch':'Dept'):brObj.type) : '';
-    const deptEmps = employees.filter(e=>e.dept===dept);
+
+    // Apply card filter within dept
+    let deptEmps = employees.filter(e=>e.dept===dept);
+    if(activeCardFilter==='active')   deptEmps = deptEmps.filter(e=>e.status==='active');
+    else if(activeCardFilter==='leave')    deptEmps = deptEmps.filter(e=>e.status==='leave');
+    else if(activeCardFilter==='inactive') deptEmps = deptEmps.filter(e=>e.status==='inactive');
+    else if(activeCardFilter==='expiring') deptEmps = deptEmps.filter(e=>{
+      const d=e.residencyExp; if(!d) return false;
+      const diff=(new Date(d)-new Date())/86400000; return diff>=0&&diff<90;
+    });
+
+    // Skip empty groups when card filter active and group is empty
+    if(activeCardFilter && deptEmps.length===0) return;
+
+    totalShown += deptEmps.length;
+    // Full dept count (without card filter) for badge
+    const fullDeptCount = employees.filter(e=>e.dept===dept).length;
 
     html2 += `<div class="dept-group-header" onclick="toggleDeptGroup('${dept}')" id="grp-hdr-${dept.replace(/\s/g,'_')}">
       <div style="display:flex;align-items:center;gap:0.5rem;flex:1;">
@@ -1418,16 +1502,25 @@ function renderList() {
         <span style="font-weight:700;font-size:0.85rem;">${deptName}</span>
         ${deptType?`<span style="font-size:0.65rem;color:var(--grey-3);background:var(--off-white);padding:0.1rem 0.4rem;border-radius:8px;">${deptType}</span>`:''}
       </div>
-      <span class="dept-count-badge">${deptEmps.length}</span>
+      <span class="dept-count-badge">${activeCardFilter?deptEmps.length+'/'+fullDeptCount:fullDeptCount}</span>
       <span class="dept-arrow" id="grp-arr-${dept.replace(/\s/g,'_')}">▼</span>
     </div>
     <div class="dept-group-body" id="grp-body-${dept.replace(/\s/g,'_')}">
       ${deptEmps.length===0
-        ? `<div style="padding:0.8rem 1.2rem;font-size:0.8rem;color:var(--text-muted);">${isEn?'No employees yet':'لا يوجد موظفون بعد'}</div>`
+        ? `<div style="padding:0.8rem 1.2rem;font-size:0.8rem;color:var(--text-muted);">${isEn?'No employees match filter':'لا يوجد موظفون في هذا الفلتر'}</div>`
         : deptEmps.map(e=>empCard(e,isEn)).join('')
       }
     </div>`;
   });
+
+  document.getElementById('listCount').textContent = totalShown || employees.filter(e=>{
+    if(!activeCardFilter) return activeFilter==='الكل'||e.dept===activeFilter;
+    return true;
+  }).length;
+
+  if(!html2) {
+    html2 = `<div style="padding:2rem;text-align:center;color:var(--text-muted);font-size:0.88rem;">${isEn?'No results':'لا توجد نتائج'}</div>`;
+  }
 
   list.innerHTML = html2;
 }
