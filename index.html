@@ -1,0 +1,2163 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0D0D0D">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Prosto">
+<title>Prosto — نظام إدارة الموظفين</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
+
+:root {
+  --red:      #CC1F1F;
+  --red-2:    #E02020;
+  --red-dark: #991515;
+  --black:    #0D0D0D;
+  --black-2:  #1A1A1A;
+  --black-3:  #252525;
+  --black-4:  #303030;
+  --white:    #FFFFFF;
+  --off-white:#F5F5F5;
+  --grey:     #E0E0E0;
+  --grey-2:   #BDBDBD;
+  --grey-3:   #757575;
+  --text-main:#0D0D0D;
+  --text-muted:#6B6B6B;
+  --green:    #2E7D32;
+  --orange:   #E65100;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: var(--off-white);
+  color: var(--text-main);
+  min-height: 100vh;
+}
+
+/* ─── LOGIN ─── */
+#loginScreen {
+  position: fixed; inset: 0;
+  background: var(--black);
+  z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+}
+
+.login-box {
+  background: var(--black-2);
+  border: 1px solid var(--black-4);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  width: 100%; max-width: 380px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+}
+
+.login-logo { text-align: center; margin-bottom: 2rem; }
+
+.login-logo-icon {
+  width: 72px; height: 72px;
+  background: var(--red);
+  border-radius: 18px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.2rem;
+  margin: 0 auto 0.9rem;
+  box-shadow: 0 8px 30px rgba(204,31,31,0.4);
+}
+
+.login-title {
+  font-size: 2.2rem; font-weight: 800;
+  color: var(--white); letter-spacing: 3px;
+}
+
+.login-subtitle { font-size: 0.78rem; color: var(--grey-3); margin-top: 0.3rem; }
+
+.login-field { margin-bottom: 1rem; }
+.login-label { display: block; font-size: 0.78rem; font-weight: 700; color: var(--grey-3); margin-bottom: 0.4rem; }
+
+.login-input {
+  width: 100%; padding: 0.85rem 1rem;
+  background: var(--black-3); border: 1.5px solid var(--black-4);
+  border-radius: 10px; font-family: 'Tajawal', sans-serif;
+  font-size: 0.95rem; color: var(--white); outline: none;
+  transition: border-color 0.2s; direction: ltr; text-align: right;
+}
+.login-input:focus { border-color: var(--red); }
+.login-input::placeholder { color: #454545; }
+
+.login-btn {
+  width: 100%; padding: 0.9rem;
+  background: var(--red); color: var(--white);
+  border: none; border-radius: 10px;
+  font-family: 'Tajawal', sans-serif; font-size: 1rem; font-weight: 800;
+  cursor: pointer; margin-top: 0.5rem;
+  transition: background 0.2s, transform 0.1s;
+}
+.login-btn:hover { background: var(--red-2); }
+.login-btn:active { transform: scale(0.98); }
+
+.login-error {
+  background: rgba(204,31,31,0.12); border: 1px solid rgba(204,31,31,0.35);
+  color: #FF6B6B; border-radius: 8px;
+  padding: 0.6rem 0.9rem; font-size: 0.82rem;
+  margin-top: 0.8rem; text-align: center; display: none;
+}
+.login-error.show { display: block; }
+.login-footer { text-align: center; margin-top: 1.5rem; color: #454545; font-size: 0.72rem; }
+
+/* ─── HEADER ─── */
+header {
+  background: var(--black);
+  padding: 0 2rem; display: flex; align-items: center;
+  justify-content: space-between; height: 64px;
+  position: sticky; top: 0; z-index: 100;
+  border-bottom: 2px solid var(--red);
+}
+
+.logo { display: flex; align-items: center; gap: 0.7rem; }
+
+.logo-icon {
+  width: 36px; height: 36px;
+  background: var(--red); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+}
+
+.logo-text { font-size: 1.4rem; font-weight: 800; color: var(--white); letter-spacing: 2px; }
+.logo-sub { font-size: 0.7rem; color: var(--grey-3); font-weight: 400; }
+
+.header-right { display: flex; align-items: center; gap: 1rem; }
+.header-date { color: var(--grey-3); font-size: 0.82rem; }
+
+.add-btn {
+  background: var(--red); color: var(--white);
+  border: none; padding: 0.5rem 1.2rem;
+  border-radius: 8px; font-family: 'Tajawal', sans-serif;
+  font-weight: 700; font-size: 0.88rem; cursor: pointer;
+  transition: background 0.2s;
+}
+.add-btn:hover { background: var(--red-2); }
+
+/* ─── STATS ─── */
+.stats-row {
+  max-width: 1300px; margin: 1.5rem auto 0;
+  padding: 0 1.5rem;
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem;
+}
+
+.stat-card {
+  background: var(--black); border-radius: 12px;
+  padding: 1.1rem 1.3rem; display: flex; align-items: center; gap: 1rem;
+  border-bottom: 3px solid var(--red);
+}
+
+.stat-icon {
+  font-size: 1.6rem; width: 46px; height: 46px;
+  background: var(--black-3); border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+
+.stat-num { font-size: 1.6rem; font-weight: 800; color: var(--white); line-height: 1; }
+.stat-label { font-size: 0.75rem; color: var(--grey-3); margin-top: 0.2rem; }
+
+/* ─── MAIN ─── */
+/* ─── APP SHELL ─── */
+.app-shell {
+  display: flex; min-height: calc(100vh - 64px);
+}
+.sidebar-nav {
+  width: 220px; background: var(--black); flex-shrink: 0;
+  display: flex; flex-direction: column; padding: 1rem 0;
+  position: sticky; top: 64px; height: calc(100vh - 64px); overflow-y: auto;
+  border-left: 1px solid var(--black-3);
+}
+.sidebar-logo-small {
+  padding: 0.5rem 1.2rem 1rem;
+  border-bottom: 1px solid var(--black-3); margin-bottom: 0.5rem;
+  font-size: 0.72rem; color: var(--grey-3); font-weight: 700; letter-spacing: 0.08em;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.75rem 1.2rem; cursor: pointer;
+  font-size: 0.88rem; font-weight: 600; color: var(--grey-3);
+  transition: all 0.15s; border-right: 3px solid transparent;
+  text-decoration: none;
+}
+.nav-item:hover { background: var(--black-2); color: var(--white); }
+.nav-item.active { background: var(--black-2); color: var(--white); border-right-color: var(--red); }
+.nav-item .nav-icon { font-size: 1.1rem; width: 22px; text-align: center; }
+.nav-divider { height: 1px; background: var(--black-3); margin: 0.5rem 1.2rem; }
+.nav-badge { background: var(--red); color: white; font-size: 0.65rem; font-weight: 700; padding: 0.1rem 0.4rem; border-radius: 10px; margin-right: auto; }
+
+.page-area { flex: 1; overflow: hidden; }
+
+/* pages */
+.page { display: none; }
+.page.active { display: block; }
+
+.container {
+  max-width: 1300px; margin: 1.5rem auto 0;
+  padding: 0 1.5rem 2rem;
+  display: grid; grid-template-columns: 320px 1fr; gap: 1.5rem; align-items: start;
+}
+
+/* ─── PANEL ─── */
+.panel { background: var(--white); border-radius: 14px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+
+.panel-header {
+  background: var(--black); padding: 0.9rem 1.2rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.panel-title { color: var(--white); font-weight: 700; font-size: 0.95rem; }
+.count-badge {
+  background: var(--red); color: var(--white);
+  font-size: 0.73rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 20px;
+}
+
+.search-box {
+  padding: 0.75rem 1rem; border-bottom: 1px solid var(--grey);
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.search-box input {
+  border: none; outline: none; font-family: 'Tajawal', sans-serif;
+  font-size: 0.88rem; width: 100%; background: transparent; color: var(--text-main);
+}
+.search-box input::placeholder { color: var(--grey-2); }
+
+.dept-filter {
+  padding: 0.5rem 0.8rem; display: flex; gap: 0.35rem;
+  flex-wrap: wrap; border-bottom: 1px solid var(--grey);
+}
+.dept-chip {
+  padding: 0.25rem 0.75rem; border-radius: 20px;
+  font-size: 0.72rem; font-weight: 700; cursor: pointer;
+  border: 1.5px solid var(--grey); background: transparent;
+  font-family: 'Tajawal', sans-serif; transition: all 0.15s; color: var(--text-muted);
+}
+.dept-chip.active, .dept-chip:hover {
+  background: var(--black); border-color: var(--black); color: var(--white);
+}
+
+.staff-list { max-height: calc(100vh - 300px); overflow-y: auto; }
+.staff-list::-webkit-scrollbar { width: 4px; }
+.staff-list::-webkit-scrollbar-thumb { background: var(--red); border-radius: 2px; }
+
+.staff-item {
+  display: flex; align-items: center; gap: 0.8rem;
+  padding: 0.8rem 1rem; cursor: pointer;
+  border-bottom: 1px solid var(--grey); transition: background 0.12s;
+}
+.staff-item:hover { background: var(--off-white); }
+.staff-item.active { background: #FFF0F0; border-right: 3px solid var(--red); }
+
+.avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--black); display: flex; align-items: center; justify-content: center;
+  font-size: 0.82rem; font-weight: 800; color: var(--white); flex-shrink: 0;
+  overflow: hidden; border: 2px solid var(--grey);
+}
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.staff-info { flex: 1; min-width: 0; }
+.staff-name { font-weight: 700; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.staff-role { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.1rem; }
+
+.status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.status-dot.active { background: var(--green); }
+.status-dot.leave  { background: var(--orange); }
+.status-dot.inactive { background: var(--grey-2); }
+
+/* ─── DETAIL ─── */
+.detail-panel { background: var(--white); border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); overflow: hidden; }
+
+.empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 400px; color: var(--text-muted); }
+.empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.3; }
+
+.detail-header {
+  background: var(--black); padding: 1.8rem 2rem;
+  display: flex; align-items: center; gap: 1.5rem;
+  position: relative; border-bottom: 3px solid var(--red);
+}
+
+.detail-avatar {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: var(--black-3); border: 3px solid var(--red);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.8rem; font-weight: 700; color: var(--white);
+  flex-shrink: 0; overflow: hidden; cursor: pointer; position: relative;
+}
+.detail-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.detail-avatar .cam-overlay {
+  position: absolute; inset: 0; background: rgba(0,0,0,0.55);
+  display: none; align-items: center; justify-content: center; font-size: 1.4rem;
+}
+.detail-avatar:hover .cam-overlay { display: flex; }
+
+.detail-name { font-size: 1.4rem; font-weight: 800; color: var(--white); }
+.detail-role-tag {
+  display: inline-block; background: rgba(204,31,31,0.2);
+  border: 1px solid var(--red); color: #FF8A8A;
+  font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.7rem; border-radius: 20px; margin-top: 0.3rem;
+}
+.detail-id { color: var(--grey-3); font-size: 0.8rem; margin-top: 0.3rem; }
+
+.status-badge {
+  margin-right: auto; padding: 0.35rem 0.9rem; border-radius: 20px;
+  font-size: 0.8rem; font-weight: 700;
+}
+.status-badge.active   { background: rgba(46,125,50,0.15); color: #81C784; border: 1px solid #2E7D32; }
+.status-badge.leave    { background: rgba(230,81,0,0.15);  color: #FFB74D; border: 1px solid #E65100; }
+.status-badge.inactive { background: rgba(255,255,255,0.07); color: #9E9E9E; border: 1px solid #555; }
+
+/* ─── TABS ─── */
+.detail-tabs { display: flex; border-bottom: 2px solid var(--grey); padding: 0 1.5rem; }
+.tab-btn {
+  padding: 0.85rem 1.1rem; font-family: 'Tajawal', sans-serif; font-size: 0.85rem;
+  font-weight: 600; background: none; border: none; cursor: pointer;
+  color: var(--text-muted); border-bottom: 2.5px solid transparent; margin-bottom: -2px;
+  transition: all 0.15s;
+}
+.tab-btn.active { color: var(--red); border-bottom-color: var(--red); }
+.tab-btn:hover  { color: var(--text-main); }
+
+.detail-content { padding: 1.5rem; }
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+.info-card { background: var(--off-white); border-radius: 10px; padding: 0.9rem 1.1rem; }
+.info-label { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+.info-value { font-size: 0.92rem; font-weight: 600; }
+.info-card.full { grid-column: span 2; }
+
+.salary-highlight {
+  background: var(--black); border-radius: 12px; padding: 1.2rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;
+  border-right: 4px solid var(--red);
+}
+.salary-label { color: var(--grey-3); font-size: 0.78rem; font-weight: 600; }
+.salary-amount { color: var(--white); font-size: 1.7rem; font-weight: 800; }
+.salary-currency { color: var(--grey-3); font-size: 0.85rem; }
+
+.schedule-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 0.35rem; margin-top: 0.5rem; }
+.day-cell { background: var(--off-white); border-radius: 8px; padding: 0.5rem 0.3rem; text-align: center; }
+.day-name { font-size: 0.65rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
+.day-status { font-size: 0.68rem; font-weight: 600; }
+.day-cell.work { background: #E8F5E9; }
+.day-cell.work .day-status { color: var(--green); }
+.day-cell.off .day-status { color: var(--grey-2); }
+
+/* ─── DOCS TAB ─── */
+.doc-list { display: flex; flex-direction: column; gap: 0.6rem; }
+.doc-item { display: flex; align-items: center; gap: 0.8rem; background: var(--off-white); padding: 0.8rem 1rem; border-radius: 10px; }
+.doc-icon { font-size: 1.3rem; }
+.doc-name { font-weight: 600; font-size: 0.86rem; }
+.doc-date { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.1rem; }
+.doc-status { margin-right: auto; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 20px; }
+.doc-status.valid    { background: #E8F5E9; color: var(--green); }
+.doc-status.expiring { background: #FFF3E0; color: var(--orange); }
+.doc-status.expired  { background: #FFEBEE; color: var(--red); }
+
+/* ─── PHOTO UPLOADS ─── */
+.photos-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; margin-top: 0.5rem;
+}
+.photo-slot {
+  background: var(--off-white); border-radius: 10px;
+  aspect-ratio: 4/3; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; cursor: pointer;
+  border: 2px dashed var(--grey); transition: border-color 0.15s; overflow: hidden;
+  position: relative;
+}
+.photo-slot:hover { border-color: var(--red); }
+.photo-slot img { width: 100%; height: 100%; object-fit: cover; }
+.photo-slot .photo-label {
+  font-size: 0.72rem; font-weight: 700; color: var(--text-muted);
+  margin-top: 0.4rem; text-align: center; padding: 0 0.3rem;
+}
+.photo-slot .upload-icon { font-size: 1.5rem; opacity: 0.4; }
+.photo-slot .photo-overlay {
+  position: absolute; inset: 0; background: rgba(0,0,0,0.5);
+  display: none; align-items: center; justify-content: center;
+  font-size: 1.2rem; color: white;
+}
+.photo-slot:hover .photo-overlay { display: flex; }
+.photo-slot .photo-del {
+  position: absolute; top: 4px; left: 4px;
+  background: var(--red); color: white; border: none;
+  border-radius: 50%; width: 22px; height: 22px;
+  font-size: 0.7rem; cursor: pointer; display: none;
+  align-items: center; justify-content: center;
+}
+.photo-slot.has-img .photo-del { display: flex; }
+
+/* ─── SECTION TITLE ─── */
+.section-title {
+  font-size: 0.78rem; font-weight: 700; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.7rem; margin-top: 1.2rem;
+}
+.section-title:first-child { margin-top: 0; }
+
+/* ─── ACTIONS ─── */
+.action-row {
+  display: flex; gap: 0.6rem; padding: 1rem 1.5rem;
+  border-top: 1px solid var(--grey);
+}
+.action-btn {
+  flex: 1; padding: 0.65rem; border-radius: 9px;
+  font-family: 'Tajawal', sans-serif; font-weight: 700; font-size: 0.82rem;
+  cursor: pointer; transition: opacity 0.15s; border: none; text-align: center;
+}
+.action-btn:hover { opacity: 0.8; }
+.action-btn.primary   { background: var(--black); color: var(--white); }
+.action-btn.secondary { background: var(--off-white); color: var(--text-main); border: 1px solid var(--grey); }
+.action-btn.danger    { background: #FFEBEE; color: var(--red); }
+
+/* ─── MODAL ─── */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.65); z-index: 200;
+  align-items: center; justify-content: center; padding: 1rem;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--white); border-radius: 16px; width: 100%; max-width: 600px;
+  max-height: 92vh; overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.modal-header {
+  background: var(--black); padding: 1.1rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  border-radius: 16px 16px 0 0; position: sticky; top: 0;
+  border-bottom: 2px solid var(--red);
+}
+.modal-title { color: var(--white); font-weight: 700; font-size: 0.95rem; }
+.close-btn { background: none; border: none; color: var(--grey-3); font-size: 1.2rem; cursor: pointer; padding: 0.2rem 0.5rem; border-radius: 6px; }
+.close-btn:hover { background: rgba(255,255,255,0.1); color: white; }
+
+/* photo upload inside modal */
+.photo-upload-area {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 0.5rem; padding: 1.2rem;
+  background: var(--off-white); border-radius: 12px;
+  border: 2px dashed var(--grey); cursor: pointer; transition: border-color 0.2s;
+  margin-bottom: 1rem;
+}
+.photo-upload-area:hover { border-color: var(--red); }
+.photo-preview-circle {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: var(--black); display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; color: var(--white); overflow: hidden; border: 3px solid var(--red);
+}
+.photo-preview-circle img { width: 100%; height: 100%; object-fit: cover; }
+.photo-upload-hint { font-size: 0.78rem; color: var(--text-muted); }
+
+.modal-body { padding: 1.3rem 1.5rem; }
+
+.modal-section-title {
+  font-size: 0.72rem; font-weight: 700; color: var(--grey-3);
+  text-transform: uppercase; letter-spacing: 0.06em;
+  margin: 1rem 0 0.6rem; padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--grey);
+}
+.modal-section-title:first-child { margin-top: 0; }
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+.form-group.full { grid-column: span 2; }
+.form-label { font-size: 0.77rem; font-weight: 700; color: var(--text-muted); }
+
+.form-input, .form-select {
+  padding: 0.65rem 0.9rem; border: 1.5px solid var(--grey);
+  border-radius: 9px; font-family: 'Tajawal', sans-serif; font-size: 0.87rem;
+  color: var(--text-main); background: var(--off-white); outline: none;
+  transition: border-color 0.15s; direction: rtl;
+}
+.form-input:focus, .form-select:focus { border-color: var(--red); background: white; }
+
+.modal-footer {
+  padding: 1rem 1.5rem; border-top: 1px solid var(--grey);
+  display: flex; gap: 0.7rem; justify-content: flex-end;
+  position: sticky; bottom: 0; background: white;
+}
+.btn-save {
+  background: var(--red); color: var(--white); border: none;
+  padding: 0.65rem 1.5rem; border-radius: 9px;
+  font-family: 'Tajawal', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer;
+}
+.btn-save:hover { background: var(--red-2); }
+.btn-cancel {
+  background: var(--off-white); color: var(--text-main); border: 1px solid var(--grey);
+  padding: 0.65rem 1.2rem; border-radius: 9px;
+  font-family: 'Tajawal', sans-serif; font-weight: 600; font-size: 0.9rem; cursor: pointer;
+}
+
+/* install banner */
+#installBanner {
+  display: none; position: fixed; bottom: 1rem; left: 1rem; right: 1rem;
+  background: var(--black-2); border: 1px solid var(--red);
+  border-radius: 14px; padding: 1rem 1.2rem; z-index: 8888;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4); align-items: center; gap: 1rem;
+}
+#installBanner.show { display: flex; }
+.install-text { flex: 1; }
+.install-title { color: var(--white); font-weight: 700; font-size: 0.88rem; }
+.install-sub { color: var(--grey-3); font-size: 0.73rem; margin-top: 0.2rem; }
+.install-yes {
+  background: var(--red); color: white; border: none; padding: 0.5rem 1rem;
+  border-radius: 8px; font-family: 'Tajawal', sans-serif; font-weight: 700;
+  font-size: 0.83rem; cursor: pointer; white-space: nowrap;
+}
+.install-no { background: none; border: none; color: var(--grey-3); font-size: 1rem; cursor: pointer; }
+
+/* hidden file input */
+.hidden-input { display: none; }
+
+
+  @media (max-width: 900px) {
+    .app-shell { flex-direction: column; }
+    .sidebar-nav { width: 100%; height: auto; flex-direction: row; flex-wrap: wrap; position: static; padding: 0.5rem; border-left: none; border-bottom: 2px solid var(--red); }
+    .sidebar-logo-small { display: none; }
+    .nav-item { padding: 0.5rem 0.9rem; border-right: none; border-bottom: 3px solid transparent; font-size: 0.8rem; }
+    .nav-item.active { border-right: none; border-bottom-color: var(--red); }
+    .nav-divider { display: none; }
+  }
+
+  @media (max-width: 900px) {
+  .container { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: repeat(2,1fr); }
+  .info-grid { grid-template-columns: 1fr; }
+  .info-card.full { grid-column: span 1; }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-group.full { grid-column: span 1; }
+  .photos-grid { grid-template-columns: repeat(2,1fr); }
+}
+
+  .stat-card.clickable { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+  .stat-card.clickable:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(204,31,31,0.25); }
+  .stat-card.clickable.active-card { border-bottom-color: var(--red-2); box-shadow: 0 0 0 2px var(--red); }
+  .stat-arrow { color: var(--grey-3); font-size: 1.3rem; margin-right: auto; padding-right: 0.3rem; }
+
+  .lang-btn {
+    background: var(--black-3); color: var(--grey-2); border: 1.5px solid var(--black-4);
+    padding: 0.4rem 0.8rem; border-radius: 7px; font-family: 'Tajawal', sans-serif;
+    font-weight: 700; font-size: 0.8rem; cursor: pointer; transition: all 0.15s; letter-spacing: 1px;
+  }
+  .lang-btn:hover { border-color: var(--red); color: white; }
+
+  .doc-block {
+    background: var(--off-white); border-radius: 12px; margin-bottom: 1rem; overflow: hidden;
+    border: 1.5px solid var(--grey);
+  }
+  .doc-block-header {
+    display: flex; align-items: center; gap: 0.9rem;
+    padding: 0.9rem 1.1rem; background: white; border-bottom: 1px solid var(--grey);
+  }
+  .doc-block-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .doc-block-info { flex: 1; }
+  .doc-block-title { font-weight: 700; font-size: 0.92rem; }
+  .doc-block-num { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.1rem; font-family: monospace; direction: ltr; text-align: right; }
+  .doc-block-date { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.1rem; }
+  .doc-photos-row {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; padding: 0.8rem;
+  }
+  /* photo slot override for doc row */
+  .doc-photos-row .photo-slot { aspect-ratio: 3/2; }
+
+  .cmp-filter-btn {
+    padding:0.4rem 1rem;border-radius:20px;border:1.5px solid var(--grey);
+    background:white;font-family:Tajawal,sans-serif;font-weight:700;
+    font-size:0.78rem;cursor:pointer;transition:all 0.15s;color:var(--text-muted);
+  }
+  .cmp-filter-btn.active,.cmp-filter-btn:hover {
+    background:var(--black);border-color:var(--black);color:white;
+  }
+  .complaint-card {
+    background:white;border-radius:12px;padding:1.1rem 1.3rem;
+    margin-bottom:0.8rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);
+    border-right:4px solid var(--grey);transition:box-shadow 0.15s;
+  }
+  .complaint-card.sev-high   { border-right-color:var(--red); }
+  .complaint-card.sev-medium { border-right-color:#E65100; }
+  .complaint-card.sev-low    { border-right-color:#2E7D32; }
+  .complaint-card:hover { box-shadow:0 4px 16px rgba(0,0,0,0.1); }
+
+  .editable-card { cursor: pointer; transition: box-shadow 0.15s; }
+  .editable-card:hover { box-shadow: 0 0 0 2px var(--red); }
+
+  .dept-group-header {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.65rem 1rem; background: var(--off-white);
+    border-bottom: 1px solid var(--grey); cursor: pointer;
+    position: sticky; top: 0; z-index: 2;
+    transition: background 0.12s;
+  }
+  .dept-group-header:hover { background: #EBEBEB; }
+  .dept-count-badge {
+    background: var(--black); color: white;
+    font-size: 0.68rem; font-weight: 700;
+    padding: 0.1rem 0.45rem; border-radius: 10px; margin-right: auto;
+  }
+  .dept-arrow { font-size: 0.65rem; color: var(--grey-3); }
+  .dept-group-body { display: block; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-logo-icon">🍽️</div>
+      <div class="login-title">PROSTO</div>
+      <div class="login-subtitle">نظام إدارة الموظفين</div>
+    </div>
+    <div class="login-field">
+      <label class="login-label">اسم المستخدم</label>
+      <input class="login-input" id="loginUser" type="text" placeholder="username" autocomplete="username">
+    </div>
+    <div class="login-field">
+      <label class="login-label">كلمة المرور</label>
+      <input class="login-input" id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter') doLogin()">
+    </div>
+    <button class="login-btn" onclick="doLogin()">🔐 دخول</button>
+    <div class="login-error" id="loginError">❌ اسم المستخدم أو كلمة المرور غير صحيحة</div>
+    <div class="login-footer">PROSTO System v2.0 · جميع الحقوق محفوظة</div>
+  </div>
+</div>
+
+<!-- INSTALL BANNER -->
+<div id="installBanner">
+  <div class="install-text">
+    <div class="install-title">📲 تثبيت التطبيق</div>
+    <div class="install-sub">أضف Prosto لشاشة الرئيسية</div>
+  </div>
+  <button class="install-yes" id="installYes">تثبيت</button>
+  <button class="install-no" onclick="document.getElementById('installBanner').classList.remove('show')">✕</button>
+</div>
+
+<!-- hidden file inputs -->
+<input type="file" class="hidden-input" id="avatarInput" accept="image/*" onchange="handleAvatarUpload(event)">
+<input type="file" class="hidden-input" id="docPhotoInput" accept="image/*" onchange="handleDocPhoto(event)">
+<input type="file" class="hidden-input" id="modalAvatarInput" accept="image/*" onchange="handleModalAvatar(event)">
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">🍽️</div>
+    <div>
+      <div class="logo-text">PROSTO</div>
+      <div class="logo-sub" id="headerSub">نظام إدارة الموظفين</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="header-date" id="headerDate"></span>
+    <button class="lang-btn" onclick="toggleLang()" id="langBtn" title="Switch Language">EN</button>
+    <button class="add-btn" id="addEmpBtn" onclick="openModal()">+ إضافة موظف</button>
+  </div>
+</header>
+
+<!-- APP SHELL -->
+<div class="app-shell">
+
+<!-- SIDEBAR -->
+<nav class="sidebar-nav" id="sidebarNav">
+  <div class="sidebar-logo-small" id="navSectionLabel">NAVIGATION</div>
+  <a class="nav-item active" onclick="showPage('employees')" id="nav-employees">
+    <span class="nav-icon">👥</span><span data-nav="employees">الموظفون</span>
+  </a>
+  <a class="nav-item" onclick="showPage('payroll')" id="nav-payroll">
+    <span class="nav-icon">💰</span><span data-nav="payroll">الرواتب والبايرول</span>
+  </a>
+  <div class="nav-divider"></div>
+  <div class="nav-divider"></div>
+  <a class="nav-item" onclick="showPage('complaints')" id="nav-complaints">
+    <span class="nav-icon">📨</span><span data-nav="complaints">الشكاوي</span>
+    <span class="nav-badge" id="complaintsBadge" style="display:none">0</span>
+  </a>
+  <a class="nav-item" onclick="showPage('registrations')" id="nav-registrations">
+    <span class="nav-icon">📋</span><span data-nav="registrations">طلبات التسجيل</span>
+    <span class="nav-badge" id="regsBadge" style="display:none">0</span>
+  </a>
+  <div class="nav-divider"></div>
+  <a class="nav-item" onclick="showPage('branches')" id="nav-branches">
+    <span class="nav-icon">🏪</span><span data-nav="branches">الفروع والأقسام</span>
+  </a>
+  <a class="nav-item" onclick="showPage('settings')" id="nav-settings">
+    <span class="nav-icon">⚙️</span><span data-nav="settings">الإعدادات</span>
+  </a>
+</nav>
+
+<!-- PAGE AREA -->
+<div class="page-area">
+
+<!-- ══ PAGE: EMPLOYEES ══ -->
+<div class="page active" id="page-employees">
+<div class="stats-row" style="grid-template-columns:repeat(5,1fr);">
+  <div class="stat-card clickable" onclick="filterByCard('all')" id="card-all">
+    <div class="stat-icon">👥</div>
+    <div><div class="stat-num" id="statTotal">0</div><div class="stat-label" id="lbl-total">إجمالي الموظفين</div></div>
+    <div class="stat-arrow">›</div>
+  </div>
+  <div class="stat-card clickable" onclick="filterByCard('active')" id="card-active">
+    <div class="stat-icon">✅</div>
+    <div><div class="stat-num" id="statActive">0</div><div class="stat-label" id="lbl-active">نشطون</div></div>
+    <div class="stat-arrow">›</div>
+  </div>
+  <div class="stat-card clickable" onclick="filterByCard('leave')" id="card-leave">
+    <div class="stat-icon">🏖️</div>
+    <div><div class="stat-num" id="statLeave">0</div><div class="stat-label" id="lbl-leave">في إجازة</div></div>
+    <div class="stat-arrow">›</div>
+  </div>
+  <div class="stat-card clickable" onclick="filterByCard('inactive')" id="card-inactive">
+    <div class="stat-icon">⛔</div>
+    <div><div class="stat-num" id="statInactive">0</div><div class="stat-label" id="lbl-inactive">غير نشطين</div></div>
+    <div class="stat-arrow">›</div>
+  </div>
+  <div class="stat-card clickable" onclick="filterByCard('expiring')" id="card-expiring">
+    <div class="stat-icon">⚠️</div>
+    <div><div class="stat-num" id="statExpiring">0</div><div class="stat-label" id="lbl-expiring">وثائق تنتهي قريبًا</div></div>
+    <div class="stat-arrow">›</div>
+  </div>
+</div>
+
+<!-- FILTER BANNER -->
+<div id="filterBanner" style="display:none;max-width:1300px;margin:0.7rem auto 0;padding:0 1.5rem;">
+  <div style="background:var(--red);color:white;padding:0.6rem 1.2rem;border-radius:10px;display:flex;align-items:center;justify-content:space-between;font-size:0.85rem;font-weight:700;">
+    <span id="filterBannerText"></span>
+    <button onclick="clearCardFilter()" style="background:rgba(255,255,255,0.2);border:none;color:white;padding:0.3rem 0.8rem;border-radius:6px;cursor:pointer;font-family:Tajawal,sans-serif;font-weight:700;">✕ إلغاء الفلتر</button>
+  </div>
+</div>
+
+<div class="container">
+  <!-- LIST -->
+  <div class="panel">
+    <div class="panel-header">
+      <span class="panel-title">الموظفون</span>
+      <span class="count-badge" id="listCount">0</span>
+    </div>
+    <div class="search-box">
+      <span>🔍</span>
+      <input type="text" placeholder="بحث بالاسم أو الوظيفة..." id="searchInput" oninput="filterStaff()">
+    </div>
+    <div class="dept-filter" id="deptFilter"></div>
+    <div class="staff-list" id="staffList"></div>
+  </div>
+
+  <!-- DETAIL -->
+  <div class="detail-panel" id="detailPanel">
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">👤</div>
+      <div style="color:var(--text-muted)">اختر موظفًا لعرض بياناته</div>
+    </div>
+    <div id="detailContent" style="display:none;"></div>
+  </div>
+</div>
+
+</div><!-- end page-employees -->
+
+<!-- ══ PAGE: PAYROLL ══ -->
+<div class="page" id="page-payroll">
+  <div style="max-width:1300px;margin:1.5rem auto;padding:0 1.5rem 2rem;">
+
+    <!-- payroll header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;">
+      <div>
+        <h2 style="font-size:1.3rem;font-weight:800;" id="payroll-title">💰 الرواتب والبايرول</h2>
+        <div style="font-size:0.82rem;color:var(--text-muted);margin-top:0.2rem;" id="payroll-subtitle">إجمالي الرواتب الشهرية لجميع الفروع</div>
+      </div>
+      <div style="display:flex;gap:0.7rem;align-items:center;">
+        <select id="payrollBranchFilter" onchange="renderPayroll()" style="padding:0.5rem 0.9rem;border:1.5px solid var(--grey);border-radius:8px;font-family:Tajawal,sans-serif;font-size:0.85rem;background:white;cursor:pointer;">
+          <option value="all">جميع الفروع</option>
+          <option value="الخالدية">الخالدية</option>
+          <option value="بني ياس">بني ياس</option>
+          <option value="الكول سنتر">الكول سنتر</option>
+          <option value="المشغل">المشغل</option>
+        </select>
+        <button onclick="exportPayrollCSV()" style="background:var(--black);color:white;border:none;padding:0.5rem 1rem;border-radius:8px;font-family:Tajawal,sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer;">⬇️ تصدير CSV</button>
+      </div>
+    </div>
+
+    <!-- payroll summary cards -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;" id="payrollSummary"></div>
+
+    <!-- payroll table -->
+    <div style="background:white;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);">
+      <div style="background:var(--black);padding:0.9rem 1.2rem;display:flex;align-items:center;justify-content:space-between;">
+        <span style="color:white;font-weight:700;font-size:0.95rem;" id="payroll-table-title">كشف الرواتب</span>
+        <span style="color:var(--grey-3);font-size:0.8rem;" id="payrollCount"></span>
+      </div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.85rem;" id="payrollTable">
+          <thead>
+            <tr style="background:var(--off-white);border-bottom:2px solid var(--grey);">
+              <th style="padding:0.75rem 1rem;text-align:right;font-weight:700;color:var(--text-muted);" data-ar="رقم" data-en="#">رقم</th>
+              <th style="padding:0.75rem 1rem;text-align:right;font-weight:700;color:var(--text-muted);" data-ar="الاسم" data-en="Name">الاسم</th>
+              <th style="padding:0.75rem 1rem;text-align:right;font-weight:700;color:var(--text-muted);" data-ar="الفرع" data-en="Branch">الفرع</th>
+              <th style="padding:0.75rem 1rem;text-align:right;font-weight:700;color:var(--text-muted);" data-ar="الراتب الأساسي" data-en="Basic Salary">الراتب الأساسي</th>
+              <th style="padding:0.75rem 1rem;text-align:right;font-weight:700;color:var(--text-muted);" data-ar="بدل سكن" data-en="Housing">بدل سكن</th>
+              <th style="padding:0.75rem 1rem;text-align:right;font-weight:700;color:var(--text-muted);">خصومات</th>
+              <th style="padding:0.75rem 1rem;text-align:right;font-weight:700;color:var(--text-muted);" data-ar="الإجمالي" data-en="Total">الإجمالي</th>
+              <th style="padding:0.75rem 1rem;text-align:right;font-weight:700;color:var(--text-muted);" data-ar="الحالة" data-en="Status">الحالة</th>
+            </tr>
+          </thead>
+          <tbody id="payrollBody"></tbody>
+          <tfoot id="payrollFoot"></tfoot>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div><!-- end page-payroll -->
+
+<!-- ══ PAGE: SETTINGS ══ -->
+<div class="page" id="page-settings">
+  <div style="max-width:900px;margin:1.5rem auto;padding:0 1.5rem 2rem;">
+    <h2 style="font-size:1.3rem;font-weight:800;margin-bottom:1.5rem;" id="settings-title">⚙️ إعدادات النظام</h2>
+
+    <!-- Credentials -->
+    <div style="background:white;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);margin-bottom:1.2rem;">
+      <div style="background:var(--black);padding:0.9rem 1.2rem;border-bottom:2px solid var(--red);">
+        <span style="color:white;font-weight:700;" id="s-cred-title">🔐 بيانات تسجيل الدخول</span>
+      </div>
+      <div style="padding:1.3rem;" id="credsList"></div>
+    </div>
+
+    <!-- System info -->
+    <div style="background:white;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);margin-bottom:1.2rem;">
+      <div style="background:var(--black);padding:0.9rem 1.2rem;border-bottom:2px solid var(--red);">
+        <span style="color:white;font-weight:700;" id="s-info-title">📊 معلومات النظام</span>
+      </div>
+      <div style="padding:1.3rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem;" id="systemInfo"></div>
+    </div>
+
+    <!-- Expiry alerts -->
+    <div style="background:white;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);">
+      <div style="background:var(--black);padding:0.9rem 1.2rem;border-bottom:2px solid var(--red);">
+        <span style="color:white;font-weight:700;" id="s-alerts-title">⚠️ تنبيهات انتهاء الوثائق</span>
+      </div>
+      <div style="padding:1.3rem;" id="expiryAlerts"></div>
+    </div>
+  </div>
+</div><!-- end page-settings -->
+
+<!-- ══ PAGE: BRANCHES ══ -->
+<div class="page" id="page-branches">
+  <div style="max-width:900px;margin:1.5rem auto;padding:0 1.5rem 2rem;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;">
+      <div>
+        <h2 style="font-size:1.3rem;font-weight:800;" id="branches-title">🏪 الفروع والأقسام</h2>
+        <div style="font-size:0.82rem;color:var(--text-muted);margin-top:0.2rem;" id="branches-sub">إدارة فروع بروستو</div>
+      </div>
+    </div>
+
+    <!-- Add branch form -->
+    <div style="background:white;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);margin-bottom:1.5rem;">
+      <div style="background:var(--black);padding:0.9rem 1.2rem;border-bottom:2px solid var(--red);">
+        <span style="color:white;font-weight:700;" id="add-branch-title">➕ إضافة فرع جديد</span>
+      </div>
+      <div style="padding:1.3rem;display:flex;gap:0.8rem;align-items:flex-end;flex-wrap:wrap;">
+        <div style="flex:1;min-width:200px;">
+          <label style="font-size:0.77rem;font-weight:700;color:var(--grey-3);display:block;margin-bottom:0.35rem;" id="branch-name-label">اسم الفرع (عربي)</label>
+          <input id="newBranchAr" class="form-input" placeholder="مثال: الريم" style="width:100%">
+        </div>
+        <div style="flex:1;min-width:200px;">
+          <label style="font-size:0.77rem;font-weight:700;color:var(--grey-3);display:block;margin-bottom:0.35rem;" id="branch-en-label">Branch Name (EN)</label>
+          <input id="newBranchEn" class="form-input" placeholder="e.g. Al Reem" style="width:100%;direction:ltr;">
+        </div>
+        <div style="min-width:160px;">
+          <label style="font-size:0.77rem;font-weight:700;color:var(--grey-3);display:block;margin-bottom:0.35rem;" id="branch-prefix-label">الكود المختصر</label>
+          <input id="newBranchPrefix" class="form-input" placeholder="AR" style="width:100%;direction:ltr;text-transform:uppercase;" maxlength="4">
+        </div>
+        <div style="min-width:130px;">
+          <label style="font-size:0.77rem;font-weight:700;color:var(--grey-3);display:block;margin-bottom:0.35rem;">النوع</label>
+          <select id="newBranchType" class="form-select" style="width:100%;">
+            <option value="فرع">🏪 فرع</option>
+            <option value="قسم">🏢 قسم</option>
+          </select>
+        </div>
+        <button onclick="addBranch()" style="background:var(--red);color:white;border:none;padding:0.7rem 1.3rem;border-radius:9px;font-family:Tajawal,sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;white-space:nowrap;" id="add-branch-btn">➕ إضافة</button>
+      </div>
+    </div>
+
+    <!-- Branches list -->
+    <div id="branchesList"></div>
+  </div>
+</div><!-- end page-branches -->
+
+<!-- ══ PAGE: COMPLAINTS ══ -->
+<div class="page" id="page-complaints">
+  <div style="max-width:1000px;margin:1.5rem auto;padding:0 1.5rem 2rem;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+      <div>
+        <h2 style="font-size:1.3rem;font-weight:800;">📨 الشكاوي والاقتراحات</h2>
+        <div style="font-size:0.82rem;color:var(--text-muted);margin-top:0.2rem;">الشكاوي المقدمة من الموظفين</div>
+      </div>
+      <div style="display:flex;gap:0.7rem;align-items:center;flex-wrap:wrap;">
+        <a href="complaint.html" target="_blank" style="background:var(--red);color:white;padding:0.5rem 1rem;border-radius:8px;font-weight:700;font-size:0.85rem;text-decoration:none;">🔗 لينك الشكاوي</a>
+        <button onclick="clearComplaints()" style="background:var(--off-white);border:1px solid var(--grey);padding:0.5rem 1rem;border-radius:8px;font-family:Tajawal,sans-serif;font-weight:600;font-size:0.82rem;cursor:pointer;">🗑️ مسح الكل</button>
+      </div>
+    </div>
+
+    <!-- link box -->
+    <div style="background:var(--black);border-radius:12px;padding:1rem 1.3rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+      <div style="flex:1;">
+        <div style="color:var(--grey-2);font-size:0.75rem;font-weight:700;margin-bottom:0.3rem;">🔗 اللينك — قم بإرساله للموظف</div>
+        <div style="color:white;font-size:0.85rem;font-weight:600;direction:ltr;text-align:right;" id="complaintLinkDisplay"></div>
+      </div>
+      <button onclick="copyLink('complaint')" style="background:var(--red);color:white;border:none;padding:0.5rem 1rem;border-radius:8px;font-family:Tajawal,sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;">📋 نسخ</button>
+    </div>
+
+    <!-- filter row -->
+    <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;" id="complaintFilters">
+      <button class="cmp-filter-btn active" onclick="filterComplaints('all',this)">الكل</button>
+      <button class="cmp-filter-btn" onclick="filterComplaints('new',this)">🆕 جديدة</button>
+      <button class="cmp-filter-btn" onclick="filterComplaints('high',this)">🔴 عاجلة</button>
+      <button class="cmp-filter-btn" onclick="filterComplaints('resolved',this)">✅ تم الحل</button>
+    </div>
+
+    <div id="complaintsList"></div>
+  </div>
+</div><!-- end page-complaints -->
+
+<!-- ══ PAGE: REGISTRATIONS ══ -->
+<div class="page" id="page-registrations">
+  <div style="max-width:1000px;margin:1.5rem auto;padding:0 1.5rem 2rem;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+      <div>
+        <h2 style="font-size:1.3rem;font-weight:800;">📋 طلبات تسجيل الموظفين</h2>
+        <div style="font-size:0.82rem;color:var(--text-muted);margin-top:0.2rem;">الطلبات المقدمة عبر لينك التسجيل</div>
+      </div>
+      <div style="display:flex;gap:0.7rem;align-items:center;flex-wrap:wrap;">
+        <a href="register.html" target="_blank" style="background:var(--red);color:white;padding:0.5rem 1rem;border-radius:8px;font-weight:700;font-size:0.85rem;text-decoration:none;">🔗 لينك التسجيل</a>
+        <button onclick="clearRegistrations()" style="background:var(--off-white);border:1px solid var(--grey);padding:0.5rem 1rem;border-radius:8px;font-family:Tajawal,sans-serif;font-weight:600;font-size:0.82rem;cursor:pointer;">🗑️ مسح الكل</button>
+      </div>
+    </div>
+
+    <!-- link box -->
+    <div style="background:var(--black);border-radius:12px;padding:1rem 1.3rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+      <div style="flex:1;">
+        <div style="color:var(--grey-2);font-size:0.75rem;font-weight:700;margin-bottom:0.3rem;">🔗 اللينك — قم بإرساله للموظف الجديد</div>
+        <div style="color:white;font-size:0.85rem;font-weight:600;direction:ltr;text-align:right;" id="registerLinkDisplay"></div>
+      </div>
+      <button onclick="copyLink('register')" style="background:var(--red);color:white;border:none;padding:0.5rem 1rem;border-radius:8px;font-family:Tajawal,sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;">📋 نسخ</button>
+    </div>
+
+    <div id="registrationsList"></div>
+  </div>
+</div><!-- end page-registrations -->
+
+</div><!-- end page-area -->
+</div><!-- end app-shell -->
+
+<!-- ADD MODAL -->
+<div class="modal-overlay" id="addModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">➕ إضافة موظف جديد</span>
+      <button class="close-btn" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- صورة شخصية -->
+      <div class="modal-section-title">الصورة الشخصية</div>
+      <div class="photo-upload-area" onclick="document.getElementById('modalAvatarInput').click()">
+        <div class="photo-preview-circle" id="modalAvatarPreview">📷</div>
+        <div class="photo-upload-hint">اضغط لرفع صورة شخصية</div>
+      </div>
+
+      <!-- البيانات الأساسية -->
+      <div class="modal-section-title">البيانات الأساسية</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">الاسم الكامل *</label>
+          <input type="text" class="form-input" id="f_name" placeholder="الاسم بالعربي">
+        </div>
+        <div class="form-group">
+          <label class="form-label">الاسم بالإنجليزية</label>
+          <input type="text" class="form-input" id="f_nameEn" placeholder="Full Name EN" style="direction:ltr;text-align:right">
+        </div>
+        <div class="form-group">
+          <label class="form-label">رقم الموظف</label>
+          <input type="text" class="form-input" id="f_id" placeholder="KH-001">
+        </div>
+        <div class="form-group">
+          <label class="form-label">الفرع</label>
+          <select class="form-select" id="f_dept">
+            <option>الخالدية</option>
+            <option>بني ياس</option>
+            <option>الكول سنتر</option>
+            <option>المشغل</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">الوظيفة</label>
+          <input type="text" class="form-input" id="f_role" placeholder="موظف / طاهٍ ...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">الجنسية</label>
+          <input type="text" class="form-input" id="f_nationality" placeholder="مصري / سوري ...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">الجنس</label>
+          <select class="form-select" id="f_gender"><option>ذكر</option><option>أنثى</option></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">رقم الهاتف</label>
+          <input type="text" class="form-input" id="f_phone" placeholder="+971 50 000 0000" style="direction:ltr;text-align:right">
+        </div>
+        <div class="form-group">
+          <label class="form-label">الحالة</label>
+          <select class="form-select" id="f_status">
+            <option value="active">نشط</option>
+            <option value="leave">في إجازة</option>
+            <option value="inactive">غير نشط</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">تاريخ بدء العمل</label>
+          <input type="date" class="form-input" id="f_startDate">
+        </div>
+      </div>
+
+      <!-- بيانات التصريح -->
+      <div class="modal-section-title">بيانات التصريح والإقامة</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">نوع التصريح</label>
+          <select class="form-select" id="f_permitType"><option>إقامة</option><option>إعارة</option><option>—</option></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">الكفيل</label>
+          <select class="form-select" id="f_sponsor">
+            <option>بروست ماستر</option>
+            <option>لفة تنور</option>
+            <option>—</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">رقم البطاقة</label>
+          <input type="text" class="form-input" id="f_eid" placeholder="784-XXXX-XXXXXXX-X" style="direction:ltr;text-align:right">
+        </div>
+        <div class="form-group">
+          <label class="form-label">تاريخ انتهاء الإقامة</label>
+          <input type="date" class="form-input" id="f_residencyExp">
+        </div>
+        <div class="form-group">
+          <label class="form-label">تاريخ انتهاء الجواز</label>
+          <input type="date" class="form-input" id="f_passportExp">
+        </div>
+        <div class="form-group">
+          <label class="form-label">تاريخ انتهاء بطاقة العمل</label>
+          <input type="date" class="form-input" id="f_labourCardExp">
+        </div>
+      </div>
+
+      <!-- الراتب -->
+      <div class="modal-section-title">الراتب والمكافآت</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">الراتب الأساسي (درهم)</label>
+          <input type="number" class="form-input" id="f_salary" placeholder="3000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">بدل سكن</label>
+          <input type="number" class="form-input" id="f_housing" placeholder="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">خصومات</label>
+          <input type="number" class="form-input" id="f_transport" placeholder="0">
+        </div>
+      </div>
+
+      <!-- ملاحظات -->
+      <div class="modal-section-title">ملاحظات</div>
+      <div class="form-group">
+        <textarea class="form-input" id="f_notes" rows="3" placeholder="ملاحظات إضافية..."></textarea>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">إلغاء</button>
+      <button class="btn-save" id="modalSaveBtn" onclick="saveEmployee()">💾 حفظ الموظف</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── DATA ─────────────────────────────────────────────────────────────────────
+let employees = [{"id": "KH-001", "name": "عبد الناصر معاوية حامد أحمد", "nameEn": "Abd Alnaser Moawia Hamid Ahmed", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "سوداني", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "118004030", "residencyExp": "2026-09-18", "passportExp": "", "labourCardExp": "2026-09-18", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: لفة تنور | إقامة", "initials": "عم", "permitType": "إقامة", "sponsor": "لفة تنور", "branch": "الخالدية"}, {"id": "KH-002", "name": "هارولد فالديز سوريانو", "nameEn": "Harold Valdez Soriano", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "فلبيني", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "139307779", "residencyExp": "2028-06-02", "passportExp": "", "labourCardExp": "2028-06-02", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: لفة تنور | إقامة", "initials": "هف", "permitType": "إقامة", "sponsor": "لفة تنور", "branch": "الخالدية"}, {"id": "KH-003", "name": "جينيفا فاي إيبوجو مايو", "nameEn": "Geneva Fay Ibojo Mayo", "role": "موظفة", "dept": "الخالدية", "status": "active", "nationality": "فلبينية", "gender": "أنثى", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "135709270", "residencyExp": "2027-06-23", "passportExp": "", "labourCardExp": "2027-06-23", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: لفة تنور | إقامة", "initials": "جإ", "permitType": "إقامة", "sponsor": "لفة تنور", "branch": "الخالدية"}, {"id": "KH-004", "name": "عبد الله عبد الكريم طهاوي", "nameEn": "Abdullah Abdulkarim Tahawi", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "سوري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "119042756", "residencyExp": "2026-10-21", "passportExp": "", "labourCardExp": "2026-10-21", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: لفة تنور | إقامة", "initials": "عط", "permitType": "إقامة", "sponsor": "لفة تنور", "branch": "الخالدية"}, {"id": "KH-005", "name": "محمد أنور عامر عروب", "nameEn": "Mohamed Anwar Amer Aroub", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "سوري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "132611283", "residencyExp": "2027-11-06", "passportExp": "", "labourCardExp": "2027-11-06", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: لفة تنور | إقامة", "initials": "مع", "permitType": "إقامة", "sponsor": "لفة تنور", "branch": "الخالدية"}, {"id": "KH-006", "name": "محمد السيد أحمد أبو النور", "nameEn": "Mohamed Elsayed Ahmed Abou Elnour", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "132324016", "residencyExp": "2027-10-29", "passportExp": "", "labourCardExp": "2027-10-29", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: لفة تنور | إقامة", "initials": "مأ", "permitType": "إقامة", "sponsor": "لفة تنور", "branch": "الخالدية"}, {"id": "KH-007", "name": "كريم خميس علي حلمي محمد", "nameEn": "Karim Khamis Ali Helmi Mohamed", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "134727540", "residencyExp": "2028-01-02", "passportExp": "", "labourCardExp": "2028-01-02", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: لفة تنور | إقامة", "initials": "كخ", "permitType": "إقامة", "sponsor": "لفة تنور", "branch": "الخالدية"}, {"id": "KH-008", "name": "المعتصم كمال مصطفى", "nameEn": "Almoatasem Kamal Mustafa", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "سوري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "137793948", "residencyExp": "2028-04-11", "passportExp": "", "labourCardExp": "2028-04-11", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: لفة تنور | إقامة", "initials": "مك", "permitType": "إقامة", "sponsor": "لفة تنور", "branch": "الخالدية"}, {"id": "KH-009", "name": "رانجيت تامانج", "nameEn": "Ranjit Tamang", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "نيبالي", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "116892360", "residencyExp": "2026-08-08", "passportExp": "", "labourCardExp": "2026-08-08", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: لفة تنور | إقامة", "initials": "رت", "permitType": "إقامة", "sponsor": "لفة تنور", "branch": "الخالدية"}, {"id": "KH-010", "name": "تلوق مند شاه قدرمند شاه", "nameEn": "Talauq Mand Shah", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "باكستاني", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "136049979", "residencyExp": "2028-02-10", "passportExp": "", "labourCardExp": "2028-02-10", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: لفة تنور | إقامة", "initials": "تش", "permitType": "إقامة", "sponsor": "لفة تنور", "branch": "الخالدية"}, {"id": "KH-011", "name": "سوريش سونار", "nameEn": "Suresh Sunar", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "نيبالي", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "138385947", "residencyExp": "2028-05-04", "passportExp": "", "labourCardExp": "2028-05-04", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: لفة تنور | إقامة", "initials": "سس", "permitType": "إقامة", "sponsor": "لفة تنور", "branch": "الخالدية"}, {"id": "KH-012", "name": "جريجوريو جر تابيل سالازار", "nameEn": "Gregorio Ger Tabil Salazar", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "فلبيني", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "138136033", "residencyExp": "2028-04-24", "passportExp": "", "labourCardExp": "2028-04-24", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: لفة تنور | إقامة", "initials": "جس", "permitType": "إقامة", "sponsor": "لفة تنور", "branch": "الخالدية"}, {"id": "KH-013", "name": "علي أحمد سفراني", "nameEn": "Ali Ahmad Safrani", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "سوري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "137947325", "residencyExp": "2027-04-16", "passportExp": "", "labourCardExp": "2027-04-16", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: بروست ماستر | إعارة", "initials": "عس", "permitType": "إعارة", "sponsor": "بروست ماستر", "branch": "الخالدية"}, {"id": "KH-014", "name": "سانتوش باسنيت", "nameEn": "Santosh Basnet", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "نيبالي", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "138800377", "residencyExp": "2028-05-19", "passportExp": "", "labourCardExp": "2028-05-19", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: بروست ماستر | إقامة", "initials": "سب", "permitType": "إقامة", "sponsor": "بروست ماستر", "branch": "الخالدية"}, {"id": "KH-015", "name": "بهوبان كى سى", "nameEn": "Bhuban KC", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "نيبالي", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "138797206", "residencyExp": "2028-05-19", "passportExp": "", "labourCardExp": "2028-05-19", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: بروست ماستر | إقامة", "initials": "بك", "permitType": "إقامة", "sponsor": "بروست ماستر", "branch": "الخالدية"}, {"id": "KH-016", "name": "أسميتا باريار", "nameEn": "Asmita Pariyar", "role": "موظفة", "dept": "الخالدية", "status": "active", "nationality": "نيبالية", "gender": "أنثى", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "138209029", "residencyExp": "2028-04-27", "passportExp": "", "labourCardExp": "2028-04-27", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: بروست ماستر | إقامة", "initials": "أب", "permitType": "إقامة", "sponsor": "بروست ماستر", "branch": "الخالدية"}, {"id": "KH-017", "name": "نابين ماغار", "nameEn": "Nabin Magar", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "نيبالي", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "138792294", "residencyExp": "2028-05-23", "passportExp": "", "labourCardExp": "2028-05-23", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: بروست ماستر | إقامة", "initials": "نم", "permitType": "إقامة", "sponsor": "بروست ماستر", "branch": "الخالدية"}, {"id": "KH-018", "name": "محمد حمدي قاسم عمر", "nameEn": "Mohamed Hamdi Qasem", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "135430826", "residencyExp": "2026-07-22", "passportExp": "", "labourCardExp": "2026-07-22", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة — تنتهي يوليو 2026 ⚠️", "initials": "مح", "permitType": "إعارة", "sponsor": "—", "branch": "الخالدية"}, {"id": "KH-019", "name": "كريم الشحات فاروق علي", "nameEn": "Karim Elshahhat Farouk", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "134866939", "residencyExp": "2026-07-05", "passportExp": "", "labourCardExp": "2026-07-05", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة — تنتهي يوليو 2026 ⚠️", "initials": "كف", "permitType": "إعارة", "sponsor": "—", "branch": "الخالدية"}, {"id": "KH-020", "name": "حسن علي محمود محمود", "nameEn": "Hassan Ali Mahmoud", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "134866631", "residencyExp": "2026-07-05", "passportExp": "", "labourCardExp": "2026-07-05", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة — تنتهي يوليو 2026 ⚠️", "initials": "حم", "permitType": "إعارة", "sponsor": "—", "branch": "الخالدية"}, {"id": "KH-021", "name": "علي جابر علي علي", "nameEn": "Ali Gaber Ali Ali", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "135709506", "residencyExp": "2026-07-29", "passportExp": "", "labourCardExp": "2026-07-29", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة — تنتهي يوليو 2026 ⚠️", "initials": "عج", "permitType": "إعارة", "sponsor": "—", "branch": "الخالدية"}, {"id": "KH-022", "name": "منصور محمد تامر تمساح", "nameEn": "Mansour Mohamed Tamer", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "136050026", "residencyExp": "2026-07-31", "passportExp": "", "labourCardExp": "2026-07-31", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة — تنتهي يوليو 2026 ⚠️", "initials": "مت", "permitType": "إعارة", "sponsor": "—", "branch": "الخالدية"}, {"id": "KH-023", "name": "محمود جابر عبد القادر سعد", "nameEn": "Mahmoud Gaber Abdulqader", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "136765206", "residencyExp": "2026-08-13", "passportExp": "", "labourCardExp": "2026-08-13", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة", "initials": "مج", "permitType": "إعارة", "sponsor": "—", "branch": "الخالدية"}, {"id": "KH-024", "name": "صبري عبد الرحمن محمد حافظ", "nameEn": "Sabri Abdulrahman Mohamed", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "133619160", "residencyExp": "2026-12-05", "passportExp": "", "labourCardExp": "2026-12-05", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة", "initials": "صع", "permitType": "إعارة", "sponsor": "—", "branch": "الخالدية"}, {"id": "KH-025", "name": "عمر محمد السيد عفيفي", "nameEn": "Omar Mohamed Elsayed Ofeify", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "135989377", "residencyExp": "2027-02-04", "passportExp": "", "labourCardExp": "2027-02-04", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة", "initials": "عم", "permitType": "إعارة", "sponsor": "—", "branch": "الخالدية"}, {"id": "KH-026", "name": "هشام عبد المقصود السيد إبراهيم", "nameEn": "Hisham Abdelmaqsoud Elsayed", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "136746735", "residencyExp": "2027-03-02", "passportExp": "", "labourCardExp": "2027-03-02", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة", "initials": "هإ", "permitType": "إعارة", "sponsor": "—", "branch": "الخالدية"}, {"id": "KH-027", "name": "راجو داس توكون شوندرو داس", "nameEn": "Raju Das Tokun Shondro Das", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "بنجلاديشي", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "137615683", "residencyExp": "2026-10-03", "passportExp": "", "labourCardExp": "2026-10-03", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة", "initials": "رد", "permitType": "إعارة", "sponsor": "—", "branch": "الخالدية"}, {"id": "KH-028", "name": "فينسينت برايان ريتوال ماديلا", "nameEn": "Vencent Brian Ritual Madila", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "فلبيني", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "129843059", "residencyExp": "2026-08-17", "passportExp": "", "labourCardExp": "2026-08-17", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة", "initials": "فم", "permitType": "إعارة", "sponsor": "—", "branch": "الخالدية"}, {"id": "KH-029", "name": "باتريسيا أووسوا", "nameEn": "Patricia Owusu", "role": "موظفة", "dept": "الخالدية", "status": "active", "nationality": "غانية", "gender": "أنثى", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "128651009", "residencyExp": "2026-07-15", "passportExp": "", "labourCardExp": "2026-07-15", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة — تنتهي يوليو 2026 ⚠️", "initials": "بأ", "permitType": "إعارة", "sponsor": "—", "branch": "الخالدية"}, {"id": "KH-030", "name": "جبار اودن جاسم", "nameEn": "Jabbar Awdan Jassim", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "—", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "—", "residencyExp": "", "passportExp": "", "labourCardExp": "", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "بيانات التصريح غير مكتملة", "initials": "جج", "permitType": "—", "sponsor": "—", "branch": "الخالدية"}, {"id": "KH-031", "name": "محمد أحمد إبراهيم عيد", "nameEn": "Mohamed Ahmed Ibrahim Eid", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "—", "residencyExp": "", "passportExp": "", "labourCardExp": "", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "بيانات التصريح غير مكتملة", "initials": "مع", "permitType": "—", "sponsor": "—", "branch": "الخالدية"}, {"id": "KH-032", "name": "سيف الإسلام محمد أحمد شافعي", "nameEn": "Seif Alislam Mohamed Ahmed Shafei", "role": "موظف", "dept": "الخالدية", "status": "active", "nationality": "بنجلاديشي", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "136177053", "residencyExp": "2027-02-09", "passportExp": "", "labourCardExp": "2027-02-09", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة", "initials": "سش", "permitType": "إعارة", "sponsor": "—", "branch": "الخالدية"}, {"id": "BY-001", "name": "أحمد همام سالم جودة", "nameEn": "Ahmed Hammam Salem Gouda", "role": "موظف", "dept": "بني ياس", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "133228947", "residencyExp": "2027-11-24", "passportExp": "", "labourCardExp": "2027-11-24", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: بروست ماستر | إقامة", "initials": "أج", "permitType": "إقامة", "sponsor": "بروست ماستر", "branch": "بني ياس"}, {"id": "BY-002", "name": "إبراهيم فرحات إبراهيم السيد", "nameEn": "Ibrahim Farahat Ibrahim Elsayed", "role": "موظف", "dept": "بني ياس", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "133201767", "residencyExp": "2027-11-24", "passportExp": "", "labourCardExp": "2027-11-24", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: بروست ماستر | إقامة", "initials": "إف", "permitType": "إقامة", "sponsor": "بروست ماستر", "branch": "بني ياس"}, {"id": "BY-003", "name": "إيهاب إسماعيل حسن موسى", "nameEn": "Ihab Ismail Hassan Moussa", "role": "موظف", "dept": "بني ياس", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "128098361", "residencyExp": "2027-07-01", "passportExp": "", "labourCardExp": "2027-07-01", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: بروست ماستر | إقامة", "initials": "إم", "permitType": "إقامة", "sponsor": "بروست ماستر", "branch": "بني ياس"}, {"id": "BY-004", "name": "سوراج تامانج", "nameEn": "Suraj Tamang", "role": "موظف", "dept": "بني ياس", "status": "active", "nationality": "نيبالي", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "138386550", "residencyExp": "2028-05-04", "passportExp": "", "labourCardExp": "2028-05-04", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: بروست ماستر | إقامة", "initials": "ست", "permitType": "إقامة", "sponsor": "بروست ماستر", "branch": "بني ياس"}, {"id": "BY-005", "name": "كريشنا راج باسنيت", "nameEn": "Krishna Raj Basnet", "role": "موظف", "dept": "بني ياس", "status": "active", "nationality": "نيبالي", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "138431596", "residencyExp": "2028-05-06", "passportExp": "", "labourCardExp": "2028-05-06", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: بروست ماستر | إقامة", "initials": "كب", "permitType": "إقامة", "sponsor": "بروست ماستر", "branch": "بني ياس"}, {"id": "BY-006", "name": "أحمد السيد لطفي الغباري", "nameEn": "Ahmed Elsayed Lotfy Elghobary", "role": "موظف", "dept": "بني ياس", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "127388150", "residencyExp": "2027-06-15", "passportExp": "", "labourCardExp": "2027-06-15", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: بروست ماستر | إقامة", "initials": "أغ", "permitType": "إقامة", "sponsor": "بروست ماستر", "branch": "بني ياس"}, {"id": "BY-007", "name": "راجيش بهوجيل", "nameEn": "Rajesh Bhujel", "role": "موظف", "dept": "بني ياس", "status": "active", "nationality": "نيبالي", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "138431597", "residencyExp": "2028-05-06", "passportExp": "", "labourCardExp": "2028-05-06", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: بروست ماستر | إقامة", "initials": "رب", "permitType": "إقامة", "sponsor": "بروست ماستر", "branch": "بني ياس"}, {"id": "BY-008", "name": "رابين مخيا رام ديف مخيا", "nameEn": "Rabin Mukhiya Ram Dev Mukhiya", "role": "موظف", "dept": "بني ياس", "status": "active", "nationality": "نيبالي", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "138779915", "residencyExp": "2028-05-19", "passportExp": "", "labourCardExp": "2028-05-19", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: بروست ماستر | إقامة", "initials": "رم", "permitType": "إقامة", "sponsor": "بروست ماستر", "branch": "بني ياس"}, {"id": "BY-009", "name": "عبد الله عدنان جابر سرور", "nameEn": "Abdalla Adnan Gaber Mohamed Serour", "role": "موظف", "dept": "بني ياس", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "129278070", "residencyExp": "2027-08-02", "passportExp": "", "labourCardExp": "2027-08-02", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: بروست ماستر | إقامة", "initials": "عس", "permitType": "إقامة", "sponsor": "بروست ماستر", "branch": "بني ياس"}, {"id": "BY-010", "name": "عامر نصر الدين سلو", "nameEn": "Aamer Nasr Aldin Slou", "role": "موظف", "dept": "بني ياس", "status": "active", "nationality": "سوري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "139291941", "residencyExp": "2028-05-15", "passportExp": "", "labourCardExp": "2028-05-15", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: لفة تنور | إقامة", "initials": "عن", "permitType": "إقامة", "sponsor": "لفة تنور", "branch": "بني ياس"}, {"id": "BY-011", "name": "إسلام جابر عبد المطلب بدوي", "nameEn": "Eslam Gaber Abdelmotaleb Badawi", "role": "موظف", "dept": "بني ياس", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "135430823", "residencyExp": "2026-07-21", "passportExp": "", "labourCardExp": "2026-07-21", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: لفة تنور | إعارة — تنتهي يوليو 2026 ⚠️", "initials": "إب", "permitType": "إعارة", "sponsor": "لفة تنور", "branch": "بني ياس"}, {"id": "BY-012", "name": "جوكول سونار رام بهادور سونار", "nameEn": "Gokul Sunar Ram Bahadur Sunar", "role": "موظف", "dept": "بني ياس", "status": "active", "nationality": "نيبالي", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "135649071", "residencyExp": "2026-07-24", "passportExp": "", "labourCardExp": "2026-07-24", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: لفة تنور | إعارة — تنتهي يوليو 2026 ⚠️", "initials": "جس", "permitType": "إعارة", "sponsor": "لفة تنور", "branch": "بني ياس"}, {"id": "BY-013", "name": "محمود محمد محمود قنديل", "nameEn": "Mahmoud Mohamed Mahmoud Kandil", "role": "موظف", "dept": "بني ياس", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "135091972", "residencyExp": "2026-07-13", "passportExp": "", "labourCardExp": "2026-07-13", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: لفة تنور | إعارة — تنتهي يوليو 2026 ⚠️", "initials": "مق", "permitType": "إعارة", "sponsor": "لفة تنور", "branch": "بني ياس"}, {"id": "BY-014", "name": "رجب عصام علي جابر", "nameEn": "Ragab Essam Ali Gaber", "role": "موظف", "dept": "بني ياس", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "135649072", "residencyExp": "2026-07-24", "passportExp": "", "labourCardExp": "2026-07-24", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة — تنتهي يوليو 2026 ⚠️", "initials": "رج", "permitType": "إعارة", "sponsor": "—", "branch": "بني ياس"}, {"id": "BY-015", "name": "محمد علاء الدين فتحي محمد", "nameEn": "Mohamed Alaaeldin Fathy", "role": "موظف", "dept": "بني ياس", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "135989371", "residencyExp": "2026-08-04", "passportExp": "", "labourCardExp": "2026-08-04", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة", "initials": "مف", "permitType": "إعارة", "sponsor": "—", "branch": "بني ياس"}, {"id": "BY-016", "name": "محمود رجب محمود عبد الفهيم", "nameEn": "Mahmoud Ragab Mahmoud Abdelfahim", "role": "موظف", "dept": "بني ياس", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "135430828", "residencyExp": "2026-07-21", "passportExp": "", "labourCardExp": "2026-07-21", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة — تنتهي يوليو 2026 ⚠️", "initials": "مع", "permitType": "إعارة", "sponsor": "—", "branch": "بني ياس"}, {"id": "BY-017", "name": "زهير الإسلام سراج الإسلام", "nameEn": "Zohirul Islam Sirajul Islam", "role": "موظف", "dept": "بني ياس", "status": "active", "nationality": "بنجلاديشي", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "138422678", "residencyExp": "2026-11-04", "passportExp": "", "labourCardExp": "2026-11-04", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة", "initials": "زإ", "permitType": "إعارة", "sponsor": "—", "branch": "بني ياس"}, {"id": "BY-018", "name": "أحمد عربي سالم محمد سالم", "nameEn": "Ahmed Arabi Salem Mohamed Salem", "role": "موظف", "dept": "بني ياس", "status": "inactive", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "134434594", "residencyExp": "2026-06-27", "passportExp": "", "labourCardExp": "2026-06-27", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة — منتهية ⚠️", "initials": "أس", "permitType": "إعارة", "sponsor": "—", "branch": "بني ياس"}, {"id": "BY-019", "name": "أمير محمد سعيد منصور", "nameEn": "Amir Mohamed Said Mansour", "role": "موظف", "dept": "بني ياس", "status": "inactive", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "134290853", "residencyExp": "2026-06-23", "passportExp": "", "labourCardExp": "2026-06-23", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة — منتهية ⚠️", "initials": "أم", "permitType": "إعارة", "sponsor": "—", "branch": "بني ياس"}, {"id": "CC-001", "name": "راغب عادل المحاميد", "nameEn": "Ragheb Adel Al Mahamid", "role": "موظف كول سنتر", "dept": "الكول سنتر", "status": "active", "nationality": "سوري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "136050031", "residencyExp": "2026-08-04", "passportExp": "", "labourCardExp": "2026-08-04", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: بروست ماستر | إعارة", "initials": "رم", "permitType": "إعارة", "sponsor": "بروست ماستر", "branch": "الكول سنتر"}, {"id": "CC-002", "name": "رحمة علي محمد أنور شاهين", "nameEn": "Rahma Ali Mohamed Anwar Shahin", "role": "موظفة كول سنتر", "dept": "الكول سنتر", "status": "active", "nationality": "مصرية", "gender": "أنثى", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "136063263", "residencyExp": "2028-02-10", "passportExp": "", "labourCardExp": "2028-02-10", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: لفة تنور | إقامة", "initials": "رش", "permitType": "إقامة", "sponsor": "لفة تنور", "branch": "الكول سنتر"}, {"id": "CC-003", "name": "جمال نصر هاشم علي", "nameEn": "Jamal Nasr Hashem Ali", "role": "موظف كول سنتر", "dept": "الكول سنتر", "status": "inactive", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "134163984", "residencyExp": "2026-06-19", "passportExp": "", "labourCardExp": "2026-06-19", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة — منتهية ⚠️", "initials": "جه", "permitType": "إعارة", "sponsor": "—", "branch": "الكول سنتر"}, {"id": "CC-004", "name": "محمد ناصر جميع عبد المنعم", "nameEn": "Mohamed Naser Gamee Abd Elmnem", "role": "موظف كول سنتر", "dept": "الكول سنتر", "status": "active", "nationality": "—", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "—", "residencyExp": "", "passportExp": "", "labourCardExp": "", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "بيانات التصريح غير مكتملة", "initials": "مع", "permitType": "—", "sponsor": "—", "branch": "الكول سنتر"}, {"id": "MS-001", "name": "إسلام عصام محمد عامر عمران", "nameEn": "Eslam Essam Mohamed Amer Omran", "role": "موظف مشغل", "dept": "المشغل", "status": "inactive", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "114618488", "residencyExp": "2026-05-22", "passportExp": "", "labourCardExp": "2026-05-22", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: لفة تنور | إقامة — منتهية ⚠️", "initials": "إع", "permitType": "إقامة", "sponsor": "لفة تنور", "branch": "المشغل"}, {"id": "MS-002", "name": "رضا عصام محمد عامر عمران", "nameEn": "Reda Essam Mohamed Amer Omran", "role": "موظف مشغل", "dept": "المشغل", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "136050034", "residencyExp": "2026-08-09", "passportExp": "", "labourCardExp": "2026-08-09", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: بروست ماستر | إعارة", "initials": "رع", "permitType": "إعارة", "sponsor": "بروست ماستر", "branch": "المشغل"}, {"id": "MS-003", "name": "رضا ربيع طنطاوي السيد طنطاوي", "nameEn": "Reda Rabie Tantawi Elsayed", "role": "موظف مشغل", "dept": "المشغل", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "136050029", "residencyExp": "2026-07-31", "passportExp": "", "labourCardExp": "2026-07-31", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة — تنتهي يوليو 2026 ⚠️", "initials": "رط", "permitType": "إعارة", "sponsor": "—", "branch": "المشغل"}, {"id": "MS-004", "name": "مؤمن محمود محمد إبراهيم", "nameEn": "Moamen Mahmoud Mohamed Ibrahim", "role": "موظف مشغل", "dept": "المشغل", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "121261843", "residencyExp": "2026-12-25", "passportExp": "", "labourCardExp": "2026-12-25", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: لفة تنور | إقامة", "initials": "مم", "permitType": "إقامة", "sponsor": "لفة تنور", "branch": "المشغل"}, {"id": "MS-005", "name": "براء رضوان خرشة", "nameEn": "Baraa Radwan Kharshe", "role": "موظف مشغل", "dept": "المشغل", "status": "active", "nationality": "سوري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "131091292", "residencyExp": "2027-09-21", "passportExp": "", "labourCardExp": "2027-09-21", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "كفيل: لفة تنور | إقامة", "initials": "بخ", "permitType": "إقامة", "sponsor": "لفة تنور", "branch": "المشغل"}, {"id": "MS-006", "name": "أحمد محمد أحمد الفاضلي", "nameEn": "Ahmed Mohamed Ahmed Alfadly", "role": "موظف مشغل", "dept": "المشغل", "status": "active", "nationality": "مصري", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "133829047", "residencyExp": "2026-12-10", "passportExp": "", "labourCardExp": "2026-12-10", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "إعارة", "initials": "أف", "permitType": "إعارة", "sponsor": "—", "branch": "المشغل"}, {"id": "MS-007", "name": "محمد السعيد عبدالله خليل سركيس", "nameEn": "Mohamed Elsayed Abdullah Khalil Sarkis", "role": "موظف مشغل", "dept": "المشغل", "status": "active", "nationality": "—", "gender": "ذكر", "phone": "—", "email": "", "salary": 0, "housing": 0, "transport": 0, "startDate": "", "eid": "—", "residencyExp": "", "passportExp": "", "labourCardExp": "", "schedule": ["work", "work", "work", "work", "work", "off", "off"], "notes": "بيانات التصريح غير مكتملة", "initials": "مس", "permitType": "—", "sponsor": "—", "branch": "المشغل"}];
+
+const photoStore = {};
+function getPhotoStore(id) {
+  if (!photoStore[id]) photoStore[id] = { avatar: null, docs: {} };
+  return photoStore[id];
+}
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let selectedId      = null;
+let activeFilter    = 'الكل';
+let searchQuery     = '';
+let activeCardFilter= null;
+let pendingDocPhotoKey = null;
+let modalAvatarData = null;
+window.currentLang  = 'ar';
+
+// ─── CREDENTIALS (editable) ───────────────────────────────────────────────────
+let USERS = JSON.parse(localStorage.getItem('prosto_users') || 'null') || [
+  {username:'admin', password:'prosto2024', name:'المدير العام'},
+];
+let currentUser = null;
+
+// ─── LANGUAGE ─────────────────────────────────────────────────────────────────
+const T = {
+  ar: {
+    dir:'rtl', addBtn:'+ إضافة موظف', headerSub:'نظام إدارة الموظفين',
+    panelTitle:'الموظفون', searchPH:'بحث بالاسم أو الوظيفة...',
+    statTotal:'إجمالي الموظفين', statActive:'نشطون', statLeave:'في إجازة', statExpiring:'وثائق تنتهي قريبًا',
+    filterAll:'جميع الموظفين', filterActive:'الموظفون النشطون', filterLeave:'في إجازة',
+    filterInactive:'الموظفون غير النشطين', filterExpiring:'وثائق تنتهي خلال 90 يوم', clearFilter:'✕ إلغاء الفلتر',
+    emptyState:'اختر موظفًا لعرض بياناته', langBtn:'EN',
+    navEmployees:'الموظفون', navPayroll:'الرواتب والبايرول', navComplaints:'الشكاوي',
+    navRegistrations:'طلبات التسجيل', navBranches:'الفروع والأقسام', navSettings:'الإعدادات',
+    statusActive:'🟢 نشط', statusLeave:'🟡 في إجازة', statusInactive:'⚫ غير نشط',
+    depts:{'الكل':'الكل','الخالدية':'الخالدية','بني ياس':'بني ياس','الكول سنتر':'الكول سنتر','المشغل':'المشغل'},
+    tabPersonal:'👤 الشخصية', tabFinancial:'💰 الراتب', tabSchedule:'📅 الجدول', tabDocs:'📄 الوثائق والصور',
+    days:['الجمعة','السبت','الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس'],
+    salary:'الراتب الأساسي', housing:'بدل سكن', transport:'خصومات', totalSalary:'إجمالي الراتب الشهري',
+    yearsService:'سنوات الخدمة', currency:'درهم',
+    docResidency:'الهوية / الإقامة', docPassport:'جواز السفر', docLabour:'بطاقة العمل',
+    docValid:'ساري', docExpiring:'ينتهي قريبًا', docExpired:'منتهي ⚠️', docUnknown:'غير محدد',
+    editBtn:'✏️ تعديل', printBtn:'🖨️ طباعة', deleteBtn:'🗑️ حذف',
+    saveEmp:'💾 حفظ الموظف', cancelBtn:'إلغاء',
+    workDay:'✅ عمل', offDay:'⛔ إجازة',
+    allBranches:'جميع الفروع', exportCSV:'⬇️ تصدير CSV',
+    payrollTitle:'💰 الرواتب والبايرول', payrollSub:'إجمالي الرواتب الشهرية',
+    settingsTitle:'⚙️ إعدادات النظام',
+    complaintsTitle:'📨 الشكاوي والاقتراحات', regsTitle:'📋 طلبات تسجيل الموظفين',
+    noComplaints:'📭 لا توجد شكاوي', noRegs:'📭 لا توجد طلبات تسجيل',
+    copyLink:'📋 نسخ', complaintLink:'🔗 اللينك — قم بإرساله للموظف', registerLink:'🔗 اللينك — قم بإرساله للموظف الجديد',
+    resolved:'✅ تم الحل', deleteC:'🗑️ حذف', markResolved:'✅ تم الحل',
+    approve:'✅ موافقة', reject:'❌ رفض', addToEmp:'➕ إضافة للموظفين',
+    processed:'تمت المعالجة',
+    changePass:'تغيير كلمة المرور', newPass:'كلمة المرور الجديدة', savePass:'حفظ',
+    systemInfo:'📊 معلومات النظام', loginInfo:'🔐 بيانات تسجيل الدخول',
+    expiryAlerts:'⚠️ تنبيهات انتهاء الوثائق', noAlerts:'✅ لا توجد وثائق تنتهي قريبًا',
+    photosCam:'📷 تغيير', idFront:'الهوية (أمام)', idBack:'الهوية (خلف)',
+    passFront:'الجواز (أمام)', passBack:'الجواز (خلف)', labourCard:'بطاقة العمل',
+    visaDoc:'التأشيرة', contractDoc:'العقد', attach1:'مرفق 1', attach2:'مرفق 2',
+    otherDocs:'مرفقات أخرى',
+    infoLabel_phone:'رقم الهاتف', infoLabel_nationality:'الجنسية', infoLabel_gender:'الجنس',
+    infoLabel_eid:'رقم البطاقة', infoLabel_permit:'نوع التصريح', infoLabel_sponsor:'الكفيل',
+    infoLabel_start:'تاريخ بدء العمل', infoLabel_branch:'الفرع', infoLabel_notes:'ملاحظات',
+    expires:'تنتهي',
+    weeklySchedule:'جدول العمل الأسبوعي', workDays:'أيام العمل / أسبوع', offDays:'أيام الإجازة / أسبوع',
+    docStatusTitle:'حالة الوثائق', otherDocsTitle:'مرفقات أخرى',
+  },
+  en: {
+    dir:'ltr', addBtn:'+ Add Employee', headerSub:'Employee Management System',
+    panelTitle:'Employees', searchPH:'Search by name or role...',
+    statTotal:'Total Employees', statActive:'Active', statLeave:'On Leave', statExpiring:'Docs Expiring Soon',
+    filterAll:'All Employees', filterActive:'Active Employees', filterLeave:'On Leave',
+    filterInactive:'Inactive Employees', filterExpiring:'Docs expiring within 90 days', clearFilter:'✕ Clear Filter',
+    emptyState:'Select an employee to view details', langBtn:'عربي',
+    navEmployees:'Employees', navPayroll:'Payroll', navComplaints:'Complaints',
+    navRegistrations:'Registrations', navBranches:'Branches & Depts', navSettings:'Settings',
+    statusActive:'🟢 Active', statusLeave:'🟡 On Leave', statusInactive:'⚫ Inactive',
+    depts:{'الكل':'All','الخالدية':'Khalidiya','بني ياس':'Bani Yas','الكول سنتر':'Call Center','المشغل':'Workshop'},
+    tabPersonal:'👤 Personal', tabFinancial:'💰 Salary', tabSchedule:'📅 Schedule', tabDocs:'📄 Documents',
+    days:['Friday','Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday'],
+    salary:'Basic Salary', housing:'Housing Allowance', transport:'Deductions', totalSalary:'Total Monthly Salary',
+    yearsService:'Years of Service', currency:'AED',
+    docResidency:'ID / Residency', docPassport:'Passport', docLabour:'Labour Card',
+    docValid:'Valid', docExpiring:'Expiring Soon', docExpired:'Expired ⚠️', docUnknown:'Unknown',
+    editBtn:'✏️ Edit', printBtn:'🖨️ Print', deleteBtn:'🗑️ Delete',
+    saveEmp:'💾 Save Employee', cancelBtn:'Cancel',
+    workDay:'✅ Work', offDay:'⛔ Off',
+    allBranches:'All Branches', exportCSV:'⬇️ Export CSV',
+    payrollTitle:'💰 Payroll', payrollSub:'Total monthly salaries',
+    settingsTitle:'⚙️ System Settings',
+    complaintsTitle:'📨 Complaints & Suggestions', regsTitle:'📋 Employee Registration Requests',
+    noComplaints:'📭 No complaints yet', noRegs:'📭 No registration requests yet',
+    copyLink:'📋 Copy', complaintLink:'🔗 Link — Send to employee', registerLink:'🔗 Link — Send to new employee',
+    resolved:'✅ Resolved', deleteC:'🗑️ Delete', markResolved:'✅ Mark Resolved',
+    approve:'✅ Approve', reject:'❌ Reject', addToEmp:'➕ Add to Employees',
+    processed:'Processed',
+    changePass:'Change Password', newPass:'New Password', savePass:'Save',
+    systemInfo:'📊 System Info', loginInfo:'🔐 Login Credentials',
+    expiryAlerts:'⚠️ Document Expiry Alerts', noAlerts:'✅ No documents expiring soon',
+    photosCam:'📷 Change', idFront:'ID (Front)', idBack:'ID (Back)',
+    passFront:'Passport (Front)', passBack:'Passport (Back)', labourCard:'Labour Card',
+    visaDoc:'Visa', contractDoc:'Contract', attach1:'Attachment 1', attach2:'Attachment 2',
+    otherDocs:'Other Documents',
+    infoLabel_phone:'Phone', infoLabel_nationality:'Nationality', infoLabel_gender:'Gender',
+    infoLabel_eid:'Card Number', infoLabel_permit:'Permit Type', infoLabel_sponsor:'Sponsor',
+    infoLabel_start:'Start Date', infoLabel_branch:'Branch', infoLabel_notes:'Notes',
+    expires:'Expires',
+    weeklySchedule:'Weekly Work Schedule', workDays:'Work Days / Week', offDays:'Off Days / Week',
+    docStatusTitle:'Document Status', otherDocsTitle:'Other Attachments',
+  }
+};
+
+function t(key) { return (T[window.currentLang]||T.ar)[key] || key; }
+
+function toggleLang() {
+  window.currentLang = window.currentLang === 'ar' ? 'en' : 'ar';
+  const lang = window.currentLang;
+  document.documentElement.setAttribute('lang', lang);
+  document.documentElement.setAttribute('dir', T[lang].dir);
+  document.body.style.direction = T[lang].dir;
+
+  // header
+  document.getElementById('langBtn').textContent  = t('langBtn');
+  document.getElementById('addEmpBtn').textContent = t('addBtn');
+  document.getElementById('headerSub').textContent = t('headerSub');
+
+  // stats
+  document.getElementById('lbl-total').textContent    = t('statTotal');
+  document.getElementById('lbl-active').textContent   = t('statActive');
+  document.getElementById('lbl-leave').textContent    = t('statLeave');
+  document.getElementById('lbl-expiring').textContent = t('statExpiring');
+  const inactiveEl=document.getElementById('lbl-inactive'); if(inactiveEl) inactiveEl.textContent=window.currentLang==='en'?'Inactive':'غير نشطين';
+
+  // panel
+  const pt = document.querySelector('.panel-title');
+  if(pt) pt.textContent = t('panelTitle');
+  const si = document.getElementById('searchInput');
+  if(si) si.placeholder = t('searchPH');
+
+  // nav
+  ['employees','payroll','complaints','registrations','branches','settings'].forEach(k => {
+    const el = document.querySelector(`#nav-${k} span[data-nav]`);
+    if(el) el.textContent = t('nav'+k.charAt(0).toUpperCase()+k.slice(1));
+  });
+
+  // filter banner
+  if(activeCardFilter) {
+    document.getElementById('filterBannerText').textContent = '🔍 ' + t('filter'+activeCardFilter.charAt(0).toUpperCase()+activeCardFilter.slice(1));
+    document.querySelector('#filterBanner button').textContent = t('clearFilter');
+  }
+
+  buildDeptFilter();
+  renderList();
+  if(selectedId) selectEmployee(selectedId);
+
+  // re-render current page
+  const activePage = document.querySelector('.page.active');
+  if(activePage) {
+    const id = activePage.id.replace('page-','');
+    if(id==='payroll') renderPayroll();
+    if(id==='settings') renderSettings();
+    if(id==='complaints') renderComplaints();
+    if(id==='registrations') renderRegistrations();
+  }
+}
+
+// ─── PAGE NAV ─────────────────────────────────────────────────────────────────
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('nav-'+name).classList.add('active');
+  if(name==='payroll')       renderPayroll();
+  if(name==='settings')      renderSettings();
+  if(name==='complaints')    renderComplaints();
+  if(name==='registrations') renderRegistrations();
+}
+
+// ─── DEPT FILTER ──────────────────────────────────────────────────────────────
+function buildDeptFilter() {
+  const isEn = window.currentLang==='en';
+  // Always show All + every branch/dept regardless of employee count
+  const allDepts = ['الكل', ...branches.map(b=>b.ar)];
+  document.getElementById('deptFilter').innerHTML = allDepts.map(d=>{
+    const brObj = branches.find(b=>b.ar===d);
+    const count = d==='الكل' ? employees.length : employees.filter(e=>e.dept===d).length;
+    const label = d==='الكل'?(isEn?'All':'الكل'):(brObj?(isEn?brObj.en:brObj.ar):d);
+    return `<button class="dept-chip ${d===activeFilter?'active':''}" onclick="setFilter('${d}')">
+      ${label}${count>0?` <span style="background:rgba(255,255,255,0.15);border-radius:10px;padding:0.05rem 0.35rem;font-size:0.65rem;margin-right:0.2rem;">${count}</span>`:''}
+    </button>`;
+  }).join('');
+}
+function setFilter(dept) { activeFilter=dept; buildDeptFilter(); renderList(); }
+function filterStaff()   { searchQuery=document.getElementById('searchInput').value.toLowerCase(); renderList(); }
+
+// ─── CARD FILTER ──────────────────────────────────────────────────────────────
+function filterByCard(type) {
+  if(activeCardFilter===type) { clearCardFilter(); return; }
+  activeCardFilter=type;
+  ['all','active','leave','inactive','expiring'].forEach(t2=>{
+    document.getElementById('card-'+t2)?.classList.toggle('active-card', t2===type);
+  });
+  const bannerTexts = { all:t('filterAll'), active:t('filterActive'), leave:t('filterLeave'), inactive:t('filterInactive'), expiring:t('filterExpiring') };
+  document.getElementById('filterBannerText').textContent = '🔍 '+bannerTexts[type];
+  document.getElementById('filterBanner').style.display='block';
+  document.querySelector('#filterBanner button').textContent=t('clearFilter');
+  activeFilter='الكل'; buildDeptFilter(); renderList();
+}
+function clearCardFilter() {
+  activeCardFilter=null;
+  ['all','active','leave','inactive','expiring'].forEach(t2=>document.getElementById('card-'+t2)?.classList.remove('active-card'));
+  document.getElementById('filterBanner').style.display='none';
+  renderList();
+}
+
+// ─── GET FILTERED ─────────────────────────────────────────────────────────────
+function getFiltered() {
+  return employees.filter(e=>{
+    const matchDept   = activeFilter==='الكل' || e.dept===activeFilter;
+    const q           = searchQuery;
+    const matchSearch = !q || e.name.toLowerCase().includes(q) ||
+      (e.nameEn||'').toLowerCase().includes(q) || (e.role||'').toLowerCase().includes(q);
+    let matchCard = true;
+    if(activeCardFilter==='active')     matchCard = e.status==='active';
+    else if(activeCardFilter==='leave')    matchCard = e.status==='leave';
+    else if(activeCardFilter==='inactive') matchCard = e.status==='inactive';
+    else if(activeCardFilter==='expiring') {
+      const d=e.residencyExp; if(!d){matchCard=false;}
+      else { const diff=(new Date(d)-new Date())/86400000; matchCard=diff>=0&&diff<90; }
+    }
+    return matchDept && matchSearch && matchCard;
+  });
+}
+
+// ─── RENDER LIST ──────────────────────────────────────────────────────────────
+function renderList() {
+  const list     = document.getElementById('staffList');
+  const filtered = getFiltered();
+  const isEn     = window.currentLang==='en';
+  document.getElementById('listCount').textContent = filtered.length;
+
+  // If a specific dept is selected OR searching — flat list
+  if(activeFilter !== 'الكل' || searchQuery || activeCardFilter) {
+    if(!filtered.length){
+      list.innerHTML=`<div style="padding:2rem;text-align:center;color:var(--text-muted);font-size:0.88rem;">${isEn?'No results':'لا توجد نتائج'}</div>`;
+      return;
+    }
+    list.innerHTML = filtered.map(e => empCard(e, isEn)).join('');
+    return;
+  }
+
+  // DEFAULT: show grouped by branch/dept
+  let html2 = '';
+  const branchOrder = [...branches.map(b=>b.ar)];
+  // also include any dept not in branches list
+  const extraDepts = [...new Set(employees.map(e=>e.dept))].filter(d=>!branchOrder.includes(d));
+  const allGroups = [...branchOrder, ...extraDepts];
+
+  allGroups.forEach(dept => {
+    const brObj = branches.find(b=>b.ar===dept);
+    const deptName = brObj ? (isEn?brObj.en:brObj.ar) : dept;
+    const deptType = brObj ? (isEn?(brObj.type==='فرع'?'Branch':'Dept'):brObj.type) : '';
+    const deptEmps = employees.filter(e=>e.dept===dept);
+
+    html2 += `<div class="dept-group-header" onclick="toggleDeptGroup('${dept}')" id="grp-hdr-${dept.replace(/\s/g,'_')}">
+      <div style="display:flex;align-items:center;gap:0.5rem;flex:1;">
+        <span style="font-size:0.9rem;">${brObj?.type==='فرع'?'🏪':'🏢'}</span>
+        <span style="font-weight:700;font-size:0.85rem;">${deptName}</span>
+        ${deptType?`<span style="font-size:0.65rem;color:var(--grey-3);background:var(--off-white);padding:0.1rem 0.4rem;border-radius:8px;">${deptType}</span>`:''}
+      </div>
+      <span class="dept-count-badge">${deptEmps.length}</span>
+      <span class="dept-arrow" id="grp-arr-${dept.replace(/\s/g,'_')}">▼</span>
+    </div>
+    <div class="dept-group-body" id="grp-body-${dept.replace(/\s/g,'_')}">
+      ${deptEmps.length===0
+        ? `<div style="padding:0.8rem 1.2rem;font-size:0.8rem;color:var(--text-muted);">${isEn?'No employees yet':'لا يوجد موظفون بعد'}</div>`
+        : deptEmps.map(e=>empCard(e,isEn)).join('')
+      }
+    </div>`;
+  });
+
+  list.innerHTML = html2;
+}
+
+function empCard(e, isEn) {
+  const ps = getPhotoStore(e.id);
+  // avatar: show number (index) instead of initials
+  const empIdx = employees.indexOf(e) + 1;
+  const avatarHtml = ps.avatar ? `<img src="${ps.avatar}" alt="">` : empIdx;
+  // name: show only the language selected
+  const displayName = isEn ? (e.nameEn || e.name) : e.name;
+  const secondName  = '';
+  const displayRole = isEn ? (e.role||'Employee') : (e.role||'موظف');
+  return `<div class="staff-item ${selectedId===e.id?'active':''}" onclick="selectEmployee('${e.id}')">
+    <div class="avatar">${avatarHtml}</div>
+    <div class="staff-info">
+      <div class="staff-name">${displayName}</div>
+      <div class="staff-role" style="font-size:0.7rem;">${secondName?secondName+' · ':''}${displayRole}</div>
+    </div>
+    <div class="status-dot ${e.status||'active'}"></div>
+  </div>`;
+}
+
+function toggleDeptGroup(dept) {
+  const key = dept.replace(/\s/g,'_');
+  const body = document.getElementById('grp-body-'+key);
+  const arr  = document.getElementById('grp-arr-'+key);
+  if(!body) return;
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  if(arr) arr.textContent = isOpen ? '▶' : '▼';
+}
+
+// ─── UPDATE STATS ─────────────────────────────────────────────────────────────
+function updateStats() {
+  document.getElementById('statTotal').textContent    = employees.length;
+  document.getElementById('statActive').textContent   = employees.filter(e=>e.status==='active').length;
+  document.getElementById('statLeave').textContent    = employees.filter(e=>e.status==='leave').length;
+  document.getElementById('statInactive').textContent = employees.filter(e=>e.status==='inactive').length;
+  const exp=employees.filter(e=>{const d=e.residencyExp;if(!d)return false;const diff=(new Date(d)-new Date())/86400000;return diff>=0&&diff<90;}).length;
+  document.getElementById('statExpiring').textContent=exp;
+  const inact=employees.filter(e=>e.status==='inactive').length;
+  const inactEl=document.getElementById('statInactive');
+  if(inactEl) inactEl.textContent=inact;
+}
+
+// ─── SELECT EMPLOYEE ──────────────────────────────────────────────────────────
+function selectEmployee(id) {
+  selectedId=id; renderList();
+  const e=employees.find(x=>x.id===id); if(!e) return;
+  document.getElementById('emptyState').style.display='none';
+  const dc=document.getElementById('detailContent'); dc.style.display='block';
+  const isEn=window.currentLang==='en';
+  const ps=getPhotoStore(e.id);
+  const total=Math.max(0,(e.salary||0)+(e.housing||0)-(e.transport||0));
+  const statusLabel={active:t('statusActive'),leave:t('statusLeave'),inactive:t('statusInactive')}[e.status||'active'];
+  const deptMap=t('depts');
+
+  function docStatus(d) {
+    if(!d) return ['unknown',t('docUnknown')];
+    const diff=(new Date(d)-new Date())/86400000;
+    if(diff<0)   return ['expired',t('docExpired')];
+    if(diff<90)  return ['expiring',t('docExpiring')];
+    return ['valid',t('docValid')];
+  }
+  const [rSt,rLbl]=docStatus(e.residencyExp);
+  const [pSt,pLbl]=docStatus(e.passportExp);
+  const [lSt,lLbl]=docStatus(e.labourCardExp);
+  const avatarInner=ps.avatar?`<img src="${ps.avatar}" alt="">`:(e.nameEn?getInitials(e.name,e.nameEn):(e.initials||'??'));
+  const displayName=isEn&&e.nameEn?e.nameEn:e.name;
+  const displayDept=deptMap[e.dept]||e.dept;
+
+  function docPhotoSlot(key,icon,arLabel,enLabel) {
+    const img=ps.docs[key];
+    const label=isEn?enLabel:arLabel;
+    return `<div class="photo-slot ${img?'has-img':''}" onclick="openDocPhoto('${e.id}','${key}')">
+      ${img?`<img src="${img}" alt="">`:`<div class="upload-icon">${icon}</div><div class="photo-label">${label}</div>`}
+      <div class="photo-overlay">📷</div>
+      <button class="photo-del" onclick="delDocPhoto(event,'${e.id}','${key}')" title="Delete">✕</button>
+    </div>`;
+  }
+
+  dc.innerHTML=`
+    <div class="detail-header">
+      <div class="detail-avatar" onclick="document.getElementById('avatarInput').click()" title="${isEn?'Change photo':'تغيير الصورة'}">
+        ${avatarInner}<div class="cam-overlay">📷</div>
+      </div>
+      <div>
+        <div class="detail-name">${displayName}</div>
+        <div class="detail-role-tag">${e.role||'موظف'}</div>
+        <div class="detail-id">${e.id} · ${displayDept}</div>
+      </div>
+      <div class="status-badge ${e.status||'active'}">${statusLabel}</div>
+    </div>
+
+    <div class="detail-tabs">
+      <button class="tab-btn active" onclick="switchTab('personal',this)">${t('tabPersonal')}</button>
+      <button class="tab-btn" onclick="switchTab('financial',this)">${t('tabFinancial')}</button>
+      <button class="tab-btn" onclick="switchTab('schedule',this)">${t('tabSchedule')}</button>
+      <button class="tab-btn" onclick="switchTab('docs',this)">${t('tabDocs')}</button>
+    </div>
+
+    <div class="detail-content">
+
+      <div class="tab-pane active" id="tab-personal">
+        <div class="info-grid">
+          <div class="info-card"><div class="info-label">${t('infoLabel_phone')}</div><div class="info-value">${e.phone||'—'}</div></div>
+          <div class="info-card"><div class="info-label">${t('infoLabel_nationality')}</div><div class="info-value">${e.nationality||'—'}</div></div>
+          <div class="info-card"><div class="info-label">${t('infoLabel_gender')}</div><div class="info-value">${e.gender||'—'}</div></div>
+          <div class="info-card"><div class="info-label">${t('infoLabel_eid')}</div><div class="info-value">${e.eid||'—'}</div></div>
+          <div class="info-card"><div class="info-label">${t('infoLabel_permit')}</div><div class="info-value">${e.permitType||'—'}</div></div>
+          <div class="info-card"><div class="info-label">${t('infoLabel_sponsor')}</div><div class="info-value">${e.sponsor||'—'}</div></div>
+          <div class="info-card"><div class="info-label">${t('infoLabel_start')}</div><div class="info-value">${fmtDate(e.startDate)}</div></div>
+          <div class="info-card"><div class="info-label">${t('infoLabel_branch')}</div><div class="info-value">${displayDept}</div></div>
+          <div class="info-card full"><div class="info-label">${t('infoLabel_notes')}</div><div class="info-value" style="font-weight:400;line-height:1.7">${e.notes||'—'}</div></div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="tab-financial">
+        <div class="salary-highlight">
+          <div>
+            <div class="salary-label">${t('totalSalary')}</div>
+            <div style="display:flex;align-items:baseline;gap:0.4rem;margin-top:0.3rem;">
+              <span class="salary-amount">${total.toLocaleString()}</span>
+              <span class="salary-currency">${t('currency')}</span>
+            </div>
+          </div>
+          <div style="font-size:2rem">💳</div>
+        </div>
+        <div class="info-grid">
+          <div class="info-card editable-card" onclick="editSalaryField('${e.id}','salary',${e.salary||0})">
+            <div class="info-label">${t('salary')} <span style="float:left;font-size:0.7rem;color:var(--red);">✏️ ${isEn?'Edit':'تعديل'}</span></div>
+            <div class="info-value" id="sf-salary-${e.id}">${(e.salary||0).toLocaleString()} ${t('currency')}</div>
+          </div>
+          <div class="info-card editable-card" onclick="editSalaryField('${e.id}','housing',${e.housing||0})">
+            <div class="info-label">${t('housing')} <span style="float:left;font-size:0.7rem;color:var(--red);">✏️ ${isEn?'Edit':'تعديل'}</span></div>
+            <div class="info-value" id="sf-housing-${e.id}">${(e.housing||0).toLocaleString()} ${t('currency')}</div>
+          </div>
+          <div class="info-card editable-card" onclick="editSalaryField('${e.id}','transport',${e.transport||0})">
+            <div class="info-label">${t('transport')} <span style="float:left;font-size:0.7rem;color:var(--red);">✏️ ${isEn?'Edit':'تعديل'}</span></div>
+            <div class="info-value" id="sf-transport-${e.id}">${(e.transport||0).toLocaleString()} ${t('currency')}</div>
+          </div>
+          <div class="info-card">
+            <div class="info-label">${t('yearsService')}</div>
+            <div class="info-value">${yrs(e.startDate)} ${isEn?'yrs':'سنة'}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="tab-schedule">
+        <div class="section-title">${t('weeklySchedule')}</div>
+        <div class="schedule-grid">
+          ${(e.schedule||['work','work','work','work','work','off','off']).map((s,i)=>`
+            <div class="day-cell ${s}">
+              <div class="day-name">${t('days')[i]}</div>
+              <div class="day-status">${s==='work'?t('workDay'):t('offDay')}</div>
+            </div>`).join('')}
+        </div>
+        <div class="info-grid" style="margin-top:1rem;">
+          <div class="info-card"><div class="info-label">${t('workDays')}</div><div class="info-value">${(e.schedule||[]).filter(s=>s==='work').length}</div></div>
+          <div class="info-card"><div class="info-label">${t('offDays')}</div><div class="info-value">${(e.schedule||[]).filter(s=>s==='off').length}</div></div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="tab-docs">
+        <div class="doc-block">
+          <div class="doc-block-header">
+            <span class="doc-block-icon">🪪</span>
+            <div class="doc-block-info">
+              <div class="doc-block-title">${t('docResidency')}</div>
+              <div class="doc-block-num">${e.eid||'—'}</div>
+              <div class="doc-block-date">${t('expires')}: ${fmtDate(e.residencyExp)}</div>
+            </div>
+            <span class="doc-status ${rSt}">${rLbl}</span>
+          </div>
+          <div class="doc-photos-row">
+            ${docPhotoSlot('id_front','🪪','الهوية (أمام)',t('idFront'))}
+            ${docPhotoSlot('id_back','🪪','الهوية (خلف)',t('idBack'))}
+          </div>
+        </div>
+        <div class="doc-block">
+          <div class="doc-block-header">
+            <span class="doc-block-icon">📘</span>
+            <div class="doc-block-info">
+              <div class="doc-block-title">${t('docPassport')}</div>
+              <div class="doc-block-date">${t('expires')}: ${fmtDate(e.passportExp)}</div>
+            </div>
+            <span class="doc-status ${pSt}">${pLbl}</span>
+          </div>
+          <div class="doc-photos-row">
+            ${docPhotoSlot('passport_front','📘','الجواز (أمام)',t('passFront'))}
+            ${docPhotoSlot('passport_back','📘','الجواز (خلف)',t('passBack'))}
+          </div>
+        </div>
+        <div class="doc-block">
+          <div class="doc-block-header">
+            <span class="doc-block-icon">📋</span>
+            <div class="doc-block-info">
+              <div class="doc-block-title">${t('docLabour')}</div>
+              <div class="doc-block-date">${t('expires')}: ${fmtDate(e.labourCardExp)}</div>
+            </div>
+            <span class="doc-status ${lSt}">${lLbl}</span>
+          </div>
+          <div class="doc-photos-row">
+            ${docPhotoSlot('labour_card','📋',t('labourCard'),t('labourCard'))}
+            ${docPhotoSlot('visa','✈️',t('visaDoc'),t('visaDoc'))}
+          </div>
+        </div>
+        <div class="doc-block">
+          <div class="doc-block-header">
+            <span class="doc-block-icon">📎</span>
+            <div class="doc-block-info"><div class="doc-block-title">${t('otherDocs')}</div></div>
+          </div>
+          <div class="doc-photos-row">
+            ${docPhotoSlot('contract','📝',t('contractDoc'),t('contractDoc'))}
+            ${docPhotoSlot('other1','📎',t('attach1'),t('attach1'))}
+            ${docPhotoSlot('other2','📎',t('attach2'),t('attach2'))}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="action-row">
+      <button class="action-btn secondary" onclick="openEditModal('${e.id}')">${t('editBtn')}</button>
+      <button class="action-btn primary" onclick="window.print()">${t('printBtn')}</button>
+      <button class="action-btn danger" onclick="deleteEmployee('${e.id}')">${t('deleteBtn')}</button>
+    </div>`;
+}
+
+function switchTab(name,btn) {
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ─── EDITABLE SALARY ─────────────────────────────────────────────────────────
+function editSalaryField(empId, field, currentVal) {
+  const isEn=window.currentLang==='en';
+  const label={salary:t('salary'),housing:t('housing'),transport:t('transport')}[field];
+  const newVal = prompt((isEn?'Enter new value for ':'أدخل القيمة الجديدة لـ ')+label, currentVal);
+  if(newVal===null) return;
+  const num=parseInt(newVal);
+  if(isNaN(num)||num<0){alert(isEn?'Invalid number':'رقم غير صحيح');return;}
+  const e=employees.find(x=>x.id===empId);
+  if(!e) return;
+  e[field]=num;
+  updateStats();
+  selectEmployee(empId);
+}
+
+// ─── EDIT MODAL ───────────────────────────────────────────────────────────────
+function openEditModal(id) {
+  const e=employees.find(x=>x.id===id); if(!e) return;
+  // fill add modal with employee data
+  document.getElementById('f_name').value        = e.name||'';
+  document.getElementById('f_nameEn').value      = e.nameEn||'';
+  document.getElementById('f_id').value          = e.id||'';
+  document.getElementById('f_role').value        = e.role||'';
+  document.getElementById('f_nationality').value = e.nationality||'';
+  document.getElementById('f_phone').value       = e.phone||'';
+  document.getElementById('f_salary').value      = e.salary||0;
+  document.getElementById('f_housing').value     = e.housing||0;
+  document.getElementById('f_transport').value   = e.transport||0;
+  document.getElementById('f_startDate').value   = e.startDate||'';
+  document.getElementById('f_eid').value         = e.eid||'';
+  document.getElementById('f_residencyExp').value= e.residencyExp||'';
+  document.getElementById('f_passportExp').value = e.passportExp||'';
+  document.getElementById('f_labourCardExp').value=e.labourCardExp||'';
+  document.getElementById('f_notes').value       = e.notes||'';
+  document.getElementById('f_dept').value        = e.dept||'الخالدية';
+  document.getElementById('f_status').value      = e.status||'active';
+  document.getElementById('f_permitType').value  = e.permitType||'إقامة';
+  document.getElementById('f_sponsor').value     = e.sponsor||'بروست ماستر';
+  document.getElementById('f_gender').value      = e.gender||'ذكر';
+  // change save button to update
+  const saveBtn=document.getElementById('modalSaveBtn');
+  if(saveBtn){ saveBtn.textContent='💾 '+(window.currentLang==='en'?'Update':'تحديث'); saveBtn.onclick=()=>updateEmployee(id); }
+  document.getElementById('addModal').classList.add('open');
+}
+
+function updateEmployee(id) {
+  const e=employees.find(x=>x.id===id); if(!e) return;
+  e.name        = document.getElementById('f_name').value.trim()||e.name;
+  e.nameEn      = document.getElementById('f_nameEn').value.trim();
+  e.role        = document.getElementById('f_role').value;
+  e.dept        = document.getElementById('f_dept').value;
+  e.branch      = e.dept;
+  e.status      = document.getElementById('f_status').value;
+  e.nationality = document.getElementById('f_nationality').value;
+  e.gender      = document.getElementById('f_gender').value;
+  e.phone       = document.getElementById('f_phone').value;
+  e.salary      = parseInt(document.getElementById('f_salary').value)||0;
+  e.housing     = parseInt(document.getElementById('f_housing').value)||0;
+  e.transport   = parseInt(document.getElementById('f_transport').value)||0;
+  e.startDate   = document.getElementById('f_startDate').value;
+  e.eid         = document.getElementById('f_eid').value;
+  e.permitType  = document.getElementById('f_permitType').value;
+  e.sponsor     = document.getElementById('f_sponsor').value;
+  e.residencyExp= document.getElementById('f_residencyExp').value;
+  e.passportExp = document.getElementById('f_passportExp').value;
+  e.labourCardExp=document.getElementById('f_labourCardExp').value;
+  e.notes       = document.getElementById('f_notes').value;
+  e.initials    = getInitials(e.name);
+  if(modalAvatarData) getPhotoStore(id).avatar=modalAvatarData;
+  closeModal();
+  buildDeptFilter(); renderList(); updateStats();
+  selectEmployee(id);
+}
+
+// ─── PHOTO HANDLERS ───────────────────────────────────────────────────────────
+function handleAvatarUpload(evt) {
+  const file=evt.target.files[0]; if(!file||!selectedId) return;
+  const reader=new FileReader();
+  reader.onload=e=>{getPhotoStore(selectedId).avatar=e.target.result;renderList();selectEmployee(selectedId);};
+  reader.readAsDataURL(file); evt.target.value='';
+}
+function openDocPhoto(empId,key) { pendingDocPhotoKey={empId,key}; document.getElementById('docPhotoInput').click(); }
+function handleDocPhoto(evt) {
+  const file=evt.target.files[0]; if(!file||!pendingDocPhotoKey) return;
+  const {empId,key}=pendingDocPhotoKey;
+  const reader=new FileReader();
+  reader.onload=e=>{getPhotoStore(empId).docs[key]=e.target.result;selectEmployee(empId);};
+  reader.readAsDataURL(file); evt.target.value=''; pendingDocPhotoKey=null;
+}
+function delDocPhoto(evt,empId,key) { evt.stopPropagation(); delete getPhotoStore(empId).docs[key]; selectEmployee(empId); }
+function handleModalAvatar(evt) {
+  const file=evt.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{modalAvatarData=e.target.result;document.getElementById('modalAvatarPreview').innerHTML=`<img src="${e.target.result}" alt="">`;};
+  reader.readAsDataURL(file); evt.target.value='';
+}
+
+// ─── HELPERS ──────────────────────────────────────────────────────────────────
+function fmtDate(d) {
+  if(!d) return '—';
+  try{return new Date(d).toLocaleDateString(window.currentLang==='en'?'en-GB':'ar-AE',{year:'numeric',month:'long',day:'numeric'});}
+  catch{return d;}
+}
+function yrs(d) { if(!d)return'0'; return ((new Date()-new Date(d))/31557600000).toFixed(1); }
+function getInitials(name, nameEn) {
+  // prefer English name for initials
+  const src = nameEn && nameEn.trim() ? nameEn : name;
+  const p = src.trim().split(' ').filter(Boolean);
+  return p.length>=2 ? (p[0][0]+p[1][0]).toUpperCase() : p[0].substring(0,2).toUpperCase();
+}
+
+// ─── MODAL ────────────────────────────────────────────────────────────────────
+function openModal() {
+  modalAvatarData=null;
+  document.getElementById('modalAvatarPreview').innerHTML='📷';
+  const saveBtn=document.getElementById('modalSaveBtn');
+  if(saveBtn){ saveBtn.textContent=t('saveEmp'); saveBtn.onclick=saveEmployee; }
+  document.getElementById('addModal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('addModal').classList.remove('open');
+  ['f_name','f_nameEn','f_id','f_role','f_nationality','f_phone',
+   'f_salary','f_housing','f_transport','f_startDate','f_eid',
+   'f_residencyExp','f_passportExp','f_labourCardExp','f_notes'].forEach(id=>{
+    const el=document.getElementById(id); if(el)el.value='';
+  });
+}
+function saveEmployee() {
+  const name=document.getElementById('f_name').value.trim();
+  if(!name){alert(window.currentLang==='en'?'Please enter the name':'يرجى إدخال الاسم');return;}
+  const dept=document.getElementById('f_dept').value;
+  const prefix={'الخالدية':'KH','بني ياس':'BY','الكول سنتر':'CC','المشغل':'MS'}[dept]||'EMP';
+  const finalId=document.getElementById('f_id').value.trim()||`${prefix}-${String(employees.filter(e=>e.dept===dept).length+1).padStart(3,'0')}`;
+  const newEmp={
+    id:finalId,name,nameEn:document.getElementById('f_nameEn').value||'',
+    role:document.getElementById('f_role').value||'موظف',
+    dept,branch:dept,status:document.getElementById('f_status').value,
+    nationality:document.getElementById('f_nationality').value||'—',
+    gender:document.getElementById('f_gender').value,
+    phone:document.getElementById('f_phone').value||'—',email:'',
+    salary:parseInt(document.getElementById('f_salary').value)||0,
+    housing:parseInt(document.getElementById('f_housing').value)||0,
+    transport:parseInt(document.getElementById('f_transport').value)||0,
+    startDate:document.getElementById('f_startDate').value,
+    eid:document.getElementById('f_eid').value||'—',
+    permitType:document.getElementById('f_permitType').value,
+    sponsor:document.getElementById('f_sponsor').value,
+    residencyExp:document.getElementById('f_residencyExp').value,
+    passportExp:document.getElementById('f_passportExp').value,
+    labourCardExp:document.getElementById('f_labourCardExp').value,
+    schedule:['work','work','work','work','work','off','off'],
+    notes:document.getElementById('f_notes').value||'',
+    initials:getInitials(name, document.getElementById('f_nameEn').value||'')
+  };
+  employees.push(newEmp);
+  if(modalAvatarData) getPhotoStore(finalId).avatar=modalAvatarData;
+  closeModal(); buildDeptFilter(); renderList(); updateStats(); selectEmployee(finalId);
+}
+function deleteEmployee(id) {
+  const isEn=window.currentLang==='en';
+  if(!confirm(isEn?'Delete this employee?':'هل تريد حذف هذا الموظف؟')) return;
+  employees=employees.filter(e=>e.id!==id);
+  selectedId=null;
+  document.getElementById('emptyState').style.display='flex';
+  document.getElementById('detailContent').style.display='none';
+  buildDeptFilter(); renderList(); updateStats();
+}
+
+// ─── PAYROLL ──────────────────────────────────────────────────────────────────
+function renderPayroll() {
+  const isEn=window.currentLang==='en';
+  const branch=document.getElementById('payrollBranchFilter').value;
+  const filtered=branch==='all'?employees:employees.filter(e=>e.dept===branch);
+  const totalBasic=filtered.reduce((s,e)=>s+(e.salary||0),0);
+  const totalHousing=filtered.reduce((s,e)=>s+(e.housing||0),0);
+  const totalTransport=filtered.reduce((s,e)=>s+(e.transport||0),0);
+  const totalAll=filtered.reduce((s,e)=>s+Math.max(0,(e.salary||0)+(e.housing||0)-(e.transport||0)),0);
+
+  // update branch filter options text
+  const sel=document.getElementById('payrollBranchFilter');
+  if(sel){
+    const deptMap=t('depts');
+    sel.options[0].text=t('allBranches');
+    [['الخالدية',1],['بني ياس',2],['الكول سنتر',3],['المشغل',4]].forEach(([d,i])=>{
+      if(sel.options[i]) sel.options[i].text=deptMap[d]||d;
+    });
+  }
+
+  const summaryData=[
+    {icon:'💵',label:t('salary'),val:totalBasic},
+    {icon:'🏠',label:t('housing'),val:totalHousing},
+    {icon:'➖',label:t('transport'),val:totalTransport},
+    {icon:'💰',label:isEn?'Grand Total':'الإجمالي الكلي',val:totalAll,highlight:true},
+  ];
+  document.getElementById('payrollSummary').innerHTML=summaryData.map(c=>`
+    <div style="background:${c.highlight?'var(--black)':'white'};border-radius:12px;padding:1.1rem 1.3rem;
+      box-shadow:0 2px 12px rgba(0,0,0,0.07);border-bottom:3px solid ${c.highlight?'var(--red)':'var(--grey)'}">
+      <div style="font-size:1.5rem;margin-bottom:0.4rem;">${c.icon}</div>
+      <div style="font-size:1.4rem;font-weight:800;color:${c.highlight?'white':'var(--text-main)'};">${c.val.toLocaleString()}</div>
+      <div style="font-size:0.75rem;color:${c.highlight?'#aaa':'var(--text-muted)'};margin-top:0.2rem;">${c.label} · ${t('currency')}</div>
+    </div>`).join('');
+
+  document.getElementById('payrollCount').textContent=`${filtered.length} ${isEn?'employees':'موظف'}`;
+  const stLabels={active:isEn?'Active':'نشط',leave:isEn?'On Leave':'إجازة',inactive:isEn?'Inactive':'غير نشط'};
+  const stColors={active:'#E8F5E9',leave:'#FFF3E0',inactive:'#F5F5F5'};
+
+  document.getElementById('payrollBody').innerHTML=filtered.map((e,i)=>{
+    const total=Math.max(0,(e.salary||0)+(e.housing||0)-(e.transport||0));
+    const st=e.status||'active';
+    const displayName=isEn&&e.nameEn?e.nameEn:e.name;
+    return `<tr style="border-bottom:1px solid var(--grey);cursor:pointer;" onclick="showPage('employees');selectEmployee('${e.id}')" onmouseover="this.style.background='#fafafa'" onmouseout="this.style.background=''">
+      <td style="padding:0.7rem 1rem;color:var(--text-muted);font-size:0.8rem;">${i+1}</td>
+      <td style="padding:0.7rem 1rem;">
+        <div style="font-weight:700;font-size:0.88rem;">${displayName}</div>
+        <div style="font-size:0.73rem;color:var(--text-muted);">${isEn?e.name:e.nameEn||''}</div>
+      </td>
+      <td style="padding:0.7rem 1rem;font-size:0.85rem;">${t('depts')[e.dept]||e.dept}</td>
+      <td style="padding:0.7rem 1rem;">
+        <span style="font-weight:600;">${(e.salary||0).toLocaleString()}</span>
+        <span style="color:var(--text-muted);font-size:0.75rem;"> ${t('currency')}</span>
+        <button onclick="event.stopPropagation();editPayrollSalary('${e.id}','salary',${e.salary||0})" style="margin-right:0.4rem;background:none;border:1px solid var(--grey);border-radius:4px;padding:0.1rem 0.4rem;cursor:pointer;font-size:0.7rem;color:var(--red);">✏️</button>
+      </td>
+      <td style="padding:0.7rem 1rem;color:var(--text-muted);">
+        ${(e.housing||0).toLocaleString()}
+        <button onclick="event.stopPropagation();editPayrollSalary('${e.id}','housing',${e.housing||0})" style="margin-right:0.3rem;background:none;border:1px solid var(--grey);border-radius:4px;padding:0.1rem 0.4rem;cursor:pointer;font-size:0.7rem;color:var(--red);">✏️</button>
+      </td>
+      <td style="padding:0.7rem 1rem;color:var(--text-muted);">
+        ${(e.transport||0).toLocaleString()}
+        <button onclick="event.stopPropagation();editPayrollSalary('${e.id}','transport',${e.transport||0})" style="margin-right:0.3rem;background:none;border:1px solid var(--grey);border-radius:4px;padding:0.1rem 0.4rem;cursor:pointer;font-size:0.7rem;color:var(--red);">✏️</button>
+      </td>
+      <td style="padding:0.7rem 1rem;font-weight:800;color:var(--red);">${total.toLocaleString()} <span style="color:var(--text-muted);font-size:0.75rem;font-weight:400;">${t('currency')}</span></td>
+      <td style="padding:0.7rem 1rem;"><span style="background:${stColors[st]};padding:0.2rem 0.6rem;border-radius:20px;font-size:0.72rem;font-weight:700;">${stLabels[st]}</span></td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('payrollFoot').innerHTML=`
+    <tr style="background:var(--black);color:white;">
+      <td colspan="3" style="padding:0.9rem 1rem;font-weight:700;">${isEn?'Total':'الإجمالي'} — ${filtered.length} ${isEn?'employees':'موظف'}</td>
+      <td style="padding:0.9rem 1rem;font-weight:700;">${totalBasic.toLocaleString()}</td>
+      <td style="padding:0.9rem 1rem;">${totalHousing.toLocaleString()}</td>
+      <td style="padding:0.9rem 1rem;">${totalTransport.toLocaleString()}</td>
+      <td style="padding:0.9rem 1rem;font-weight:800;color:#FF8A8A;font-size:1rem;">${totalAll.toLocaleString()} ${t('currency')}</td>
+      <td></td>
+    </tr>`;
+}
+
+function editPayrollSalary(empId, field, currentVal) {
+  const isEn=window.currentLang==='en';
+  const label={salary:t('salary'),housing:t('housing'),transport:t('transport')}[field];
+  const newVal=prompt((isEn?'New value for ':'القيمة الجديدة لـ ')+label+' ('+t('currency')+')', currentVal);
+  if(newVal===null) return;
+  const num=parseInt(newVal);
+  if(isNaN(num)||num<0){alert(isEn?'Invalid number':'رقم غير صحيح');return;}
+  const e=employees.find(x=>x.id===empId); if(!e) return;
+  e[field]=num; updateStats(); renderPayroll();
+}
+
+function exportPayrollCSV() {
+  const isEn=window.currentLang==='en';
+  const branch=document.getElementById('payrollBranchFilter').value;
+  const filtered=branch==='all'?employees:employees.filter(e=>e.dept===branch);
+  const headers=isEn
+    ?['#','Name','Name (AR)','Branch','Basic','Housing','Transport','Total','Status']
+    :['رقم','الاسم','الاسم الإنجليزي','الفرع','الراتب الأساسي','بدل سكن','بدل مواصلات','الإجمالي','الحالة'];
+  const rows=filtered.map((e,i)=>[
+    i+1,isEn&&e.nameEn?e.nameEn:e.name,isEn?e.name:e.nameEn||'—',
+    t('depts')[e.dept]||e.dept,
+    e.salary||0,e.housing||0,e.transport||0,
+    Math.max(0,(e.salary||0)+(e.housing||0)-(e.transport||0)),
+    {active:isEn?'Active':'نشط',leave:isEn?'On Leave':'إجازة',inactive:isEn?'Inactive':'غير نشط'}[e.status||'active']
+  ]);
+  const csv=[headers,...rows].map(r=>r.join(',')).join('\n');
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`payroll_prosto_${new Date().toISOString().slice(0,10)}.csv`; a.click();
+}
+
+// ─── SETTINGS ─────────────────────────────────────────────────────────────────
+function renderSettings() {
+  const isEn=window.currentLang==='en';
+  document.getElementById('credsList').innerHTML=USERS.map((u,i)=>`
+    <div style="background:var(--off-white);border-radius:10px;padding:0.9rem 1rem;margin-bottom:0.7rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
+        <div>
+          <div style="font-weight:700;font-size:0.9rem;">👤 ${u.name}</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);margin-top:0.2rem;">${isEn?'Username':'اسم المستخدم'}: <code style="background:#eee;padding:0.1rem 0.4rem;border-radius:4px;">${u.username}</code></div>
+        </div>
+        <div style="display:flex;gap:0.5rem;">
+          <button onclick="changePassword(${i})" style="background:var(--black);color:white;border:none;padding:0.4rem 0.8rem;border-radius:7px;font-family:Tajawal,sans-serif;font-weight:700;font-size:0.75rem;cursor:pointer;">${isEn?'Change Password':'تغيير الباسورد'}</button>
+          <button onclick="changeUsername(${i})" style="background:var(--off-white);color:var(--text-main);border:1px solid var(--grey);padding:0.4rem 0.8rem;border-radius:7px;font-family:Tajawal,sans-serif;font-weight:700;font-size:0.75rem;cursor:pointer;">${isEn?'Change Username':'تغيير اليوزر'}</button>
+        </div>
+      </div>
+    </div>`).join('');
+
+  const totalPayroll=employees.reduce((s,e)=>s+Math.max(0,(e.salary||0)+(e.housing||0)-(e.transport||0)),0);
+  const expiring90=employees.filter(e=>{const d=e.residencyExp;if(!d)return false;const diff=(new Date(d)-new Date())/86400000;return diff>=0&&diff<90;}).length;
+  const expired=employees.filter(e=>{const d=e.residencyExp;if(!d)return false;return new Date(d)<new Date();}).length;
+
+  document.getElementById('systemInfo').innerHTML=[
+    {label:isEn?'Total Employees':'إجمالي الموظفين',val:employees.length+(isEn?' employees':' موظف')},
+    {label:isEn?'Monthly Payroll':'إجمالي الرواتب الشهرية',val:totalPayroll.toLocaleString()+' '+t('currency')},
+    {label:isEn?'Branches':'الفروع',val:isEn?'Khalidiya, Bani Yas, Call Center, Workshop':'الخالدية، بني ياس، الكول سنتر، المشغل'},
+    {label:isEn?'Docs Expiring Soon':'وثائق تنتهي قريبًا',val:expiring90+(isEn?' employees':' موظف')},
+    {label:isEn?'Expired Docs':'وثائق منتهية',val:expired+(isEn?' employees':' موظف')},
+    {label:isEn?'System Version':'إصدار النظام',val:'PROSTO v2.1'},
+  ].map(item=>`<div style="background:var(--off-white);border-radius:10px;padding:0.9rem 1.1rem;">
+    <div style="font-size:0.7rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.3rem;">${item.label}</div>
+    <div style="font-weight:700;font-size:0.95rem;">${item.val}</div>
+  </div>`).join('');
+
+  const alerts=employees.filter(e=>{const d=e.residencyExp;if(!d)return false;return(new Date(d)-new Date())/86400000<90;})
+    .sort((a,b)=>new Date(a.residencyExp)-new Date(b.residencyExp));
+  document.getElementById('expiryAlerts').innerHTML=alerts.length===0
+    ?`<div style="color:var(--text-muted);text-align:center;padding:1rem;">${t('noAlerts')}</div>`
+    :alerts.map(e=>{
+      const diff=Math.round((new Date(e.residencyExp)-new Date())/86400000);
+      const color=diff<0?'var(--red)':diff<30?'#E65100':'#F9A825';
+      return `<div style="display:flex;align-items:center;gap:0.8rem;padding:0.75rem 1rem;background:var(--off-white);border-radius:10px;margin-bottom:0.5rem;border-right:4px solid ${color};cursor:pointer;" onclick="showPage('employees');selectEmployee('${e.id}')">
+        <div style="flex:1;">
+          <div style="font-weight:700;font-size:0.88rem;">${isEn&&e.nameEn?e.nameEn:e.name}</div>
+          <div style="font-size:0.75rem;color:var(--text-muted);">${t('depts')[e.dept]||e.dept} · ${e.eid||'—'}</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:1.1rem;font-weight:800;color:${color};">${diff<0?(isEn?'Expired':'منتهية'):diff+(isEn?' days':' يوم')}</div>
+          <div style="font-size:0.7rem;color:var(--text-muted);">${fmtDate(e.residencyExp)}</div>
+        </div>
+      </div>`;
+    }).join('');
+}
+
+function changePassword(i) {
+  const isEn=window.currentLang==='en';
+  const newPass=prompt(isEn?'Enter new password for '+USERS[i].username:'كلمة المرور الجديدة لـ '+USERS[i].username);
+  if(!newPass||newPass.length<4){if(newPass!==null)alert(isEn?'Password too short (min 4 chars)':'الباسورد قصير جدًا');return;}
+  USERS[i].password=newPass;
+  localStorage.setItem('prosto_users',JSON.stringify(USERS));
+  alert(isEn?'Password changed successfully!':'✅ تم تغيير كلمة المرور!');
+  renderSettings();
+}
+
+function changeUsername(i) {
+  const isEn=window.currentLang==='en';
+  const newUser=prompt(isEn?'Enter new username:':'اسم المستخدم الجديد:', USERS[i].username);
+  if(!newUser||newUser.length<3){if(newUser!==null)alert(isEn?'Username too short':'اسم المستخدم قصير جدًا');return;}
+  USERS[i].username=newUser.toLowerCase().trim();
+  localStorage.setItem('prosto_users',JSON.stringify(USERS));
+  alert(isEn?'Username changed!':'✅ تم تغيير اسم المستخدم!');
+  renderSettings();
+}
+
+// ─── COMPLAINTS ───────────────────────────────────────────────────────────────
+let complaintFilter='all';
+
+function renderComplaints() {
+  const isEn=window.currentLang==='en';
+  const base=window.location.href.replace('index.html','').replace(/\/$/,'');
+  document.getElementById('complaintLinkDisplay').textContent=base+'/complaint.html';
+  const complaints=JSON.parse(localStorage.getItem('prosto_complaints')||'[]').reverse();
+  const filtered=complaints.filter(c=>
+    complaintFilter==='all'?true:
+    complaintFilter==='new'?c.status==='new':
+    complaintFilter==='high'?c.severity==='high':
+    complaintFilter==='resolved'?c.status==='resolved':true);
+  const newCount=complaints.filter(c=>c.status==='new').length;
+  const badge=document.getElementById('complaintsBadge');
+  badge.textContent=newCount; badge.style.display=newCount>0?'inline-block':'none';
+  const sevLabel={low:isEn?'🟢 Normal':'🟢 عادية',medium:isEn?'🟠 Medium':'🟠 متوسطة',high:isEn?'🔴 Urgent':'🔴 عاجلة'};
+  const sevColors={low:'#2E7D32',medium:'#E65100',high:'var(--red)'};
+  document.getElementById('complaintsList').innerHTML=filtered.length===0
+    ?`<div style="text-align:center;padding:3rem;color:var(--text-muted);">${t('noComplaints')}</div>`
+    :filtered.map((c,i)=>`
+      <div class="complaint-card sev-${c.severity}">
+        <div style="display:flex;align-items:flex-start;gap:0.8rem;justify-content:space-between;flex-wrap:wrap;">
+          <div style="flex:1;">
+            <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.5rem;">
+              <span style="font-weight:800;font-size:0.92rem;">${c.category}</span>
+              <span style="padding:0.15rem 0.6rem;border-radius:20px;font-size:0.7rem;font-weight:700;background:#FFF3E0;color:${sevColors[c.severity]}">${sevLabel[c.severity]}</span>
+              ${c.branch&&c.branch!=='—'?`<span style="padding:0.15rem 0.6rem;border-radius:20px;font-size:0.7rem;font-weight:700;background:var(--off-white);">${c.branch}</span>`:''}
+              <span style="padding:0.15rem 0.6rem;border-radius:20px;font-size:0.7rem;font-weight:700;background:${c.status==='resolved'?'#E8F5E9':'#FFEBEE'};color:${c.status==='resolved'?'#2E7D32':'var(--red)'};">${c.status==='resolved'?(isEn?'✅ Resolved':'✅ تم الحل'):(isEn?'🆕 New':'🆕 جديدة')}</span>
+            </div>
+            <div style="font-size:0.88rem;line-height:1.7;margin-bottom:0.5rem;">${c.message}</div>
+            <div style="font-size:0.75rem;color:var(--text-muted);">
+              ${c.anonymous?(isEn?'🔒 Anonymous':'🔒 مجهول'):'👤 '+c.name}
+              ${c.phone&&c.phone!=='—'?'· 📞 '+c.phone:''}
+              · ${new Date(c.timestamp).toLocaleDateString(isEn?'en-GB':'ar-AE')}
+              · ${c.num}
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:0.4rem;flex-shrink:0;">
+            ${c.status!=='resolved'?`<button onclick="resolveComplaint(${complaints.indexOf(c)})" style="background:var(--black);color:white;border:none;padding:0.4rem 0.8rem;border-radius:7px;font-family:Tajawal,sans-serif;font-weight:700;font-size:0.75rem;cursor:pointer;">${isEn?'✅ Resolve':'✅ تم الحل'}</button>`:''}
+            <button onclick="deleteComplaint(${complaints.indexOf(c)})" style="background:var(--off-white);color:var(--red);border:1px solid #fcc;padding:0.4rem 0.8rem;border-radius:7px;font-family:Tajawal,sans-serif;font-weight:700;font-size:0.75rem;cursor:pointer;">${isEn?'🗑️ Delete':'🗑️ حذف'}</button>
+          </div>
+        </div>
+      </div>`).join('');
+}
+
+function filterComplaints(f,btn) {
+  complaintFilter=f;
+  document.querySelectorAll('.cmp-filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); renderComplaints();
+}
+function resolveComplaint(idx) {
+  const c=JSON.parse(localStorage.getItem('prosto_complaints')||'[]');
+  const ri=c.length-1-idx; if(c[ri]) c[ri].status='resolved';
+  localStorage.setItem('prosto_complaints',JSON.stringify(c)); renderComplaints();
+}
+function deleteComplaint(idx) {
+  const isEn=window.currentLang==='en';
+  if(!confirm(isEn?'Delete this complaint?':'حذف هذه الشكوى؟')) return;
+  const c=JSON.parse(localStorage.getItem('prosto_complaints')||'[]');
+  c.splice(c.length-1-idx,1); localStorage.setItem('prosto_complaints',JSON.stringify(c)); renderComplaints();
+}
+function clearComplaints() {
+  const isEn=window.currentLang==='en';
+  if(!confirm(isEn?'Clear all complaints?':'مسح كل الشكاوي؟')) return;
+  localStorage.removeItem('prosto_complaints'); renderComplaints();
+}
+
+// ─── REGISTRATIONS ────────────────────────────────────────────────────────────
+function renderRegistrations() {
+  const isEn=window.currentLang==='en';
+  const base=window.location.href.replace('index.html','').replace(/\/$/,'');
+  document.getElementById('registerLinkDisplay').textContent=base+'/register.html';
+  const regs=JSON.parse(localStorage.getItem('prosto_registrations')||'[]').reverse();
+  const newCount=regs.filter(r=>r.status==='pending').length;
+  const badge=document.getElementById('regsBadge');
+  badge.textContent=newCount; badge.style.display=newCount>0?'inline-block':'none';
+  document.getElementById('registrationsList').innerHTML=regs.length===0
+    ?`<div style="text-align:center;padding:3rem;color:var(--text-muted);">${t('noRegs')}</div>`
+    :regs.map((r,i)=>`
+      <div style="background:white;border-radius:12px;padding:1.1rem 1.3rem;margin-bottom:0.8rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);border-right:4px solid ${r.status==='approved'?'#2E7D32':r.status==='rejected'?'var(--red)':'var(--grey)'};">
+        <div style="display:flex;align-items:flex-start;gap:0.8rem;justify-content:space-between;flex-wrap:wrap;">
+          <div style="flex:1;">
+            <div style="display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;margin-bottom:0.4rem;">
+              <span style="font-weight:800;font-size:0.95rem;">${r.name}</span>
+              <span style="font-size:0.78rem;color:var(--text-muted);">${r.nameEn||''}</span>
+              <span style="padding:0.15rem 0.6rem;border-radius:20px;font-size:0.7rem;font-weight:700;
+                background:${r.status==='approved'?'#E8F5E9':r.status==='rejected'?'#FFEBEE':'#FFF3E0'};
+                color:${r.status==='approved'?'#2E7D32':r.status==='rejected'?'var(--red)':'#E65100'};">
+                ${r.status==='approved'?(isEn?'✅ Approved':'✅ تمت الموافقة'):r.status==='rejected'?(isEn?'❌ Rejected':'❌ مرفوض'):(isEn?'⏳ Pending':'⏳ في الانتظار')}
+              </span>
+            </div>
+            <div style="display:flex;gap:1.5rem;font-size:0.8rem;color:var(--text-muted);flex-wrap:wrap;margin-bottom:0.3rem;">
+              <span>📍 ${t('depts')[r.branch]||r.branch}</span>
+              <span>🌍 ${r.nationality}</span>
+              <span>📞 ${r.phone}</span>
+              <span>🪪 ${r.permitType}</span>
+            </div>
+            <div style="font-size:0.75rem;color:var(--text-muted);">
+              📎 ${isEn?'Files uploaded':'وثائق مرفوعة'}: ${(r.filesUploaded||[]).length}
+              · ${new Date(r.timestamp).toLocaleDateString(isEn?'en-GB':'ar-AE')}
+              · ${r.reqNum}
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:0.4rem;flex-shrink:0;">
+            ${r.status==='pending'?`
+              <button onclick="approveReg(${i})" style="background:#2E7D32;color:white;border:none;padding:0.4rem 0.8rem;border-radius:7px;font-family:Tajawal,sans-serif;font-weight:700;font-size:0.75rem;cursor:pointer;">${isEn?'✅ Approve':'✅ موافقة'}</button>
+              <button onclick="rejectReg(${i})" style="background:var(--red);color:white;border:none;padding:0.4rem 0.8rem;border-radius:7px;font-family:Tajawal,sans-serif;font-weight:700;font-size:0.75rem;cursor:pointer;">${isEn?'❌ Reject':'❌ رفض'}</button>
+              <button onclick="addRegToEmployees(${i})" style="background:var(--black);color:white;border:none;padding:0.4rem 0.8rem;border-radius:7px;font-family:Tajawal,sans-serif;font-weight:700;font-size:0.75rem;cursor:pointer;">${isEn?'➕ Add to Staff':'➕ إضافة للموظفين'}</button>
+            `:`<span style="font-size:0.75rem;color:var(--text-muted);">${isEn?'Processed':'تمت المعالجة'}</span>`}
+          </div>
+        </div>
+      </div>`).join('');
+}
+
+function approveReg(i) {
+  const all=JSON.parse(localStorage.getItem('prosto_registrations')||'[]');
+  all[all.length-1-i].status='approved';
+  localStorage.setItem('prosto_registrations',JSON.stringify(all)); renderRegistrations();
+}
+function rejectReg(i) {
+  const all=JSON.parse(localStorage.getItem('prosto_registrations')||'[]');
+  all[all.length-1-i].status='rejected';
+  localStorage.setItem('prosto_registrations',JSON.stringify(all)); renderRegistrations();
+}
+function addRegToEmployees(i) {
+  const isEn=window.currentLang==='en';
+  const all=JSON.parse(localStorage.getItem('prosto_registrations')||'[]');
+  const ri=all.length-1-i; const r=all[ri]; if(!r) return;
+  const newEmp={
+    id:r.reqNum||('NEW-'+Date.now()),name:r.name,nameEn:r.nameEn||'',
+    role:r.role||'موظف',dept:r.branch,branch:r.branch,status:'active',
+    nationality:r.nationality||'—',gender:r.gender||'ذكر',
+    phone:r.phone||'—',email:r.email||'—',
+    salary:0,housing:0,transport:0,startDate:r.startDate||'',
+    eid:r.eid||'—',permitType:r.permitType||'—',sponsor:r.sponsor||'—',
+    residencyExp:r.residencyExp||'',passportExp:r.passportExp||'',labourCardExp:'',
+    schedule:['work','work','work','work','work','off','off'],
+    notes:(isEn?'Added from registration ':'تمت الإضافة من طلب التسجيل ')+r.reqNum,
+    initials:r.name?r.name.trim().split(' ').slice(0,2).map(w=>w[0]).join(''):'؟؟'
+  };
+  employees.push(newEmp);
+  all[ri].status='approved';
+  localStorage.setItem('prosto_registrations',JSON.stringify(all));
+  buildDeptFilter(); renderList(); updateStats(); renderRegistrations();
+  alert((isEn?'✅ Added ':'✅ تمت إضافة ')+r.name+(isEn?' to staff!':' إلى قائمة الموظفين!'));
+}
+function clearRegistrations() {
+  const isEn=window.currentLang==='en';
+  if(!confirm(isEn?'Clear all registrations?':'مسح كل طلبات التسجيل؟')) return;
+  localStorage.removeItem('prosto_registrations'); renderRegistrations();
+}
+function copyLink(type) {
+  const base=window.location.href.replace('index.html','').replace(/\/$/,'');
+  navigator.clipboard.writeText(base+'/'+type+'.html').then(()=>alert('✅ '+(window.currentLang==='en'?'Link copied!':'تم نسخ اللينك!')));
+}
+
+// ─── LOGIN ────────────────────────────────────────────────────────────────────
+function doLogin() {
+  const u=document.getElementById('loginUser').value.trim().toLowerCase();
+  const p=document.getElementById('loginPass').value;
+  // reload users from storage (in case changed)
+  USERS=JSON.parse(localStorage.getItem('prosto_users')||'null')||USERS;
+  const match=USERS.find(x=>x.username===u&&x.password===p);
+  if(match){
+    currentUser=match;
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('headerSub').textContent='مرحباً، '+match.name;
+    loadBadges();
+  } else {
+    document.getElementById('loginError').classList.add('show');
+    document.getElementById('loginPass').value='';
+    setTimeout(()=>document.getElementById('loginError').classList.remove('show'),3000);
+  }
+}
+
+function loadBadges() {
+  const c=JSON.parse(localStorage.getItem('prosto_complaints')||'[]').filter(x=>x.status==='new').length;
+  const r=JSON.parse(localStorage.getItem('prosto_registrations')||'[]').filter(x=>x.status==='pending').length;
+  if(c>0){const b=document.getElementById('complaintsBadge');b.textContent=c;b.style.display='inline-block';}
+  if(r>0){const b=document.getElementById('regsBadge');b.textContent=r;b.style.display='inline-block';}
+}
+
+// ─── PWA ──────────────────────────────────────────────────────────────────────
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;});
+document.getElementById('installYes').addEventListener('click',async()=>{
+  if(!deferredPrompt) return;
+  deferredPrompt.prompt(); await deferredPrompt.userChoice;
+  deferredPrompt=null; document.getElementById('installBanner').classList.remove('show');
+});
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+function init() {
+  document.getElementById('headerDate').textContent=
+    new Date().toLocaleDateString('ar-AE',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  // reload branches from storage if exists
+  buildDeptFilter();
+  renderList();
+  updateStats();
+}
+init();
+</script>
+</body>
+</html>
