@@ -1096,6 +1096,63 @@ function getPhotoStore(id) {
   return photoStore[id];
 }
 
+// ─── BRANCHES DATA ────────────────────────────────────────────────────────────
+let branches = JSON.parse(localStorage.getItem('prosto_branches') || 'null') || [
+  {ar:'الخالدية',  en:'Khalidiya',   prefix:'KH', type:'فرع'},
+  {ar:'بني ياس',   en:'Bani Yas',    prefix:'BY', type:'فرع'},
+  {ar:'الكول سنتر',en:'Call Center', prefix:'CC', type:'قسم'},
+  {ar:'المشغل',    en:'Workshop',    prefix:'MS', type:'قسم'},
+];
+
+function addBranch() {
+  const ar=document.getElementById('newBranchAr').value.trim();
+  const en=document.getElementById('newBranchEn').value.trim();
+  const prefix=document.getElementById('newBranchPrefix').value.trim().toUpperCase();
+  const type=document.getElementById('newBranchType').value;
+  if(!ar){alert('يرجى إدخال اسم الفرع');return;}
+  if(branches.find(b=>b.ar===ar)){alert('الفرع موجود مسبقًا');return;}
+  branches.push({ar,en:en||ar,prefix:prefix||ar.substring(0,2).toUpperCase(),type});
+  localStorage.setItem('prosto_branches',JSON.stringify(branches));
+  document.getElementById('newBranchAr').value='';
+  document.getElementById('newBranchEn').value='';
+  document.getElementById('newBranchPrefix').value='';
+  buildDeptFilter(); renderBranchesList(); updateBranchSelects();
+}
+
+function deleteBranch(ar) {
+  if(!confirm('حذف الفرع: '+ar)) return;
+  branches=branches.filter(b=>b.ar!==ar);
+  localStorage.setItem('prosto_branches',JSON.stringify(branches));
+  buildDeptFilter(); renderBranchesList(); updateBranchSelects();
+}
+
+function renderBranchesList() {
+  const isEn=window.currentLang==='en';
+  const el=document.getElementById('branchesList'); if(!el) return;
+  el.innerHTML=branches.map(b=>`
+    <div style="background:white;border-radius:12px;padding:1rem 1.3rem;margin-bottom:0.8rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+      <div style="font-size:1.3rem;">${b.type==='فرع'?'🏪':'🏢'}</div>
+      <div style="flex:1;">
+        <div style="font-weight:700;">${isEn?b.en:b.ar}</div>
+        <div style="font-size:0.78rem;color:var(--text-muted);">${isEn?b.ar:b.en} · ${b.type} · ${b.prefix}</div>
+      </div>
+      <div style="font-size:0.82rem;color:var(--text-muted);">${employees.filter(e=>e.dept===b.ar).length} موظف</div>
+      <button onclick="deleteBranch('${b.ar}')" style="background:#FFEBEE;color:var(--red);border:none;padding:0.4rem 0.8rem;border-radius:7px;font-family:Tajawal,sans-serif;font-weight:700;font-size:0.75rem;cursor:pointer;">🗑️</button>
+    </div>`).join('');
+}
+
+function updateBranchSelects() {
+  const sel=document.getElementById('f_dept'); if(!sel) return;
+  sel.innerHTML=branches.map(b=>`<option value="${b.ar}">${b.ar}</option>`).join('');
+  const psel=document.getElementById('payrollBranchFilter');
+  if(psel){
+    const cur=psel.value;
+    psel.innerHTML=`<option value="all">${t('allBranches')}</option>`+
+      branches.map(b=>`<option value="${b.ar}">${window.currentLang==='en'?b.en:b.ar}</option>`).join('');
+    try{psel.value=cur;}catch(e){}
+  }
+}
+
 // ─── STATE ────────────────────────────────────────────────────────────────────
 let selectedId      = null;
 let activeFilter    = 'الكل';
@@ -1252,6 +1309,7 @@ function toggleLang() {
     if(id==='settings') renderSettings();
     if(id==='complaints') renderComplaints();
     if(id==='registrations') renderRegistrations();
+    if(id==='branches') renderBranchesList();
   }
 }
 
@@ -1265,6 +1323,7 @@ function showPage(name) {
   if(name==='settings')      renderSettings();
   if(name==='complaints')    renderComplaints();
   if(name==='registrations') renderRegistrations();
+  if(name==='branches') renderBranchesList();
 }
 
 // ─── DEPT FILTER ──────────────────────────────────────────────────────────────
