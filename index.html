@@ -621,6 +621,15 @@ header {
   .logout-btns { display:flex; gap:0.8rem; }
   .logout-yes { flex:1; padding:0.7rem; background:var(--red); color:white; border:none; border-radius:9px; font-family:Tajawal,sans-serif; font-weight:700; font-size:0.9rem; cursor:pointer; }
   .logout-no  { flex:1; padding:0.7rem; background:var(--black-3); color:#aaa; border:1px solid var(--black-4); border-radius:9px; font-family:Tajawal,sans-serif; font-weight:700; font-size:0.9rem; cursor:pointer; }
+
+  .logout-header-btn {
+    background: transparent; color: #888;
+    border: 1.5px solid #333; padding: 0.4rem 0.9rem;
+    border-radius: 8px; font-family: Tajawal, sans-serif;
+    font-weight: 700; font-size: 0.82rem; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .logout-header-btn:hover { border-color: var(--red); color: var(--red); }
 </style>
 </head>
 <body>
@@ -674,7 +683,7 @@ header {
     <span class="header-date" id="headerDate"></span>
     <button class="lang-btn" onclick="toggleLang()" id="langBtn" title="Switch Language">EN</button>
     <button class="add-btn" id="addEmpBtn" onclick="openModal()">+ إضافة موظف</button>
-    <button id="logoutBtn" onclick="doLogout()" style="background:transparent;color:#888;border:1.5px solid #333;padding:0.4rem 0.9rem;border-radius:8px;font-family:Tajawal,sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--red)'" onmouseout="this.style.borderColor='#333';this.style.color='#888'">⏻ خروج</button>
+    <button id="logoutBtn" onclick="doLogout()" class="logout-header-btn">⏻ <span id="logoutBtnText">خروج</span></button>
   </div>
 </header>
 
@@ -2372,7 +2381,7 @@ function confirmLogout() {
   document.body.style.direction = 'rtl';
   document.getElementById('langBtn').textContent = 'EN';
   document.getElementById('addEmpBtn').textContent = '+ إضافة موظف';
-  document.getElementById('logoutBtn').textContent = '⏻ خروج';
+  document.getElementById('logoutBtnText').textContent = 'خروج';
   document.getElementById('loginUser').value = '';
   document.getElementById('loginPass').value = '';
   document.getElementById('loginError').classList.remove('show');
