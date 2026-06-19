@@ -603,62 +603,29 @@ header {
   }
   .dept-arrow { font-size: 0.65rem; color: var(--grey-3); }
   .dept-group-body { display: block; }
-
-  #logoutConfirm {
-    display:none; position:fixed; inset:0;
-    background:rgba(0,0,0,0.75); z-index:500;
-    align-items:center; justify-content:center;
-  }
-  #logoutConfirm.open { display:flex; }
-  .logout-box {
-    background:var(--black-2); border:1px solid var(--black-4);
-    border-radius:16px; padding:2rem 1.8rem; width:100%; max-width:340px;
-    text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.6);
-  }
-  .logout-icon { font-size:2.5rem; margin-bottom:0.8rem; }
-  .logout-title { color:white; font-size:1.1rem; font-weight:700; margin-bottom:0.4rem; }
-  .logout-sub { color:#888; font-size:0.82rem; margin-bottom:1.5rem; }
-  .logout-btns { display:flex; gap:0.8rem; }
-  .logout-yes { flex:1; padding:0.7rem; background:var(--red); color:white; border:none; border-radius:9px; font-family:Tajawal,sans-serif; font-weight:700; font-size:0.9rem; cursor:pointer; }
-  .logout-no  { flex:1; padding:0.7rem; background:var(--black-3); color:#aaa; border:1px solid var(--black-4); border-radius:9px; font-family:Tajawal,sans-serif; font-weight:700; font-size:0.9rem; cursor:pointer; }
-
-  .logout-header-btn {
-    background: transparent; color: #888;
-    border: 1.5px solid #333; padding: 0.4rem 0.9rem;
-    border-radius: 8px; font-family: Tajawal, sans-serif;
-    font-weight: 700; font-size: 0.82rem; cursor: pointer;
-    transition: all 0.15s;
-  }
-  .logout-header-btn:hover { border-color: var(--red); color: var(--red); }
 </style>
 </head>
 <body>
 
 <!-- LOGIN -->
-<div id="loginScreen" style="position:fixed;inset:0;background:#0D0D0D;z-index:9999;display:flex;align-items:center;justify-content:center;padding:1.5rem;">
-  <div style="background:#1A1A1A;border:1px solid #303030;border-radius:20px;padding:2.5rem 2rem;width:100%;max-width:380px;box-shadow:0 30px 80px rgba(0,0,0,0.7);text-align:center;">
-    <div style="width:72px;height:72px;background:#CC1F1F;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;margin:0 auto 0.9rem;box-shadow:0 8px 30px rgba(204,31,31,0.4);">🍽️</div>
-    <div style="font-size:2.2rem;font-weight:800;color:white;letter-spacing:3px;margin-bottom:0.3rem;">PROSTO</div>
-    <div style="font-size:0.78rem;color:#757575;margin-bottom:2rem;">نظام إدارة الموظفين</div>
-    <div style="margin-bottom:1rem;text-align:right;">
-      <label style="display:block;font-size:0.78rem;font-weight:700;color:#757575;margin-bottom:0.4rem;">اسم المستخدم</label>
-      <input id="loginUser" type="text" placeholder="username" autocomplete="username"
-        style="width:100%;padding:0.85rem 1rem;background:#252525;border:1.5px solid #303030;border-radius:10px;font-size:0.95rem;color:white;outline:none;box-sizing:border-box;direction:ltr;text-align:right;">
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-logo-icon">🍽️</div>
+      <div class="login-title">PROSTO</div>
+      <div class="login-subtitle">نظام إدارة الموظفين</div>
     </div>
-    <div style="margin-bottom:0.5rem;text-align:right;">
-      <label style="display:block;font-size:0.78rem;font-weight:700;color:#757575;margin-bottom:0.4rem;">كلمة المرور</label>
-      <input id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password"
-        style="width:100%;padding:0.85rem 1rem;background:#252525;border:1.5px solid #303030;border-radius:10px;font-size:0.95rem;color:white;outline:none;box-sizing:border-box;"
-        onkeydown="if(event.key==='Enter') doLogin()">
+    <div class="login-field">
+      <label class="login-label">اسم المستخدم</label>
+      <input class="login-input" id="loginUser" type="text" placeholder="username" autocomplete="username">
     </div>
-    <button onclick="doLogin()"
-      style="width:100%;padding:0.9rem;background:#CC1F1F;color:white;border:none;border-radius:10px;font-size:1rem;font-weight:800;cursor:pointer;margin-top:0.5rem;">
-      🔐 دخول
-    </button>
-    <div id="loginError" style="background:rgba(204,31,31,0.12);border:1px solid rgba(204,31,31,0.35);color:#FF6B6B;border-radius:8px;padding:0.6rem 0.9rem;font-size:0.82rem;margin-top:0.8rem;text-align:center;display:none;">
-      ❌ اسم المستخدم أو كلمة المرور غير صحيحة
+    <div class="login-field">
+      <label class="login-label">كلمة المرور</label>
+      <input class="login-input" id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter') doLogin()">
     </div>
-    <div style="text-align:center;margin-top:1.5rem;color:#454545;font-size:0.72rem;">PROSTO System v2.0</div>
+    <button class="login-btn" onclick="doLogin()">🔐 دخول</button>
+    <div class="login-error" id="loginError">❌ اسم المستخدم أو كلمة المرور غير صحيحة</div>
+    <div class="login-footer">PROSTO System v2.0 · جميع الحقوق محفوظة</div>
   </div>
 </div>
 
@@ -689,7 +656,6 @@ header {
     <span class="header-date" id="headerDate"></span>
     <button class="lang-btn" onclick="toggleLang()" id="langBtn" title="Switch Language">EN</button>
     <button class="add-btn" id="addEmpBtn" onclick="openModal()">+ إضافة موظف</button>
-    <button id="logoutBtn" onclick="doLogout()" class="logout-header-btn">⏻ <span id="logoutBtnText">خروج</span></button>
   </div>
 </header>
 
@@ -926,8 +892,8 @@ header {
   <div style="max-width:1000px;margin:1.5rem auto;padding:0 1.5rem 2rem;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
       <div>
-        <h2 style="font-size:1.3rem;font-weight:800;" id="complaints-h2">📨 الشكاوي والاقتراحات</h2>
-        <div style="font-size:0.82rem;color:var(--text-muted);margin-top:0.2rem;" id="complaints-sub">الشكاوي المقدمة من الموظفين</div>
+        <h2 style="font-size:1.3rem;font-weight:800;">📨 الشكاوي والاقتراحات</h2>
+        <div style="font-size:0.82rem;color:var(--text-muted);margin-top:0.2rem;">الشكاوي المقدمة من الموظفين</div>
       </div>
       <div style="display:flex;gap:0.7rem;align-items:center;flex-wrap:wrap;">
         <a href="complaint.html" target="_blank" style="background:var(--red);color:white;padding:0.5rem 1rem;border-radius:8px;font-weight:700;font-size:0.85rem;text-decoration:none;">🔗 لينك الشكاوي</a>
@@ -946,10 +912,10 @@ header {
 
     <!-- filter row -->
     <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;" id="complaintFilters">
-      <button class="cmp-filter-btn active" onclick="filterComplaints('all',this)" id="cf-all">الكل</button>
-      <button class="cmp-filter-btn" onclick="filterComplaints('new',this)" id="cf-new">🆕 جديدة</button>
-      <button class="cmp-filter-btn" onclick="filterComplaints('high',this)" id="cf-high">🔴 عاجلة</button>
-      <button class="cmp-filter-btn" onclick="filterComplaints('resolved',this)" id="cf-resolved">✅ تم الحل</button>
+      <button class="cmp-filter-btn active" onclick="filterComplaints('all',this)">الكل</button>
+      <button class="cmp-filter-btn" onclick="filterComplaints('new',this)">🆕 جديدة</button>
+      <button class="cmp-filter-btn" onclick="filterComplaints('high',this)">🔴 عاجلة</button>
+      <button class="cmp-filter-btn" onclick="filterComplaints('resolved',this)">✅ تم الحل</button>
     </div>
 
     <div id="complaintsList"></div>
@@ -961,8 +927,8 @@ header {
   <div style="max-width:1000px;margin:1.5rem auto;padding:0 1.5rem 2rem;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
       <div>
-        <h2 style="font-size:1.3rem;font-weight:800;" id="regs-h2">📋 طلبات تسجيل الموظفين</h2>
-        <div style="font-size:0.82rem;color:var(--text-muted);margin-top:0.2rem;" id="regs-sub">الطلبات المقدمة عبر لينك التسجيل</div>
+        <h2 style="font-size:1.3rem;font-weight:800;">📋 طلبات تسجيل الموظفين</h2>
+        <div style="font-size:0.82rem;color:var(--text-muted);margin-top:0.2rem;">الطلبات المقدمة عبر لينك التسجيل</div>
       </div>
       <div style="display:flex;gap:0.7rem;align-items:center;flex-wrap:wrap;">
         <a href="register.html" target="_blank" style="background:var(--red);color:white;padding:0.5rem 1rem;border-radius:8px;font-weight:700;font-size:0.85rem;text-decoration:none;">🔗 لينك التسجيل</a>
@@ -1130,127 +1096,6 @@ function getPhotoStore(id) {
   return photoStore[id];
 }
 
-// ─── BRANCHES DATA ────────────────────────────────────────────────────────────
-let branches = JSON.parse(localStorage.getItem('prosto_branches') || 'null') || [
-  {ar:'الخالدية',  en:'Khalidiya',   prefix:'KH', type:'فرع'},
-  {ar:'بني ياس',   en:'Bani Yas',    prefix:'BY', type:'فرع'},
-  {ar:'الكول سنتر',en:'Call Center', prefix:'CC', type:'قسم'},
-  {ar:'المشغل',    en:'Workshop',    prefix:'MS', type:'قسم'},
-];
-
-function addBranch() {
-  const ar=document.getElementById('newBranchAr').value.trim();
-  const en=document.getElementById('newBranchEn').value.trim();
-  const prefix=document.getElementById('newBranchPrefix').value.trim().toUpperCase();
-  const type=document.getElementById('newBranchType').value;
-  if(!ar){alert('يرجى إدخال اسم الفرع');return;}
-  if(branches.find(b=>b.ar===ar)){alert('الفرع موجود مسبقًا');return;}
-  branches.push({ar,en:en||ar,prefix:prefix||ar.substring(0,2).toUpperCase(),type});
-  localStorage.setItem('prosto_branches',JSON.stringify(branches));
-  document.getElementById('newBranchAr').value='';
-  document.getElementById('newBranchEn').value='';
-  document.getElementById('newBranchPrefix').value='';
-  buildDeptFilter(); renderBranchesList(); updateBranchSelects();
-}
-
-function deleteBranch(ar) {
-  if(!confirm('حذف الفرع: '+ar)) return;
-  branches=branches.filter(b=>b.ar!==ar);
-  localStorage.setItem('prosto_branches',JSON.stringify(branches));
-  buildDeptFilter(); renderBranchesList(); updateBranchSelects();
-}
-
-function renderBranchesList() {
-  const isEn = window.currentLang==='en';
-  const el = document.getElementById('branchesList');
-  if(!el) return;
-
-  // Branch cards
-  let cardsHtml = '<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.5rem;">';
-  branches.forEach(b => {
-    const emps    = employees.filter(e=>e.dept===b.ar);
-    const active  = emps.filter(e=>e.status==='active').length;
-    const inactive= emps.filter(e=>e.status==='inactive').length;
-    const leave   = emps.filter(e=>e.status==='leave').length;
-    const expiring= emps.filter(e=>{
-      const d=e.residencyExp; if(!d) return false;
-      const diff=(new Date(d)-new Date())/86400000; return diff>=0&&diff<90;
-    }).length;
-    const icon = b.type==='فرع' ? '🏪' : '🏢';
-    const name = isEn ? b.en : b.ar;
-    const sub  = isEn ? b.ar : b.en;
-    const empLabel = isEn ? 'emp' : 'موظف';
-    const viewLabel = isEn ? 'View employees →' : 'عرض الموظفين ←';
-
-    cardsHtml += '<div onclick="goToBranch(\'' + b.ar + '\')" style="background:white;border-radius:14px;padding:1.3rem;box-shadow:0 2px 12px rgba(0,0,0,0.07);cursor:pointer;border-top:4px solid var(--red);transition:box-shadow 0.15s,transform 0.15s;" onmouseover="this.style.boxShadow='0 6px 24px rgba(204,31,31,0.15)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='0 2px 12px rgba(0,0,0,0.07)';this.style.transform=''">';
-    cardsHtml += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem;">';
-    cardsHtml += '<div style="font-size:1.5rem;">' + icon + '</div>';
-    cardsHtml += '<span style="background:var(--black);color:white;font-size:0.72rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:20px;">' + emps.length + ' ' + empLabel + '</span>';
-    cardsHtml += '</div>';
-    cardsHtml += '<div style="font-weight:800;font-size:1rem;margin-bottom:0.2rem;">' + name + '</div>';
-    cardsHtml += '<div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:0.8rem;">' + sub + ' · ' + b.prefix + '</div>';
-    cardsHtml += '<div style="display:flex;gap:0.4rem;flex-wrap:wrap;">';
-    cardsHtml += '<span style="background:#E8F5E9;color:#2E7D32;font-size:0.68rem;font-weight:700;padding:0.2rem 0.5rem;border-radius:20px;">✅ ' + active + '</span>';
-    if(leave>0)    cardsHtml += '<span style="background:#FFF3E0;color:#E65100;font-size:0.68rem;font-weight:700;padding:0.2rem 0.5rem;border-radius:20px;">🏖️ ' + leave + '</span>';
-    if(inactive>0) cardsHtml += '<span style="background:#F5F5F5;color:#666;font-size:0.68rem;font-weight:700;padding:0.2rem 0.5rem;border-radius:20px;">⚫ ' + inactive + '</span>';
-    if(expiring>0) cardsHtml += '<span style="background:#FFEBEE;color:var(--red);font-size:0.68rem;font-weight:700;padding:0.2rem 0.5rem;border-radius:20px;">⚠️ ' + expiring + '</span>';
-    cardsHtml += '</div>';
-    cardsHtml += '<div style="margin-top:0.9rem;text-align:center;background:var(--off-white);padding:0.4rem;border-radius:8px;font-size:0.75rem;font-weight:700;color:var(--text-muted);">' + viewLabel + '</div>';
-    cardsHtml += '</div>';
-  });
-  cardsHtml += '</div>';
-
-  // Manage table
-  const manageTitle = isEn ? 'Manage Branches' : 'إدارة الفروع';
-  const viewLabel2  = isEn ? 'View' : 'عرض';
-  const empLabel2   = isEn ? 'employees' : 'موظف';
-  let manageHtml = '<div style="background:white;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);">';
-  manageHtml += '<div style="background:var(--black);padding:0.8rem 1.2rem;border-bottom:2px solid var(--red);"><span style="color:white;font-weight:700;font-size:0.9rem;">' + manageTitle + '</span></div>';
-  manageHtml += '<div style="padding:1rem;">';
-  branches.forEach(b => {
-    const cnt = employees.filter(e=>e.dept===b.ar).length;
-    const icon = b.type==='فرع' ? '🏪' : '🏢';
-    const name = isEn ? b.en : b.ar;
-    manageHtml += '<div style="display:flex;align-items:center;gap:0.8rem;padding:0.7rem 0;border-bottom:1px solid var(--grey);">';
-    manageHtml += '<div style="font-size:1.1rem;">' + icon + '</div>';
-    manageHtml += '<div style="flex:1;"><div style="font-weight:700;font-size:0.88rem;">' + name + '</div>';
-    manageHtml += '<div style="font-size:0.72rem;color:var(--text-muted);">' + b.prefix + ' · ' + cnt + ' ' + empLabel2 + '</div></div>';
-    manageHtml += '<button onclick="goToBranch(\'' + b.ar + '\')" style="background:var(--black);color:white;border:none;padding:0.35rem 0.8rem;border-radius:7px;font-family:Tajawal,sans-serif;font-weight:700;font-size:0.72rem;cursor:pointer;">' + viewLabel2 + '</button>';
-    manageHtml += '<button onclick="deleteBranch(\'' + b.ar + '\')" style="background:#FFEBEE;color:var(--red);border:none;padding:0.35rem 0.7rem;border-radius:7px;font-family:Tajawal,sans-serif;font-weight:700;font-size:0.72rem;cursor:pointer;">🗑️</button>';
-    manageHtml += '</div>';
-  });
-  manageHtml += '</div></div>';
-
-  el.innerHTML = cardsHtml + manageHtml;
-}
-
-function goToBranch(deptAr) {
-  // Switch to employees page and filter by this branch
-  showPage('employees');
-  activeFilter = deptAr;
-  activeCardFilter = null;
-  searchQuery = '';
-  document.getElementById('searchInput').value = '';
-  document.getElementById('filterBanner').style.display = 'none';
-  ['all','active','leave','inactive','expiring'].forEach(t2=>
-    document.getElementById('card-'+t2)?.classList.remove('active-card')
-  );
-  buildDeptFilter();
-  renderList();
-}
-
-function updateBranchSelects() {
-  const sel=document.getElementById('f_dept'); if(!sel) return;
-  sel.innerHTML=branches.map(b=>`<option value="${b.ar}">${b.ar}</option>`).join('');
-  const psel=document.getElementById('payrollBranchFilter');
-  if(psel){
-    const cur=psel.value;
-    psel.innerHTML=`<option value="all">${t('allBranches')}</option>`+
-      branches.map(b=>`<option value="${b.ar}">${window.currentLang==='en'?b.en:b.ar}</option>`).join('');
-    try{psel.value=cur;}catch(e){}
-  }
-}
-
 // ─── STATE ────────────────────────────────────────────────────────────────────
 let selectedId      = null;
 let activeFilter    = 'الكل';
@@ -1261,13 +1106,9 @@ let modalAvatarData = null;
 window.currentLang  = 'ar';
 
 // ─── CREDENTIALS (editable) ───────────────────────────────────────────────────
-let USERS = [
+let USERS = JSON.parse(localStorage.getItem('prosto_users') || 'null') || [
   {username:'admin', password:'prosto2024', name:'المدير العام'},
 ];
-try {
-  const stored = localStorage.getItem('prosto_users');
-  if(stored) USERS = JSON.parse(stored);
-} catch(e) {}
 let currentUser = null;
 
 // ─── LANGUAGE ─────────────────────────────────────────────────────────────────
@@ -1382,8 +1223,8 @@ function toggleLang() {
   const inactiveEl=document.getElementById('lbl-inactive'); if(inactiveEl) inactiveEl.textContent=window.currentLang==='en'?'Inactive':'غير نشطين';
 
   // panel
-  const panelTitle = document.querySelector('.panel-title');
-  if(panelTitle) panelTitle.textContent = t('panelTitle');
+  const pt = document.querySelector('.panel-title');
+  if(pt) pt.textContent = t('panelTitle');
   const si = document.getElementById('searchInput');
   if(si) si.placeholder = t('searchPH');
 
@@ -1403,69 +1244,6 @@ function toggleLang() {
   renderList();
   if(selectedId) selectEmployee(selectedId);
 
-  // translate hardcoded page elements
-  const isEn2 = window.currentLang==='en';
-
-  // payroll
-  const pt2 = document.getElementById('payroll-title');
-  if(pt2) pt2.textContent = isEn2?'💰 Payroll':'💰 الرواتب والبايرول';
-  const ps2 = document.getElementById('payroll-subtitle');
-  if(ps2) ps2.textContent = isEn2?'Total monthly salaries for all branches':'إجمالي الرواتب الشهرية لجميع الفروع';
-  const ptt = document.getElementById('payroll-table-title');
-  if(ptt) ptt.textContent = isEn2?'Payroll Sheet':'كشف الرواتب';
-
-  // complaints
-  const ch = document.getElementById('complaints-h2');
-  if(ch) ch.textContent = isEn2?'📨 Complaints & Suggestions':'📨 الشكاوي والاقتراحات';
-  const cs = document.getElementById('complaints-sub');
-  if(cs) cs.textContent = isEn2?'Complaints submitted by employees':'الشكاوي المقدمة من الموظفين';
-  const cfAll = document.getElementById('cf-all');
-  if(cfAll) cfAll.textContent = isEn2?'All':'الكل';
-  const cfNew = document.getElementById('cf-new');
-  if(cfNew) cfNew.textContent = isEn2?'🆕 New':'🆕 جديدة';
-  const cfHigh = document.getElementById('cf-high');
-  if(cfHigh) cfHigh.textContent = isEn2?'🔴 Urgent':'🔴 عاجلة';
-  const cfRes = document.getElementById('cf-resolved');
-  if(cfRes) cfRes.textContent = isEn2?'✅ Resolved':'✅ تم الحل';
-  const clinkLabel = document.querySelector('#page-complaints .intro-card .intro-title');
-  const complaintLinkLabel = document.querySelector('#page-complaints [style*="قم بإرساله"]');
-
-  // registrations
-  const rh = document.getElementById('regs-h2');
-  if(rh) rh.textContent = isEn2?'📋 Employee Registration Requests':'📋 طلبات تسجيل الموظفين';
-  const rs = document.getElementById('regs-sub');
-  if(rs) rs.textContent = isEn2?'Requests submitted via registration link':'الطلبات المقدمة عبر لينك التسجيل';
-
-  // settings
-  const st = document.getElementById('settings-title');
-  if(st) st.textContent = isEn2?'⚙️ System Settings':'⚙️ إعدادات النظام';
-  const sc = document.getElementById('s-cred-title');
-  if(sc) sc.textContent = isEn2?'🔐 Login Credentials':'🔐 بيانات تسجيل الدخول';
-  const sInfo = document.getElementById('s-info-title');
-  if(sInfo) sInfo.textContent = isEn2?'📊 System Info':'📊 معلومات النظام';
-  const sa = document.getElementById('s-alerts-title');
-  if(sa) sa.textContent = isEn2?'⚠️ Document Expiry Alerts':'⚠️ تنبيهات انتهاء الوثائق';
-
-  // branches
-  const bh = document.getElementById('branches-title');
-  if(bh) bh.textContent = isEn2?'🏪 Branches & Departments':'🏪 الفروع والأقسام';
-  const bsub = document.getElementById('branches-sub');
-  if(bsub) bsub.textContent = isEn2?'Manage Prosto branches':'إدارة فروع بروستو';
-  const abt = document.getElementById('add-branch-title');
-  if(abt) abt.textContent = isEn2?'➕ Add New Branch':'➕ إضافة فرع جديد';
-  const abb = document.getElementById('add-branch-btn');
-  if(abb) abb.textContent = isEn2?'➕ Add':'➕ إضافة';
-  const bnl = document.getElementById('branch-name-label');
-  if(bnl) bnl.textContent = isEn2?'Branch Name (AR)':'اسم الفرع (عربي)';
-  const bel = document.getElementById('branch-en-label');
-  if(bel) bel.textContent = isEn2?'Branch Name (EN)':'Branch Name (EN)';
-  const bpl = document.getElementById('branch-prefix-label');
-  if(bpl) bpl.textContent = isEn2?'Short Code':'الكود المختصر';
-
-  // login screen
-  const ls = document.querySelector('.login-subtitle');
-  if(ls) ls.textContent = isEn2?'Employee Management System':'نظام إدارة الموظفين';
-
   // re-render current page
   const activePage = document.querySelector('.page.active');
   if(activePage) {
@@ -1474,7 +1252,6 @@ function toggleLang() {
     if(id==='settings') renderSettings();
     if(id==='complaints') renderComplaints();
     if(id==='registrations') renderRegistrations();
-    if(id==='branches') renderBranchesList();
   }
 }
 
@@ -1488,7 +1265,6 @@ function showPage(name) {
   if(name==='settings')      renderSettings();
   if(name==='complaints')    renderComplaints();
   if(name==='registrations') renderRegistrations();
-  if(name==='branches') renderBranchesList();
 }
 
 // ─── DEPT FILTER ──────────────────────────────────────────────────────────────
@@ -1519,8 +1295,7 @@ function filterByCard(type) {
   document.getElementById('filterBannerText').textContent = '🔍 '+bannerTexts[type];
   document.getElementById('filterBanner').style.display='block';
   document.querySelector('#filterBanner button').textContent=t('clearFilter');
-  // keep dept filter as is, just re-render
-  buildDeptFilter(); renderList();
+  activeFilter='الكل'; buildDeptFilter(); renderList();
 }
 function clearCardFilter() {
   activeCardFilter=null;
@@ -1550,13 +1325,13 @@ function getFiltered() {
 
 // ─── RENDER LIST ──────────────────────────────────────────────────────────────
 function renderList() {
-  const list = document.getElementById('staffList');
-  const isEn = window.currentLang==='en';
+  const list     = document.getElementById('staffList');
+  const filtered = getFiltered();
+  const isEn     = window.currentLang==='en';
+  document.getElementById('listCount').textContent = filtered.length;
 
-  // If searching — flat filtered list
-  if(searchQuery) {
-    const filtered = getFiltered();
-    document.getElementById('listCount').textContent = filtered.length;
+  // If a specific dept is selected OR searching — flat list
+  if(activeFilter !== 'الكل' || searchQuery || activeCardFilter) {
     if(!filtered.length){
       list.innerHTML=`<div style="padding:2rem;text-align:center;color:var(--text-muted);font-size:0.88rem;">${isEn?'No results':'لا توجد نتائج'}</div>`;
       return;
@@ -1565,64 +1340,35 @@ function renderList() {
     return;
   }
 
-  // Build grouped list — respecting card filter and dept filter
+  // DEFAULT: show grouped by branch/dept
+  let html2 = '';
   const branchOrder = [...branches.map(b=>b.ar)];
+  // also include any dept not in branches list
   const extraDepts = [...new Set(employees.map(e=>e.dept))].filter(d=>!branchOrder.includes(d));
   const allGroups = [...branchOrder, ...extraDepts];
 
-  // If specific dept selected — show only that dept grouped
-  const groupsToShow = activeFilter === 'الكل' ? allGroups : [activeFilter];
-
-  let html2 = '';
-  let totalShown = 0;
-
-  groupsToShow.forEach(dept => {
+  allGroups.forEach(dept => {
     const brObj = branches.find(b=>b.ar===dept);
     const deptName = brObj ? (isEn?brObj.en:brObj.ar) : dept;
     const deptType = brObj ? (isEn?(brObj.type==='فرع'?'Branch':'Dept'):brObj.type) : '';
+    const deptEmps = employees.filter(e=>e.dept===dept);
 
-    // Apply card filter within dept
-    let deptEmps = employees.filter(e=>e.dept===dept);
-    if(activeCardFilter==='active')   deptEmps = deptEmps.filter(e=>e.status==='active');
-    else if(activeCardFilter==='leave')    deptEmps = deptEmps.filter(e=>e.status==='leave');
-    else if(activeCardFilter==='inactive') deptEmps = deptEmps.filter(e=>e.status==='inactive');
-    else if(activeCardFilter==='expiring') deptEmps = deptEmps.filter(e=>{
-      const d=e.residencyExp; if(!d) return false;
-      const diff=(new Date(d)-new Date())/86400000; return diff>=0&&diff<90;
-    });
-
-    // Skip empty groups when card filter active and group is empty
-    if(activeCardFilter && deptEmps.length===0) return;
-
-    totalShown += deptEmps.length;
-    // Full dept count (without card filter) for badge
-    const fullDeptCount = employees.filter(e=>e.dept===dept).length;
-
-    html2 += `<div class="dept-group-header" onclick="toggleDeptGroup('${dept}')" id="grp-hdr-${dept.replace(/ /g,'_')}">
+    html2 += `<div class="dept-group-header" onclick="toggleDeptGroup('${dept}')" id="grp-hdr-${dept.replace(/\s/g,'_')}">
       <div style="display:flex;align-items:center;gap:0.5rem;flex:1;">
         <span style="font-size:0.9rem;">${brObj?.type==='فرع'?'🏪':'🏢'}</span>
         <span style="font-weight:700;font-size:0.85rem;">${deptName}</span>
         ${deptType?`<span style="font-size:0.65rem;color:var(--grey-3);background:var(--off-white);padding:0.1rem 0.4rem;border-radius:8px;">${deptType}</span>`:''}
       </div>
-      <span class="dept-count-badge">${activeCardFilter?deptEmps.length+'/'+fullDeptCount:fullDeptCount}</span>
-      <span class="dept-arrow" id="grp-arr-${dept.replace(/ /g,'_')}">▼</span>
+      <span class="dept-count-badge">${deptEmps.length}</span>
+      <span class="dept-arrow" id="grp-arr-${dept.replace(/\s/g,'_')}">▼</span>
     </div>
-    <div class="dept-group-body" id="grp-body-${dept.replace(/ /g,'_')}">
+    <div class="dept-group-body" id="grp-body-${dept.replace(/\s/g,'_')}">
       ${deptEmps.length===0
-        ? `<div style="padding:0.8rem 1.2rem;font-size:0.8rem;color:var(--text-muted);">${isEn?'No employees match filter':'لا يوجد موظفون في هذا الفلتر'}</div>`
+        ? `<div style="padding:0.8rem 1.2rem;font-size:0.8rem;color:var(--text-muted);">${isEn?'No employees yet':'لا يوجد موظفون بعد'}</div>`
         : deptEmps.map(e=>empCard(e,isEn)).join('')
       }
     </div>`;
   });
-
-  document.getElementById('listCount').textContent = totalShown || employees.filter(e=>{
-    if(!activeCardFilter) return activeFilter==='الكل'||e.dept===activeFilter;
-    return true;
-  }).length;
-
-  if(!html2) {
-    html2 = `<div style="padding:2rem;text-align:center;color:var(--text-muted);font-size:0.88rem;">${isEn?'No results':'لا توجد نتائج'}</div>`;
-  }
 
   list.innerHTML = html2;
 }
@@ -1647,7 +1393,7 @@ function empCard(e, isEn) {
 }
 
 function toggleDeptGroup(dept) {
-  const key = dept.replace(/ /g,'_');
+  const key = dept.replace(/\s/g,'_');
   const body = document.getElementById('grp-body-'+key);
   const arr  = document.getElementById('grp-arr-'+key);
   if(!body) return;
@@ -2368,62 +2114,21 @@ function copyLink(type) {
 }
 
 // ─── LOGIN ────────────────────────────────────────────────────────────────────
-function doLogout() {
-  const isEn = window.currentLang==='en';
-  document.getElementById('logout-title').textContent = isEn?'Sign Out':'تسجيل الخروج';
-  document.getElementById('logout-sub').textContent = isEn?'Are you sure you want to sign out?':'هل تريد تسجيل الخروج من النظام؟';
-  document.getElementById('logout-yes-btn').textContent = isEn?'Sign Out':'خروج';
-  document.getElementById('logout-no-btn').textContent = isEn?'Cancel':'إلغاء';
-  document.getElementById('logoutConfirm').classList.add('open');
-}
-
-function confirmLogout() {
-  document.getElementById('logoutConfirm').classList.remove('open');
-  currentUser = null;
-  // reset state
-  selectedId = null;
-  activeFilter = 'الكل';
-  searchQuery = '';
-  activeCardFilter = null;
-  window.currentLang = 'ar';
-  document.documentElement.setAttribute('lang','ar');
-  document.documentElement.setAttribute('dir','rtl');
-  document.body.style.direction = 'rtl';
-  document.getElementById('langBtn').textContent = 'EN';
-  document.getElementById('addEmpBtn').textContent = '+ إضافة موظف';
-  document.getElementById('logoutBtnText').textContent = 'خروج';
-  document.getElementById('loginUser').value = '';
-  document.getElementById('loginPass').value = '';
-  document.getElementById('loginError').classList.remove('show');
-  document.getElementById('headerSub').textContent = 'نظام إدارة الموظفين';
-  document.getElementById('loginScreen').style.display = 'flex';
-  // reset detail panel
-  document.getElementById('emptyState').style.display = 'flex';
-  document.getElementById('detailContent').style.display = 'none';
-}
-
 function doLogin() {
-  var u = document.getElementById('loginUser').value.trim().toLowerCase();
-  var p = document.getElementById('loginPass').value;
-  
-  var users = [{username:'admin', password:'prosto2024', name:'المدير العام'}];
-  try { var s = localStorage.getItem('prosto_users'); if(s) users = JSON.parse(s); } catch(e) {}
-  
-  var match = null;
-  for(var i=0; i<users.length; i++) {
-    if(users[i].username === u && users[i].password === p) { match = users[i]; break; }
-  }
-  
-  if(match) {
-    currentUser = match;
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('headerSub').textContent = 'مرحباً، ' + match.name;
+  const u=document.getElementById('loginUser').value.trim().toLowerCase();
+  const p=document.getElementById('loginPass').value;
+  // reload users from storage (in case changed)
+  USERS=JSON.parse(localStorage.getItem('prosto_users')||'null')||USERS;
+  const match=USERS.find(x=>x.username===u&&x.password===p);
+  if(match){
+    currentUser=match;
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('headerSub').textContent='مرحباً، '+match.name;
     loadBadges();
   } else {
-    var err = document.getElementById('loginError');
-    err.style.display = 'block';
-    document.getElementById('loginPass').value = '';
-    setTimeout(function() { err.style.display = 'none'; }, 3000);
+    document.getElementById('loginError').classList.add('show');
+    document.getElementById('loginPass').value='';
+    setTimeout(()=>document.getElementById('loginError').classList.remove('show'),3000);
   }
 }
 
@@ -2454,18 +2159,5 @@ function init() {
 }
 init();
 </script>
-
-<!-- LOGOUT CONFIRM -->
-<div id="logoutConfirm">
-  <div class="logout-box">
-    <div class="logout-icon">⏻</div>
-    <div class="logout-title" id="logout-title">تسجيل الخروج</div>
-    <div class="logout-sub" id="logout-sub">هل تريد تسجيل الخروج من النظام؟</div>
-    <div class="logout-btns">
-      <button class="logout-yes" id="logout-yes-btn" onclick="confirmLogout()">خروج</button>
-      <button class="logout-no" id="logout-no-btn" onclick="document.getElementById('logoutConfirm').classList.remove('open')">إلغاء</button>
-    </div>
-  </div>
-</div>
 </body>
 </html>
