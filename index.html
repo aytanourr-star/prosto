@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8">ش
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#0D0D0D">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -606,7 +606,7 @@ header {
 
   #logoutConfirm {
     display:none; position:fixed; inset:0;
-    background:rgba(0,0,0,0.75); z-index:9998;
+    background:rgba(0,0,0,0.75); z-index:500;
     align-items:center; justify-content:center;
   }
   #logoutConfirm.open { display:flex; }
@@ -1255,9 +1255,13 @@ let modalAvatarData = null;
 window.currentLang  = 'ar';
 
 // ─── CREDENTIALS (editable) ───────────────────────────────────────────────────
-let USERS = JSON.parse(localStorage.getItem('prosto_users') || 'null') || [
+let USERS = [
   {username:'admin', password:'prosto2024', name:'المدير العام'},
 ];
+try {
+  const stored = localStorage.getItem('prosto_users');
+  if(stored) USERS = JSON.parse(stored);
+} catch(e) {}
 let currentUser = null;
 
 // ─── LANGUAGE ─────────────────────────────────────────────────────────────────
@@ -2393,20 +2397,24 @@ function confirmLogout() {
 }
 
 function doLogin() {
-  const u=document.getElementById('loginUser').value.trim().toLowerCase();
-  const p=document.getElementById('loginPass').value;
-  // reload users from storage (in case changed)
-  USERS=JSON.parse(localStorage.getItem('prosto_users')||'null')||USERS;
-  const match=USERS.find(x=>x.username===u&&x.password===p);
-  if(match){
-    currentUser=match;
-    document.getElementById('loginScreen').style.display='none';
-    document.getElementById('headerSub').textContent='مرحباً، '+match.name;
+  try {
+    const stored = localStorage.getItem('prosto_users');
+    if(stored) USERS = JSON.parse(stored);
+  } catch(e) {}
+  
+  const u = document.getElementById('loginUser').value.trim().toLowerCase();
+  const p = document.getElementById('loginPass').value;
+  const match = USERS.find(x => x.username === u && x.password === p);
+  
+  if(match) {
+    currentUser = match;
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('headerSub').textContent = 'مرحباً، ' + match.name;
     loadBadges();
   } else {
     document.getElementById('loginError').classList.add('show');
-    document.getElementById('loginPass').value='';
-    setTimeout(()=>document.getElementById('loginError').classList.remove('show'),3000);
+    document.getElementById('loginPass').value = '';
+    setTimeout(() => document.getElementById('loginError').classList.remove('show'), 3000);
   }
 }
 
