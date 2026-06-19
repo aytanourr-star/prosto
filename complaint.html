@@ -4,78 +4,102 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0D0D0D">
-<title>Prosto — تسجيل بيانات الموظف</title>
+<title>Prosto — تقديم شكوى</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
 :root {
-  --red: #CC1F1F; --red-2: #E02020;
-  --black: #0D0D0D; --black-2: #1A1A1A; --black-3: #252525;
-  --white: #FFFFFF; --off-white: #F5F5F5;
-  --grey: #E0E0E0; --grey-2: #BDBDBD; --grey-3: #757575;
+  --red:#CC1F1F; --red-2:#E02020;
+  --black:#0D0D0D; --black-2:#1A1A1A;
+  --white:#FFFFFF; --off-white:#F5F5F5;
+  --grey:#E0E0E0; --grey-2:#BDBDBD; --grey-3:#757575;
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'Tajawal',sans-serif; background:var(--off-white); color:var(--black); min-height:100vh; }
+* { margin:0;padding:0;box-sizing:border-box; }
+body { font-family:'Tajawal',sans-serif;background:var(--off-white);color:var(--black);min-height:100vh; }
 
 header {
-  background:var(--black); padding:0 1.5rem; height:60px;
-  display:flex; align-items:center; gap:0.8rem;
+  background:var(--black);padding:0 1.5rem;height:60px;
+  display:flex;align-items:center;gap:0.8rem;
   border-bottom:2px solid var(--red);
 }
 .logo-icon { width:34px;height:34px;background:var(--red);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem; }
 .logo-text { font-size:1.2rem;font-weight:800;color:white;letter-spacing:2px; }
 .logo-sub { font-size:0.7rem;color:#666; }
 
-.page-wrap { max-width:680px;margin:2rem auto;padding:0 1rem 3rem; }
+.page-wrap { max-width:620px;margin:2rem auto;padding:0 1rem 3rem; }
 
-.form-card {
-  background:white;border-radius:16px;overflow:hidden;
-  box-shadow:0 4px 20px rgba(0,0,0,0.08);margin-bottom:1.2rem;
+.intro-card {
+  background:var(--black);border-radius:14px;padding:1.3rem 1.5rem;
+  margin-bottom:1.2rem;border-right:4px solid var(--red);
 }
-.card-header {
-  background:var(--black);padding:0.9rem 1.3rem;
-  border-bottom:2px solid var(--red);
-  display:flex;align-items:center;gap:0.6rem;
-}
+.intro-title { color:white;font-size:1rem;font-weight:700;margin-bottom:0.3rem; }
+.intro-sub { color:#888;font-size:0.8rem;line-height:1.7; }
+
+.form-card { background:white;border-radius:14px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.08); }
+.card-header { background:var(--black);padding:0.9rem 1.3rem;border-bottom:2px solid var(--red);display:flex;align-items:center;gap:0.6rem; }
 .card-title { color:white;font-weight:700;font-size:0.95rem; }
-.card-body { padding:1.3rem; }
+.card-body { padding:1.3rem;display:flex;flex-direction:column;gap:1rem; }
 
-.form-grid { display:grid;grid-template-columns:1fr 1fr;gap:0.9rem; }
 .form-group { display:flex;flex-direction:column;gap:0.35rem; }
-.form-group.full { grid-column:span 2; }
 .form-label { font-size:0.77rem;font-weight:700;color:var(--grey-3); }
 .form-label .req { color:var(--red); }
 
-.form-input, .form-select, .form-textarea {
+.form-input,.form-select,.form-textarea {
   padding:0.7rem 0.9rem;border:1.5px solid var(--grey);
   border-radius:9px;font-family:'Tajawal',sans-serif;font-size:0.88rem;
   color:var(--black);background:var(--off-white);outline:none;
   transition:border-color 0.15s;direction:rtl;width:100%;
 }
 .form-input:focus,.form-select:focus,.form-textarea:focus { border-color:var(--red);background:white; }
-.form-textarea { resize:vertical;min-height:80px; }
+.form-textarea { resize:vertical;min-height:130px; }
 
-/* file upload */
-.file-upload-area {
-  border:2px dashed var(--grey);border-radius:10px;
-  padding:1.2rem;text-align:center;cursor:pointer;
-  transition:border-color 0.2s;background:var(--off-white);
-  position:relative;
+/* category chips */
+.cat-grid { display:grid;grid-template-columns:1fr 1fr;gap:0.6rem; }
+.cat-chip {
+  padding:0.7rem 1rem;border:1.5px solid var(--grey);border-radius:10px;
+  cursor:pointer;text-align:center;font-family:'Tajawal',sans-serif;
+  font-weight:700;font-size:0.83rem;color:var(--grey-3);
+  transition:all 0.15s;background:var(--off-white);
 }
-.file-upload-area:hover { border-color:var(--red); }
-.file-upload-area input[type=file] { position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%; }
-.upload-icon { font-size:1.8rem;margin-bottom:0.4rem; }
-.upload-label { font-size:0.82rem;font-weight:700;color:var(--grey-3); }
-.upload-sub { font-size:0.72rem;color:var(--grey-2);margin-top:0.2rem; }
-.file-preview { margin-top:0.6rem;font-size:0.78rem;color:var(--red);font-weight:700; }
+.cat-chip:hover { border-color:var(--red);color:var(--black); }
+.cat-chip.selected { border-color:var(--red);background:#FFF0F0;color:var(--red); }
+.cat-chip .cat-icon { font-size:1.3rem;display:block;margin-bottom:0.3rem; }
+
+/* severity */
+.severity-row { display:flex;gap:0.5rem; }
+.sev-btn {
+  flex:1;padding:0.6rem;border:1.5px solid var(--grey);border-radius:8px;
+  cursor:pointer;font-family:'Tajawal',sans-serif;font-weight:700;
+  font-size:0.8rem;text-align:center;transition:all 0.15s;
+  background:var(--off-white);color:var(--grey-3);
+}
+.sev-btn.selected-low    { border-color:#2E7D32;background:#E8F5E9;color:#2E7D32; }
+.sev-btn.selected-medium { border-color:#E65100;background:#FFF3E0;color:#E65100; }
+.sev-btn.selected-high   { border-color:var(--red);background:#FFEBEE;color:var(--red); }
+
+.anon-toggle {
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem;background:var(--off-white);border-radius:10px;cursor:pointer;
+}
+.toggle-label { font-weight:600;font-size:0.88rem; }
+.toggle-sub { font-size:0.75rem;color:var(--grey-3);margin-top:0.2rem; }
+.toggle-switch {
+  width:44px;height:24px;background:var(--grey);border-radius:12px;
+  position:relative;transition:background 0.2s;flex-shrink:0;
+}
+.toggle-switch.on { background:var(--red); }
+.toggle-switch::after {
+  content:'';position:absolute;top:3px;right:3px;
+  width:18px;height:18px;background:white;border-radius:50%;
+  transition:transform 0.2s;
+}
+.toggle-switch.on::after { transform:translateX(-20px); }
 
 .submit-btn {
   width:100%;padding:1rem;background:var(--red);color:white;
   border:none;border-radius:12px;font-family:'Tajawal',sans-serif;
-  font-size:1rem;font-weight:800;cursor:pointer;
-  transition:background 0.2s,transform 0.1s;margin-top:0.5rem;
+  font-size:1rem;font-weight:800;cursor:pointer;transition:background 0.2s;
 }
 .submit-btn:hover { background:var(--red-2); }
-.submit-btn:active { transform:scale(0.99); }
 .submit-btn:disabled { background:var(--grey-2);cursor:not-allowed; }
 
 .success-screen {
@@ -86,17 +110,7 @@ header {
 .success-title { font-size:1.4rem;font-weight:800;margin-bottom:0.5rem; }
 .success-sub { color:var(--grey-3);font-size:0.9rem;line-height:1.7; }
 
-.progress-bar {
-  height:4px;background:var(--grey);border-radius:2px;margin-bottom:1.5rem;overflow:hidden;
-}
-.progress-fill { height:100%;background:var(--red);border-radius:2px;transition:width 0.3s; }
-
-.step-label { font-size:0.78rem;color:var(--grey-3);margin-bottom:1rem;font-weight:600; }
-
-@media(max-width:600px) {
-  .form-grid { grid-template-columns:1fr; }
-  .form-group.full { grid-column:span 1; }
-}
+.char-counter { font-size:0.72rem;color:var(--grey-3);text-align:left;margin-top:0.2rem; }
 </style>
 </head>
 <body>
@@ -105,352 +119,163 @@ header {
   <div class="logo-icon">🍽️</div>
   <div>
     <div class="logo-text">PROSTO</div>
-    <div class="logo-sub">تسجيل بيانات الموظف</div>
+    <div class="logo-sub">تقديم شكوى أو اقتراح</div>
   </div>
 </header>
 
 <div class="page-wrap">
 
-  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
-  <div class="step-label" id="stepLabel">الخطوة 1 من 4 — البيانات الشخصية</div>
+  <div class="intro-card">
+    <div class="intro-title">🔒 مساحتك الآمنة</div>
+    <div class="intro-sub">يمكنك تقديم شكواك أو اقتراحك بسرية تامة. الإدارة تأخذ كل الشكاوي بجدية وستتم المراجعة في أقرب وقت.</div>
+  </div>
 
-  <div id="formArea">
-
-  <!-- STEP 1: Personal -->
-  <div class="form-card" id="step1">
-    <div class="card-header"><span>👤</span><span class="card-title">البيانات الشخصية</span></div>
+  <div class="form-card" id="formCard">
+    <div class="card-header"><span>📝</span><span class="card-title">تفاصيل الشكوى أو الاقتراح</span></div>
     <div class="card-body">
-      <div class="form-grid">
+
+      <!-- Category -->
+      <div class="form-group">
+        <label class="form-label">نوع الشكوى / الاقتراح <span class="req">*</span></label>
+        <div class="cat-grid" id="catGrid">
+          <div class="cat-chip" onclick="selectCat(this,'بيئة العمل')"><span class="cat-icon">🏢</span>بيئة العمل</div>
+          <div class="cat-chip" onclick="selectCat(this,'الراتب والمستحقات')"><span class="cat-icon">💰</span>الراتب والمستحقات</div>
+          <div class="cat-chip" onclick="selectCat(this,'التعامل والاحترام')"><span class="cat-icon">🤝</span>التعامل والاحترام</div>
+          <div class="cat-chip" onclick="selectCat(this,'الجدول والدوام')"><span class="cat-icon">📅</span>الجدول والدوام</div>
+          <div class="cat-chip" onclick="selectCat(this,'السلامة والصحة')"><span class="cat-icon">⛑️</span>السلامة والصحة</div>
+          <div class="cat-chip" onclick="selectCat(this,'اقتراح وتطوير')"><span class="cat-icon">💡</span>اقتراح وتطوير</div>
+          <div class="cat-chip" onclick="selectCat(this,'أخرى')"><span class="cat-icon">📌</span>أخرى</div>
+        </div>
+        <input type="hidden" id="c_category">
+      </div>
+
+      <!-- Severity -->
+      <div class="form-group">
+        <label class="form-label">درجة الأهمية</label>
+        <div class="severity-row">
+          <button class="sev-btn" onclick="selectSev(this,'low')">🟢 عادية</button>
+          <button class="sev-btn" onclick="selectSev(this,'medium')">🟠 متوسطة</button>
+          <button class="sev-btn" onclick="selectSev(this,'high')">🔴 عاجلة</button>
+        </div>
+        <input type="hidden" id="c_severity" value="low">
+      </div>
+
+      <!-- Branch -->
+      <div class="form-group">
+        <label class="form-label">الفرع</label>
+        <select class="form-select" id="c_branch">
+          <option value="">— اختر الفرع —</option>
+          <option>الخالدية</option><option>بني ياس</option>
+          <option>الكول سنتر</option><option>المشغل</option>
+        </select>
+      </div>
+
+      <!-- Message -->
+      <div class="form-group">
+        <label class="form-label">تفاصيل الشكوى / الاقتراح <span class="req">*</span></label>
+        <textarea class="form-textarea" id="c_message" placeholder="اكتب هنا بالتفصيل..." maxlength="1000" oninput="updateCharCount()"></textarea>
+        <div class="char-counter" id="charCounter">0 / 1000</div>
+      </div>
+
+      <!-- Anonymous toggle -->
+      <div class="anon-toggle" onclick="toggleAnon()">
+        <div>
+          <div class="toggle-label">إرسال بشكل مجهول</div>
+          <div class="toggle-sub">لن يظهر اسمك للإدارة</div>
+        </div>
+        <div class="toggle-switch" id="anonSwitch"></div>
+      </div>
+
+      <!-- Name (shown if not anon) -->
+      <div id="nameSection">
         <div class="form-group">
-          <label class="form-label">الاسم الكامل (عربي) <span class="req">*</span></label>
-          <input class="form-input" id="r_name" placeholder="الاسم الرباعي بالعربي">
+          <label class="form-label">اسمك (اختياري)</label>
+          <input class="form-input" id="c_name" placeholder="اسمك بالعربي">
         </div>
         <div class="form-group">
-          <label class="form-label">Full Name (EN) <span class="req">*</span></label>
-          <input class="form-input" id="r_nameEn" placeholder="Full name in English" style="direction:ltr">
-        </div>
-        <div class="form-group">
-          <label class="form-label">الجنسية <span class="req">*</span></label>
-          <input class="form-input" id="r_nationality" placeholder="مثال: مصري">
-        </div>
-        <div class="form-group">
-          <label class="form-label">الجنس</label>
-          <select class="form-select" id="r_gender"><option value="ذكر">ذكر</option><option value="أنثى">أنثى</option></select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">رقم الهاتف <span class="req">*</span></label>
-          <input class="form-input" id="r_phone" placeholder="+971 50 000 0000" style="direction:ltr">
-        </div>
-        <div class="form-group">
-          <label class="form-label">البريد الإلكتروني</label>
-          <input class="form-input" id="r_email" placeholder="email@example.com" style="direction:ltr">
-        </div>
-        <div class="form-group full">
-          <label class="form-label">العنوان / مكان الإقامة</label>
-          <input class="form-input" id="r_address" placeholder="أبوظبي / الخالدية...">
+          <label class="form-label">رقم هاتفك (للتواصل معك)</label>
+          <input class="form-input" id="c_phone" placeholder="+971 50 000 0000" style="direction:ltr">
         </div>
       </div>
+
+      <button class="submit-btn" id="submitComplaintBtn" onclick="submitComplaint()">📨 إرسال الشكوى</button>
     </div>
   </div>
-
-  <!-- STEP 2: Work -->
-  <div class="form-card" id="step2" style="display:none">
-    <div class="card-header"><span>💼</span><span class="card-title">بيانات العمل</span></div>
-    <div class="card-body">
-      <div class="form-grid">
-        <div class="form-group">
-          <label class="form-label">الفرع <span class="req">*</span></label>
-          <select class="form-select" id="r_branch">
-            <option>الخالدية</option><option>بني ياس</option>
-            <option>الكول سنتر</option><option>المشغل</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">الوظيفة</label>
-          <input class="form-input" id="r_role" placeholder="موظف / طاهٍ ...">
-        </div>
-        <div class="form-group">
-          <label class="form-label">تاريخ بدء العمل</label>
-          <input class="form-input" type="date" id="r_startDate">
-        </div>
-        <div class="form-group">
-          <label class="form-label">نوع التصريح</label>
-          <select class="form-select" id="r_permitType">
-            <option>إقامة</option><option>إعارة</option><option>أخرى</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">الكفيل</label>
-          <select class="form-select" id="r_sponsor">
-            <option>بروست ماستر</option><option>لفة تنور</option><option>—</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">رقم البطاقة / الإقامة</label>
-          <input class="form-input" id="r_eid" placeholder="784-XXXX-XXXXXXX-X" style="direction:ltr">
-        </div>
-        <div class="form-group">
-          <label class="form-label">تاريخ انتهاء الإقامة</label>
-          <input class="form-input" type="date" id="r_residencyExp">
-        </div>
-        <div class="form-group">
-          <label class="form-label">تاريخ انتهاء الجواز</label>
-          <input class="form-input" type="date" id="r_passportExp">
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- STEP 3: Documents -->
-  <div class="form-card" id="step3" style="display:none">
-    <div class="card-header"><span>📎</span><span class="card-title">رفع الوثائق والمستندات</span></div>
-    <div class="card-body">
-      <div class="form-grid">
-
-        <div class="form-group">
-          <label class="form-label">صورة جواز السفر (أمام) <span class="req">*</span></label>
-          <div class="file-upload-area" id="area_passport_front">
-            <input type="file" accept="image/*,.pdf" onchange="handleFile(event,'passport_front')">
-            <div class="upload-icon">📘</div>
-            <div class="upload-label">جواز السفر — الصفحة الرئيسية</div>
-            <div class="upload-sub">صورة أو PDF</div>
-            <div class="file-preview" id="prev_passport_front"></div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">صورة جواز السفر (خلف)</label>
-          <div class="file-upload-area" id="area_passport_back">
-            <input type="file" accept="image/*,.pdf" onchange="handleFile(event,'passport_back')">
-            <div class="upload-icon">📘</div>
-            <div class="upload-label">جواز السفر — الخلف</div>
-            <div class="upload-sub">صورة أو PDF</div>
-            <div class="file-preview" id="prev_passport_back"></div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">صورة الهوية / الإقامة (أمام) <span class="req">*</span></label>
-          <div class="file-upload-area">
-            <input type="file" accept="image/*,.pdf" onchange="handleFile(event,'id_front')">
-            <div class="upload-icon">🪪</div>
-            <div class="upload-label">الهوية أو الإقامة — أمام</div>
-            <div class="upload-sub">صورة أو PDF</div>
-            <div class="file-preview" id="prev_id_front"></div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">صورة الهوية / الإقامة (خلف)</label>
-          <div class="file-upload-area">
-            <input type="file" accept="image/*,.pdf" onchange="handleFile(event,'id_back')">
-            <div class="upload-icon">🪪</div>
-            <div class="upload-label">الهوية أو الإقامة — خلف</div>
-            <div class="upload-sub">صورة أو PDF</div>
-            <div class="file-preview" id="prev_id_back"></div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">بطاقة العمل / تصريح العمل</label>
-          <div class="file-upload-area">
-            <input type="file" accept="image/*,.pdf" onchange="handleFile(event,'labour_card')">
-            <div class="upload-icon">📋</div>
-            <div class="upload-label">بطاقة العمل</div>
-            <div class="upload-sub">صورة أو PDF</div>
-            <div class="file-preview" id="prev_labour_card"></div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">صورة شخصية</label>
-          <div class="file-upload-area">
-            <input type="file" accept="image/*" onchange="handleFile(event,'personal_photo')">
-            <div class="upload-icon">🤳</div>
-            <div class="upload-label">صورة شخصية واضحة</div>
-            <div class="upload-sub">صورة فقط</div>
-            <div class="file-preview" id="prev_personal_photo"></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- STEP 4: Review -->
-  <div class="form-card" id="step4" style="display:none">
-    <div class="card-header"><span>✅</span><span class="card-title">مراجعة وتأكيد</span></div>
-    <div class="card-body" id="reviewContent"></div>
-  </div>
-
-  <!-- NAV BUTTONS -->
-  <div style="display:flex;gap:0.8rem;margin-top:1rem;">
-    <button id="prevBtn" onclick="prevStep()" style="display:none;flex:1;padding:0.9rem;background:white;border:1.5px solid var(--grey);border-radius:10px;font-family:Tajawal,sans-serif;font-weight:700;cursor:pointer;font-size:0.95rem;">→ السابق</button>
-    <button id="nextBtn" onclick="nextStep()" class="submit-btn" style="margin-top:0;">التالي ←</button>
-  </div>
-
-  </div><!-- end formArea -->
 
   <!-- SUCCESS -->
   <div class="success-screen" id="successScreen">
-    <div class="success-icon">🎉</div>
-    <div class="success-title">تم إرسال بياناتك بنجاح!</div>
-    <div class="success-sub">شكرًا. تم استلام بياناتك ووثائقك وسيتم مراجعتها من قِبل الإدارة.<br>سيتم التواصل معك قريبًا.</div>
+    <div class="success-icon">✅</div>
+    <div class="success-title">تم إرسال شكواك!</div>
+    <div class="success-sub">شكرًا لتواصلك مع الإدارة.<br>سيتم مراجعة شكواك والرد عليها في أقرب وقت ممكن.</div>
     <div style="margin-top:1.5rem;padding:1rem;background:var(--off-white);border-radius:10px;font-size:0.82rem;color:var(--grey-3);">
-      رقم الطلب: <strong id="reqNum"></strong>
+      رقم الشكوى: <strong id="complaintNum"></strong>
     </div>
+    <button onclick="location.reload()" style="margin-top:1rem;padding:0.7rem 1.5rem;background:var(--black);color:white;border:none;border-radius:9px;font-family:Tajawal,sans-serif;font-weight:700;cursor:pointer;">تقديم شكوى أخرى</button>
   </div>
 
-</div><!-- end page-wrap -->
+</div>
 
 <script>
-let currentStep = 1;
-const totalSteps = 4;
-const uploadedFiles = {};
+let isAnon = false;
+let selectedCategory = '';
+let selectedSeverity = 'low';
 
-const stepTitles = [
-  'الخطوة 1 من 4 — البيانات الشخصية',
-  'الخطوة 2 من 4 — بيانات العمل',
-  'الخطوة 3 من 4 — رفع الوثائق',
-  'الخطوة 4 من 4 — مراجعة وتأكيد',
-];
-
-function updateProgress() {
-  document.getElementById('progressFill').style.width = (currentStep / totalSteps * 100) + '%';
-  document.getElementById('stepLabel').textContent = stepTitles[currentStep - 1];
+function selectCat(el, cat) {
+  document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedCategory = cat;
+  document.getElementById('c_category').value = cat;
 }
 
-function showStep(n) {
-  for (let i = 1; i <= totalSteps; i++) {
-    const el = document.getElementById('step' + i);
-    if (el) el.style.display = i === n ? 'block' : 'none';
-  }
-  document.getElementById('prevBtn').style.display = n > 1 ? 'block' : 'none';
-  document.getElementById('nextBtn').textContent = n === totalSteps ? '✅ إرسال الطلب' : 'التالي ←';
-  updateProgress();
-  window.scrollTo({top: 0, behavior: 'smooth'});
+function selectSev(el, sev) {
+  document.querySelectorAll('.sev-btn').forEach(b => b.className = 'sev-btn');
+  el.classList.add('selected-' + sev);
+  selectedSeverity = sev;
+  document.getElementById('c_severity').value = sev;
 }
 
-function validateStep() {
-  if (currentStep === 1) {
-    if (!document.getElementById('r_name').value.trim()) { alert('يرجى إدخال الاسم الكامل'); return false; }
-    if (!document.getElementById('r_nameEn').value.trim()) { alert('Please enter your full name in English'); return false; }
-    if (!document.getElementById('r_phone').value.trim()) { alert('يرجى إدخال رقم الهاتف'); return false; }
-  }
-  return true;
+function toggleAnon() {
+  isAnon = !isAnon;
+  document.getElementById('anonSwitch').classList.toggle('on', isAnon);
+  document.getElementById('nameSection').style.display = isAnon ? 'none' : 'block';
 }
 
-function nextStep() {
-  if (!validateStep()) return;
-  if (currentStep === totalSteps) { submitForm(); return; }
-  if (currentStep === totalSteps - 1) buildReview();
-  currentStep++;
-  showStep(currentStep);
+function updateCharCount() {
+  const len = document.getElementById('c_message').value.length;
+  document.getElementById('charCounter').textContent = len + ' / 1000';
 }
 
-function prevStep() {
-  if (currentStep > 1) { currentStep--; showStep(currentStep); }
-}
+function submitComplaint() {
+  if (!selectedCategory) { alert('يرجى اختيار نوع الشكوى'); return; }
+  const msg = document.getElementById('c_message').value.trim();
+  if (!msg) { alert('يرجى كتابة تفاصيل الشكوى'); return; }
 
-function handleFile(evt, key) {
-  const file = evt.target.files[0];
-  if (!file) return;
-  uploadedFiles[key] = file;
-  const prev = document.getElementById('prev_' + key);
-  if (prev) prev.textContent = '✅ ' + file.name;
-  // color the area
-  const area = evt.target.closest('.file-upload-area');
-  if (area) area.style.borderColor = 'var(--red)';
-}
-
-function buildReview() {
-  const fields = [
-    ['الاسم (عربي)', document.getElementById('r_name').value],
-    ['الاسم (EN)', document.getElementById('r_nameEn').value],
-    ['الجنسية', document.getElementById('r_nationality').value],
-    ['الجنس', document.getElementById('r_gender').value],
-    ['الهاتف', document.getElementById('r_phone').value],
-    ['البريد', document.getElementById('r_email').value || '—'],
-    ['الفرع', document.getElementById('r_branch').value],
-    ['الوظيفة', document.getElementById('r_role').value || '—'],
-    ['نوع التصريح', document.getElementById('r_permitType').value],
-    ['الكفيل', document.getElementById('r_sponsor').value],
-    ['رقم البطاقة', document.getElementById('r_eid').value || '—'],
-    ['انتهاء الإقامة', document.getElementById('r_residencyExp').value || '—'],
-    ['انتهاء الجواز', document.getElementById('r_passportExp').value || '—'],
-  ];
-
-  const docKeys = {
-    passport_front: 'جواز السفر (أمام)',
-    passport_back: 'جواز السفر (خلف)',
-    id_front: 'الهوية (أمام)',
-    id_back: 'الهوية (خلف)',
-    labour_card: 'بطاقة العمل',
-    personal_photo: 'الصورة الشخصية',
-  };
-
-  document.getElementById('reviewContent').innerHTML = `
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;margin-bottom:1rem;">
-      ${fields.map(([k,v]) => `
-        <div style="background:var(--off-white);border-radius:8px;padding:0.7rem 0.9rem;">
-          <div style="font-size:0.7rem;font-weight:700;color:var(--grey-3);margin-bottom:0.2rem;">${k}</div>
-          <div style="font-weight:600;font-size:0.88rem;">${v}</div>
-        </div>`).join('')}
-    </div>
-    <div style="font-size:0.78rem;font-weight:700;color:var(--grey-3);margin-bottom:0.5rem;">الوثائق المرفوعة:</div>
-    <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
-      ${Object.entries(docKeys).map(([k, label]) =>
-        `<span style="padding:0.3rem 0.8rem;border-radius:20px;font-size:0.75rem;font-weight:700;
-          background:${uploadedFiles[k] ? '#E8F5E9' : '#FFF3F3'};
-          color:${uploadedFiles[k] ? '#2E7D32' : '#CC1F1F'};">
-          ${uploadedFiles[k] ? '✅' : '○'} ${label}
-        </span>`).join('')}
-    </div>
-    <div style="margin-top:1rem;padding:0.8rem 1rem;background:#FFF3E0;border-radius:8px;font-size:0.8rem;color:#E65100;">
-      ⚠️ بعد الإرسال لن تتمكن من تعديل البيانات. تأكد من صحة كل المعلومات.
-    </div>
-  `;
-}
-
-function submitForm() {
-  const btn = document.getElementById('nextBtn');
+  const btn = document.getElementById('submitComplaintBtn');
   btn.disabled = true;
   btn.textContent = '⏳ جاري الإرسال...';
 
-  // Simulate sending (in production this goes to a backend)
   setTimeout(() => {
-    const reqNum = 'REQ-' + Date.now().toString(36).toUpperCase();
-    document.getElementById('formArea').style.display = 'none';
-    document.getElementById('successScreen').style.display = 'block';
-    document.getElementById('reqNum').textContent = reqNum;
-
-    // Save to localStorage for admin to see
-    const submissions = JSON.parse(localStorage.getItem('prosto_registrations') || '[]');
-    submissions.push({
-      reqNum,
+    const num = 'CMP-' + Date.now().toString(36).toUpperCase();
+    const complaints = JSON.parse(localStorage.getItem('prosto_complaints') || '[]');
+    complaints.push({
+      num,
       timestamp: new Date().toISOString(),
-      name: document.getElementById('r_name').value,
-      nameEn: document.getElementById('r_nameEn').value,
-      nationality: document.getElementById('r_nationality').value,
-      gender: document.getElementById('r_gender').value,
-      phone: document.getElementById('r_phone').value,
-      email: document.getElementById('r_email').value,
-      branch: document.getElementById('r_branch').value,
-      role: document.getElementById('r_role').value,
-      permitType: document.getElementById('r_permitType').value,
-      sponsor: document.getElementById('r_sponsor').value,
-      eid: document.getElementById('r_eid').value,
-      residencyExp: document.getElementById('r_residencyExp').value,
-      passportExp: document.getElementById('r_passportExp').value,
-      filesUploaded: Object.keys(uploadedFiles),
-      status: 'pending',
+      category: selectedCategory,
+      severity: selectedSeverity,
+      branch: document.getElementById('c_branch').value || '—',
+      message: msg,
+      anonymous: isAnon,
+      name: isAnon ? '— مجهول —' : (document.getElementById('c_name').value || '—'),
+      phone: isAnon ? '—' : (document.getElementById('c_phone').value || '—'),
+      status: 'new',
     });
-    localStorage.setItem('prosto_registrations', JSON.stringify(submissions));
-  }, 1800);
-}
+    localStorage.setItem('prosto_complaints', JSON.stringify(complaints));
 
-// init
-showStep(1);
+    document.getElementById('formCard').style.display = 'none';
+    document.getElementById('successScreen').style.display = 'block';
+    document.getElementById('complaintNum').textContent = num;
+  }, 1500);
+}
 </script>
 </body>
 </html>
