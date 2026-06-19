@@ -635,24 +635,30 @@ header {
 <body>
 
 <!-- LOGIN -->
-<div id="loginScreen">
-  <div class="login-box">
-    <div class="login-logo">
-      <div class="login-logo-icon">🍽️</div>
-      <div class="login-title">PROSTO</div>
-      <div class="login-subtitle">نظام إدارة الموظفين</div>
+<div id="loginScreen" style="position:fixed;inset:0;background:#0D0D0D;z-index:9999;display:flex;align-items:center;justify-content:center;padding:1.5rem;">
+  <div style="background:#1A1A1A;border:1px solid #303030;border-radius:20px;padding:2.5rem 2rem;width:100%;max-width:380px;box-shadow:0 30px 80px rgba(0,0,0,0.7);text-align:center;">
+    <div style="width:72px;height:72px;background:#CC1F1F;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;margin:0 auto 0.9rem;box-shadow:0 8px 30px rgba(204,31,31,0.4);">🍽️</div>
+    <div style="font-size:2.2rem;font-weight:800;color:white;letter-spacing:3px;margin-bottom:0.3rem;">PROSTO</div>
+    <div style="font-size:0.78rem;color:#757575;margin-bottom:2rem;">نظام إدارة الموظفين</div>
+    <div style="margin-bottom:1rem;text-align:right;">
+      <label style="display:block;font-size:0.78rem;font-weight:700;color:#757575;margin-bottom:0.4rem;">اسم المستخدم</label>
+      <input id="loginUser" type="text" placeholder="username" autocomplete="username"
+        style="width:100%;padding:0.85rem 1rem;background:#252525;border:1.5px solid #303030;border-radius:10px;font-size:0.95rem;color:white;outline:none;box-sizing:border-box;direction:ltr;text-align:right;">
     </div>
-    <div class="login-field">
-      <label class="login-label">اسم المستخدم</label>
-      <input class="login-input" id="loginUser" type="text" placeholder="username" autocomplete="username">
+    <div style="margin-bottom:0.5rem;text-align:right;">
+      <label style="display:block;font-size:0.78rem;font-weight:700;color:#757575;margin-bottom:0.4rem;">كلمة المرور</label>
+      <input id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password"
+        style="width:100%;padding:0.85rem 1rem;background:#252525;border:1.5px solid #303030;border-radius:10px;font-size:0.95rem;color:white;outline:none;box-sizing:border-box;"
+        onkeydown="if(event.key==='Enter') doLogin()">
     </div>
-    <div class="login-field">
-      <label class="login-label">كلمة المرور</label>
-      <input class="login-input" id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter') doLogin()">
+    <button onclick="doLogin()"
+      style="width:100%;padding:0.9rem;background:#CC1F1F;color:white;border:none;border-radius:10px;font-size:1rem;font-weight:800;cursor:pointer;margin-top:0.5rem;">
+      🔐 دخول
+    </button>
+    <div id="loginError" style="background:rgba(204,31,31,0.12);border:1px solid rgba(204,31,31,0.35);color:#FF6B6B;border-radius:8px;padding:0.6rem 0.9rem;font-size:0.82rem;margin-top:0.8rem;text-align:center;display:none;">
+      ❌ اسم المستخدم أو كلمة المرور غير صحيحة
     </div>
-    <button class="login-btn" onclick="doLogin()">🔐 دخول</button>
-    <div class="login-error" id="loginError">❌ اسم المستخدم أو كلمة المرور غير صحيحة</div>
-    <div class="login-footer">PROSTO System v2.0 · جميع الحقوق محفوظة</div>
+    <div style="text-align:center;margin-top:1.5rem;color:#454545;font-size:0.72rem;">PROSTO System v2.0</div>
   </div>
 </div>
 
@@ -2397,14 +2403,16 @@ function confirmLogout() {
 }
 
 function doLogin() {
-  try {
-    const stored = localStorage.getItem('prosto_users');
-    if(stored) USERS = JSON.parse(stored);
-  } catch(e) {}
+  var u = document.getElementById('loginUser').value.trim().toLowerCase();
+  var p = document.getElementById('loginPass').value;
   
-  const u = document.getElementById('loginUser').value.trim().toLowerCase();
-  const p = document.getElementById('loginPass').value;
-  const match = USERS.find(x => x.username === u && x.password === p);
+  var users = [{username:'admin', password:'prosto2024', name:'المدير العام'}];
+  try { var s = localStorage.getItem('prosto_users'); if(s) users = JSON.parse(s); } catch(e) {}
+  
+  var match = null;
+  for(var i=0; i<users.length; i++) {
+    if(users[i].username === u && users[i].password === p) { match = users[i]; break; }
+  }
   
   if(match) {
     currentUser = match;
@@ -2412,9 +2420,10 @@ function doLogin() {
     document.getElementById('headerSub').textContent = 'مرحباً، ' + match.name;
     loadBadges();
   } else {
-    document.getElementById('loginError').classList.add('show');
+    var err = document.getElementById('loginError');
+    err.style.display = 'block';
     document.getElementById('loginPass').value = '';
-    setTimeout(() => document.getElementById('loginError').classList.remove('show'), 3000);
+    setTimeout(function() { err.style.display = 'none'; }, 3000);
   }
 }
 
