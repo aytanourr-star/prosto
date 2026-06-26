@@ -248,6 +248,13 @@ body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);heig
 .pgh{margin-bottom:1.2rem}
 .pgt{font-size:1.1rem;font-weight:700}
 .pgs{font-size:.78rem;color:var(--mu);margin-top:.2rem}
+
+.vrow{background:#fff;border:1px solid var(--gr);border-radius:7px;padding:.75rem .9rem;margin-bottom:.5rem;border-right:3px solid var(--gr)}
+.vrow.warning{border-right-color:var(--or)}
+.vrow.violation{border-right-color:var(--red)}
+.vrow.suspension{border-right-color:#7B1FA2}
+.vtag{display:inline-block;font-size:.62rem;font-weight:700;padding:.1rem .4rem;border-radius:20px}
+.vadd-form{background:var(--off);border:1px solid var(--gr);border-radius:8px;padding:.9rem;margin-bottom:.9rem}
 /* HIDDEN */
 .hide{display:none!important}
 /* SCROLLBAR */
@@ -436,6 +443,8 @@ body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);heig
 var emps = [];
 var photos = {};
 function ps(id){if(!photos[id])photos[id]={av:null,docs:{}};return photos[id];}
+var violations = {};
+function getVio(id){if(!violations[id])violations[id]=[];return violations[id];}
 
 var branches = JSON.parse(localStorage.getItem('prosto_br')||'null') || [
   {ar:'الخالدية',en:'Khalidiya',code:'KH'},
@@ -491,7 +500,7 @@ var TR = {
     copy_ok:'تم نسخ الرابط',usr_lbl:'اسم المستخدم',emp_c:'موظف',day_c:'يوم',
     sev_n:'عادية',sev_m:'متوسطة',sev_h:'عاجلة',
     new_b:'جديدة',res_b:'تم الحل',pen_b:'في الانتظار',app_b:'تمت الموافقة',rej_b:'مرفوض',anon:'مجهول',
-    filt_br:'الكل',brn_emp:'موظف'},
+    filt_br:'الكل',brn_emp:'موظف',tab_vio:'مخالفات وإنذارات',vio_add:'إضافة مخالفة / إنذار',vio_type:'النوع',vio_date:'التاريخ',vio_desc:'التفاصيل',vio_save:'حفظ',vio_empty:'لا توجد مخالفات أو إنذارات',vio_warning:'إنذار',vio_violation:'مخالفة',vio_suspension:'إيقاف عن العمل',vio_del:'حذف'},
   en:{lsub:'Employee Management System',lusr_lbl:'Username',lpas_lbl:'Password',lbtn:'Sign In',lerr_msg:'Invalid username or password',
     nav_lbl:'NAVIGATION',nl_emp:'Employees',nl_pay:'Payroll',nl_bra:'Branches',nl_cmp:'Complaints',nl_reg:'Registrations',nl_set:'Settings',
     addBtn:'+ Add Employee',lgBtn:'Sign Out',langBtn:'عربي',
@@ -527,7 +536,7 @@ var TR = {
     copy_ok:'Link copied!',usr_lbl:'Username',emp_c:'employees',day_c:'days',
     sev_n:'Normal',sev_m:'Medium',sev_h:'Urgent',
     new_b:'New',res_b:'Resolved',pen_b:'Pending',app_b:'Approved',rej_b:'Rejected',anon:'Anonymous',
-    filt_br:'All',brn_emp:'employees'}
+    filt_br:'All',brn_emp:'employees',tab_vio:'Violations & Warnings',vio_add:'Add Violation / Warning',vio_type:'Type',vio_date:'Date',vio_desc:'Details',vio_save:'Save',vio_empty:'No violations or warnings',vio_warning:'Warning',vio_violation:'Violation',vio_suspension:'Suspension',vio_del:'Delete'}
 };
 function T(k){return (TR[lang]||TR.ar)[k]||k;}
 
@@ -818,8 +827,26 @@ function showDetail(id){
   h+='<div class="dblock"><div class="dbhead"><span class="dbicon">&#128203;</span><div class="dbinfo"><div class="dbtitle">'+T('doc_lab')+'</div><div class="dbdate">'+T('expires')+': '+fdate(e.labourCardExp)+'</div></div><span class="dstatus '+li.cls+'">'+li.lbl+'</span></div><div class="dphotos">'+pslotHtml(e.id,'lab',T('lab_c'))+pslotHtml(e.id,'visa',T('visa'))+'</div></div>';
   h+='<div class="dblock"><div class="dbhead"><span class="dbicon">&#128206;</span><div class="dbinfo"><div class="dbtitle">'+T('doc_oth')+'</div></div></div><div class="dphotos">'+pslotHtml(e.id,'cont',T('contract'))+pslotHtml(e.id,'oth1',T('att1'))+pslotHtml(e.id,'oth2',T('att2'))+'</div></div>';
   h+='</div>';
+  // VIOLATIONS PANE
+  var vios2=getVio(e.id);
+  var vtypes2={warning:T('vio_warning'),violation:T('vio_violation'),suspension:T('vio_suspension')};
+  var vc2={warning:'var(--or)',violation:'var(--red)',suspension:'#7B1FA2'};
+  var vb2={warning:'#FFF3E8',violation:'#FFEBEB',suspension:'#F3E8FF'};
+  h+='<div class="tpane" id="tp_vio">';
+  h+='<div class="vadd-form">';
+  h+='<div style="font-size:.75rem;font-weight:700;margin-bottom:.55rem">'+T('vio_add')+'</div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:.5rem">';
+  h+='<div class="fg"><label class="fl">'+T('vio_type')+'</label><select id="vstype" class="fs"><option value="warning">'+T('vio_warning')+'</option><option value="violation">'+T('vio_violation')+'</option><option value="suspension">'+T('vio_suspension')+'</option></select></div>';
+  h+='<div class="fg"><label class="fl">'+T('vio_date')+'</label><input id="vsdate" class="fi" type="date" value="'+new Date().toISOString().slice(0,10)+'"></div>';
+  h+='</div>';
+  h+='<textarea id="vsdesc" class="fi" rows="2" style="resize:vertical;margin-bottom:.5rem" placeholder="'+T('vio_desc')+'..."></textarea>';
+  h+='<button class="msave" onclick="addVio(\''+e.id+'\')" style="padding:.42rem .9rem;font-size:.78rem">'+T('vio_save')+'</button>';
+  h+='</div>';
+  if(!vios2.length){h+='<div style="text-align:center;padding:1.5rem;color:var(--mu);font-size:.8rem">'+T('vio_empty')+'</div>';}
+  else{vios2.slice().reverse().forEach(function(v,vi){var ri2=vios2.length-1-vi;h+='<div class="vrow '+(v.type)+'"><div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.3rem"><span class="vtag" style="background:'+(vb2[v.type])+';color:'+(vc2[v.type])+'">'+(vtypes2[v.type])+'</span><span style="font-size:.72rem;color:var(--mu)">'+v.date+'</span><button style="margin-right:auto;background:none;border:none;color:var(--mu);cursor:pointer;font-size:.7rem" onclick="delVio(\''+e.id+'\','+ri2+')">'+T('vio_del')+'</button></div><div style="font-size:.82rem;line-height:1.6">'+v.desc+'</div></div>';});}
+  h+='</div>';
   // ACTIONS
-  h+='<div class="actrow"><button class="abtn" onclick="openEdit(\''+e.id+'\')">'+T('edit_btn')+'</button><button class="abtn pr" onclick="window.print()">'+T('print_btn')+'</button><button class="abtn dn" onclick="delEmp(\''+e.id+'\')">'+T('del_btn')+'</button></div>';
+  h+='<div class="actrow">"<button class="abtn" onclick="openEdit(\''+e.id+'\')">'+T('edit_btn')+'</button><button class="abtn pr" onclick="window.print()">'+T('print_btn')+'</button><button class="abtn dn" onclick="delEmp(\''+e.id+'\')">'+T('del_btn')+'</button></div>';
   dc.innerHTML=h;
 }
 
@@ -1152,6 +1179,22 @@ function chUser(i){
 function copyLnk(type){
   var url=getBase()+'/'+type+'.html';
   navigator.clipboard.writeText(url).then(function(){alert(T('copy_ok'));}).catch(function(){prompt('Copy:',url);});
+}
+function addVio(empId){
+  var t=document.getElementById('vstype').value;
+  var d=document.getElementById('vsdate').value;
+  var dc=document.getElementById('vsdesc').value.trim();
+  if(!dc){alert(lang==='ar'?'يرجى كتابة التفاصيل':'Please enter details');return;}
+  if(!d){alert(lang==='ar'?'يرجى تحديد التاريخ':'Please select a date');return;}
+  getVio(empId).push({type:t,date:d,desc:dc});
+  showDetail(empId);
+  setTimeout(function(){document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('on');});document.querySelectorAll('.tpane').forEach(function(p){p.classList.remove('on');});var vt=document.querySelector('.tab:last-child');var vp=document.getElementById('tp_vio');if(vt)vt.classList.add('on');if(vp)vp.classList.add('on');},30);
+}
+function delVio(empId,idx){
+  if(!confirm(lang==='ar'?'حذف هذا الإنذار/المخالفة؟':'Delete this record?'))return;
+  getVio(empId).splice(idx,1);
+  showDetail(empId);
+  setTimeout(function(){document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('on');});document.querySelectorAll('.tpane').forEach(function(p){p.classList.remove('on');});var vt=document.querySelector('.tab:last-child');var vp=document.getElementById('tp_vio');if(vt)vt.classList.add('on');if(vp)vp.classList.add('on');},30);
 }
 function loadBadges(){
   var nc=JSON.parse(localStorage.getItem('prosto_complaints')||'[]').filter(function(c){return c.status==='new';}).length;
