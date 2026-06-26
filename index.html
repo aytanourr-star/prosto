@@ -793,7 +793,7 @@ function showDetail(id){
   h+='<div><div class="dname">'+dn+'</div><div class="dtag">'+(e.role||'—')+'</div><div class="did">'+e.id+' · '+dpt+'</div></div>';
   h+='<span class="sbadge '+(e.status||'active')+'">'+(stl[e.status||'active'])+'</span></div>';
   // TABS
-  h+='<div class="tabs"><button class="tab on" onclick="swTab(\'per\',this)">'+T('tab_per')+'</button><button class="tab" onclick="swTab(\'fin\',this)">'+T('tab_fin')+'</button><button class="tab" onclick="swTab(\'sch\',this)">'+T('tab_sch')+'</button><button class="tab" onclick="swTab(\'doc\',this)">'+T('tab_doc')+'</button></div>';
+  h+='<div class="tabs"><button class="tab on" onclick="swTab(\'per\',this)">'+T('tab_per')+'</button><button class="tab" onclick="swTab(\'fin\',this)">'+T('tab_fin')+'</button><button class="tab" onclick="swTab(\'sch\',this)">'+T('tab_sch')+'</button><button class="tab" onclick="swTab(\'doc\',this)">'+T('tab_doc')+'</button><button class="tab" onclick="swTab(\'vio\',this)">'+T('tab_vio')+'</button></div>';
   // PERSONAL
   h+='<div class="tpane on" id="tp_per"><div class="igrid">';
   h+='<div class="icell"><div class="ilabel">'+T('il_pho')+'</div><div class="ival">'+(e.phone||'—')+'</div></div>';
