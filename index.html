@@ -846,7 +846,7 @@ function showDetail(id){
   else{vios2.slice().reverse().forEach(function(v,vi){var ri2=vios2.length-1-vi;h+='<div class="vrow '+(v.type)+'"><div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.3rem"><span class="vtag" style="background:'+(vb2[v.type])+';color:'+(vc2[v.type])+'">'+(vtypes2[v.type])+'</span><span style="font-size:.72rem;color:var(--mu)">'+v.date+'</span><button style="margin-right:auto;background:none;border:none;color:var(--mu);cursor:pointer;font-size:.7rem" onclick="delVio(\''+e.id+'\','+ri2+')">'+T('vio_del')+'</button></div><div style="font-size:.82rem;line-height:1.6">'+v.desc+'</div></div>';});}
   h+='</div>';
   // ACTIONS
-  h+='<div class="actrow">"<button class="abtn" onclick="openEdit(\''+e.id+'\')">'+T('edit_btn')+'</button><button class="abtn pr" onclick="window.print()">'+T('print_btn')+'</button><button class="abtn dn" onclick="delEmp(\''+e.id+'\')">'+T('del_btn')+'</button></div>';
+  h+='<div class="actrow"><button class="abtn" onclick="openEdit(\''+e.id+'\')">'+T('edit_btn')+'</button><button class="abtn pr" onclick="window.print()">'+T('print_btn')+'</button><button class="abtn dn" onclick="delEmp(\''+e.id+'\')">'+T('del_btn')+'</button></div>';
   dc.innerHTML=h;
 }
 
