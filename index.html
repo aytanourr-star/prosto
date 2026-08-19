@@ -1202,8 +1202,16 @@ function renderReg(){
       h+='<button class="tbtn" onclick="rejReg('+i+')" style="color:var(--red)">'+T('reject')+'</button>';
       h+='<button class="tbtn" onclick="addToStaff('+i+')">'+T('add_staff')+'</button>';
     }else{h+='<span style="font-size:.7rem;color:var(--mu)">'+T('processed')+'</span>';}
+    h+='<button class="tbtn" onclick="delReg('+i+')" style="font-size:.68rem;color:var(--red);">'+T('del_cmp')+'</button>';
     h+='</div></div></div>';return h;
   }).join('');
+}
+function delReg(i){
+  if(!confirm(lang==='ar'?'حذف هذا الطلب؟':'Delete this request?'))return;
+  var all=JSON.parse(localStorage.getItem('prosto_registrations')||'[]');
+  all.splice(i,1);
+  localStorage.setItem('prosto_registrations',JSON.stringify(all));
+  renderReg();
 }
 function appReg(i){var all=JSON.parse(localStorage.getItem('prosto_registrations')||'[]');if(all[i])all[i].status='approved';localStorage.setItem('prosto_registrations',JSON.stringify(all));renderReg();}
 function rejReg(i){var all=JSON.parse(localStorage.getItem('prosto_registrations')||'[]');if(all[i])all[i].status='rejected';localStorage.setItem('prosto_registrations',JSON.stringify(all));renderReg();}
