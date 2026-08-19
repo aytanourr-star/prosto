@@ -470,7 +470,7 @@ try{var su=localStorage.getItem('prosto_users');if(su)USERS=JSON.parse(su);}catc
 var me=null,lang='ar',selId=null,filt='all',br='',q='',cmpF='all',docKey=null,mavData=null,editId=null;
 
 var TR={
-ar:{lsub:'نظام إدارة الموظفين',lusr_lbl:'اسم المستخدم',lpas_lbl:'كلمة المرور',lbtn:'دخول',
+ar:{lsub:'نظام إدارة الموارد البشرية',lusr_lbl:'اسم المستخدم',lpas_lbl:'كلمة المرور',lbtn:'تسجيل الدخول',lwelcome:'أهلاً بعودتك',lwelcome_sub:'سجّل دخولك للوصول إلى مساحة العمل',
   nav_lbl:'التنقل',nl_emp:'الموظفون',nl_pay:'الرواتب',nl_bra:'الفروع والأقسام',
   nl_vio:'المخالفات والإنذارات',nl_cmp:'الشكاوي',nl_reg:'طلبات التسجيل',nl_set:'الإعدادات',
   addBtn:'+ إضافة موظف',lgBtn:'خروج',langBtn:'EN',
@@ -525,7 +525,7 @@ ar:{lsub:'نظام إدارة الموظفين',lusr_lbl:'اسم المستخد�
   sev_n:'عادية',sev_m:'متوسطة',sev_h:'عاجلة',
   new_b:'جديدة',res_b:'تم الحل',pen_b:'في الانتظار',app_b:'تمت الموافقة',rej_b:'مرفوض',anon:'مجهول',
   filt_br:'الكل',brn_emp:'موظف'},
-en:{lsub:'Employee Management System',lusr_lbl:'Username',lpas_lbl:'Password',lbtn:'Sign In',
+en:{lsub:'Employee Management System',lusr_lbl:'Username',lpas_lbl:'Password',lbtn:'Sign In',lwelcome:'Welcome Back',lwelcome_sub:'Sign in to access your workspace',
   nav_lbl:'NAVIGATION',nl_emp:'Employees',nl_pay:'Payroll',nl_bra:'Branches',
   nl_vio:'Violations & Warnings',nl_cmp:'Complaints',nl_reg:'Registrations',nl_set:'Settings',
   addBtn:'+ Add Employee',lgBtn:'Sign Out',langBtn:'عربي',
@@ -1281,5 +1281,4 @@ function renderSet(){
     return'<div class="arow" onclick="gp(\'emp\');selEmp(\''+e.id+'\')" style="border-right-color:'+color+';border-right-width:3px"><div style="flex:1"><div style="font-weight:600;font-size:.82rem">'+dn+'</div><div style="font-size:.68rem;color:var(--mu)">'+bn+' · '+(e.eid||'—')+'</div></div><div style="text-align:center"><div style="font-weight:700;color:'+color+'">'+dl+'</div><div style="font-size:.65rem;color:var(--mu)">'+fdate(e.residencyExp)+'</div></div></div>';
   }).join('');
 }
-function chPass(i){var v=prompt(lang==='ar'?'كلمة المرور الجديدة لـ '+USERS[i].username:'New password for '+USERS[i].username);if(!v||v.length<4)return;USERS[i].password=v;localStorage.setItem('prosto_users',JSON.stringify(USERS));alert(lang==='ar'?'تم تغيير كلمة المرور':'Password changed');}
-function chUser(i
+function chPass(i){var v=prompt(lang==='ar'?'كلمة المرور الجديدة لـ '+USERS[i].username:'New password for '+USERS[i].username);if(!v||v.length<4)return
