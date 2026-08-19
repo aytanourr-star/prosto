@@ -1178,12 +1178,15 @@ function delCmp(ri){if(!confirm(lang==='ar'?'حذف هذه الشكوى؟':'Dele
 function renderReg(){
   var base=getBase();
   document.getElementById('regLink').textContent=base+'/register.html';
-  var all=JSON.parse(localStorage.getItem('prosto_registrations')||'[]').reverse();
+  var all=JSON.parse(localStorage.getItem('prosto_registrations')||'[]');
+  all.reverse();
   var nc=all.filter(function(r){return r.status==='pending';}).length;
   var b=document.getElementById('regBadge');b.textContent=nc;b.style.display=nc>0?'inline-block':'none';
   if(!all.length){document.getElementById('regList').innerHTML='<div style="text-align:center;padding:2rem;color:var(--mu);font-size:.82rem">'+T('no_reg')+'</div>';return;}
   var en=lang==='en';
+  var totalLen=all.length;
   document.getElementById('regList').innerHTML=all.map(function(r,i){
+    var realIdx=totalLen-1-i;
     var stBg={approved:'#E8F5ED',rejected:'#FFEBEB',pending:'#FFF3E8'}[r.status]||'#FFF3E8';
     var stCo={approved:'var(--gn)',rejected:'var(--red)',pending:'var(--or)'}[r.status]||'var(--or)';
     var stLb={approved:T('app_b'),rejected:T('rej_b'),pending:T('pen_b')}[r.status]||r.status;
@@ -1198,11 +1201,13 @@ function renderReg(){
     h+='<div style="font-size:.68rem;color:var(--mu)">'+T('files_up')+': '+((r.filesUploaded||[]).length)+' · '+new Date(r.timestamp).toLocaleDateString(en?'en-GB':'ar-AE')+' · '+(r.reqNum||'')+'</div></div>';
     h+='<div style="display:flex;flex-direction:column;gap:.35rem;flex-shrink:0">';
     if(r.status==='pending'){
-      h+='<button class="tbtn red" onclick="appReg('+i+')">'+T('approve')+'</button>';
-      h+='<button class="tbtn" onclick="rejReg('+i+')" style="color:var(--red)">'+T('reject')+'</button>';
-      h+='<button class="tbtn" onclick="addToStaff('+i+')">'+T('add_staff')+'</button>';
-    }else{h+='<span style="font-size:.7rem;color:var(--mu)">'+T('processed')+'</span>';}
-    h+='<button class="tbtn" onclick="delReg('+i+')" style="font-size:.68rem;color:var(--red);">'+T('del_cmp')+'</button>';
+      h+='<button class="tbtn red" onclick="appReg('+realIdx+')">'+T('approve')+'</button>';
+      h+='<button class="tbtn" onclick="rejReg('+realIdx+')" style="color:var(--red)">'+T('reject')+'</button>';
+      h+='<button class="tbtn" onclick="addToStaff('+realIdx+')">'+T('add_staff')+'</button>';
+    } else {
+      h+='<span style="font-size:.7rem;color:var(--mu)">'+T('processed')+'</span>';
+    }
+    h+='<button class="tbtn" onclick="delReg('+realIdx+')" style="font-size:.68rem;color:var(--red);">'+(en?'Delete':'حذف')+'</button>';
     h+='</div></div></div>';return h;
   }).join('');
 }
