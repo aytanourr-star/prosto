@@ -61,6 +61,10 @@ body{font-family:'Tajawal',sans-serif;background:#EEF4FF;color:#0D2444;height:10
 .nb:hover{background:rgba(255,255,255,.15);color:#fff}
 .nb.on{background:rgba(255,255,255,.2);color:#fff}
 .nb.on .ndot{background:var(--red)}
+
+.nicon{width:15px;height:15px;flex-shrink:0;opacity:.7}
+.nb.on .nicon{opacity:1}
+.nb:hover .nicon{opacity:1}
 .ndot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.3);flex-shrink:0;transition:background .12s}
 .nbadge{margin-right:auto;background:var(--red);color:#fff;font-size:.6rem;font-weight:700;padding:.08rem .38rem;border-radius:10px;display:none}
 .nsep{height:1px;background:rgba(255,255,255,.15);margin:.45rem .7rem}
@@ -281,7 +285,7 @@ body{font-family:'Tajawal',sans-serif;background:#EEF4FF;color:#0D2444;height:10
 <input type="file" id="mavInput" accept="image/*" class="hide">
 <div id="shell">
   <div class="topbar">
-    <div class="tmark"></div><span class="tbrand">PROSTO</span>
+    <div class="tmark" style="display:flex;align-items:center;justify-content:center;font-size:.9rem;">🍽️</div><span class="tbrand">PROSTO</span>
     <div class="tright">
       <span class="tuser" id="tuser"></span>
       <button class="tbtn" id="langBtn">EN</button>
@@ -292,15 +296,15 @@ body{font-family:'Tajawal',sans-serif;background:#EEF4FF;color:#0D2444;height:10
   <div class="body">
     <nav class="sidebar">
       <div class="snav" id="nav_lbl">التنقل</div>
-      <button class="nb on" id="nb_emp" onclick="gp('emp')"><span class="ndot"></span><span id="nl_emp">الموظفون</span></button>
-      <button class="nb" id="nb_pay" onclick="gp('pay')"><span class="ndot"></span><span id="nl_pay">الرواتب</span></button>
+      <button class="nb on" id="nb_emp" onclick="gp('emp')"><svg class="nicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span id="nl_emp">الموظفون</span></button>
+      <button class="nb" id="nb_pay" onclick="gp('pay')"><svg class="nicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span id="nl_pay">الرواتب</span></button>
       <div class="nsep"></div>
-      <button class="nb" id="nb_bra" onclick="gp('bra')"><span class="ndot"></span><span id="nl_bra">الفروع والأقسام</span></button>
-      <button class="nb" id="nb_vio" onclick="gp('vio')"><span class="ndot"></span><span id="nl_vio">المخالفات والإنذارات</span></button>
-      <button class="nb" id="nb_cmp" onclick="gp('cmp')"><span class="ndot"></span><span id="nl_cmp">الشكاوي</span><span class="nbadge" id="cmpBadge">0</span></button>
-      <button class="nb" id="nb_reg" onclick="gp('reg')"><span class="ndot"></span><span id="nl_reg">طلبات التسجيل</span><span class="nbadge" id="regBadge">0</span></button>
+      <button class="nb" id="nb_bra" onclick="gp('bra')"><svg class="nicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span id="nl_bra">الفروع والأقسام</span></button>
+      <button class="nb" id="nb_vio" onclick="gp('vio')"><svg class="nicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span id="nl_vio">المخالفات والإنذارات</span></button>
+      <button class="nb" id="nb_cmp" onclick="gp('cmp')"><svg class="nicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span id="nl_cmp">الشكاوي</span><span class="nbadge" id="cmpBadge">0</span></button>
+      <button class="nb" id="nb_reg" onclick="gp('reg')"><svg class="nicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span id="nl_reg">طلبات التسجيل</span><span class="nbadge" id="regBadge">0</span></button>
       <div class="nsep"></div>
-      <button class="nb" id="nb_set" onclick="gp('set')"><span class="ndot"></span><span id="nl_set">الإعدادات</span></button>
+      <button class="nb" id="nb_set" onclick="gp('set')"><svg class="nicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span id="nl_set">الإعدادات</span></button>
     </nav>
     <div class="pages">
 
