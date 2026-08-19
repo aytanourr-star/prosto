@@ -9,7 +9,6 @@
 :root{--red:#C41E1E;--rh:#A81818;--blk:#0A0A0A;--d1:#111;--d2:#1A1A1A;--d3:#242424;--bdr:#2E2E2E;--wh:#fff;--off:#F8F8F8;--gr:#E4E4E4;--mu:#888;--tx:#111;--gn:#1A7F3C;--or:#C45C1E}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);height:100vh;overflow:hidden}
-/* LOGIN */
 #loginWrap{position:fixed;inset:0;background:var(--blk);display:flex;align-items:center;justify-content:center;z-index:9999}
 .lcard{background:var(--d1);border:1px solid var(--bdr);border-radius:12px;padding:2.5rem 2rem;width:340px}
 .lmark{width:44px;height:44px;background:var(--red);border-radius:10px;margin:0 auto .8rem}
@@ -23,7 +22,6 @@ body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);heig
 .lbtn:hover{background:var(--rh)}
 .lerr{display:none;margin-top:.6rem;padding:.5rem .8rem;background:rgba(196,30,30,.1);border:1px solid rgba(196,30,30,.3);border-radius:6px;color:#FF7B7B;font-size:.78rem;text-align:center}
 .lerr.show{display:block}
-/* LOGOUT */
 #lgDlg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9998;align-items:center;justify-content:center}
 #lgDlg.open{display:flex}
 .lgbox{background:var(--d2);border:1px solid var(--bdr);border-radius:10px;padding:1.8rem;width:280px;text-align:center}
@@ -33,10 +31,8 @@ body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);heig
 .lgbtns button{flex:1;padding:.6rem;border-radius:7px;font-family:'Tajawal',sans-serif;font-weight:700;cursor:pointer;border:none;font-size:.85rem}
 .lgyes{background:var(--red);color:#fff}
 .lgno{background:var(--d3);color:#aaa;border:1px solid var(--bdr)!important}
-/* SHELL */
 #shell{display:none;height:100vh;flex-direction:column}
 #shell.on{display:flex}
-/* TOPBAR */
 .topbar{height:54px;background:var(--blk);border-bottom:1px solid var(--bdr);display:flex;align-items:center;padding:0 1.2rem;gap:.8rem;flex-shrink:0}
 .tmark{width:26px;height:26px;background:var(--red);border-radius:6px;flex-shrink:0}
 .tbrand{font-size:1rem;font-weight:800;color:#fff;letter-spacing:2px}
@@ -46,9 +42,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);heig
 .tbtn:hover{color:#fff;border-color:#555}
 .tbtn.red{background:var(--red);color:#fff;border-color:var(--red)}
 .tbtn.red:hover{background:var(--rh)}
-/* BODY */
 .body{display:flex;flex:1;overflow:hidden}
-/* SIDEBAR */
 .sidebar{width:195px;background:var(--blk);border-left:1px solid var(--bdr);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;padding:.8rem 0}
 .snav{font-size:.62rem;font-weight:700;color:#3a3a3a;letter-spacing:.08em;padding:.5rem .8rem .3rem;text-transform:uppercase}
 .nb{display:flex;align-items:center;gap:.55rem;padding:.55rem .7rem;margin:.05rem .45rem;border-radius:7px;cursor:pointer;font-size:.82rem;font-weight:500;color:var(--mu);border:none;background:none;font-family:'Tajawal',sans-serif;width:calc(100% - .9rem);text-align:right;transition:all .12s}
@@ -58,11 +52,9 @@ body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);heig
 .ndot{width:4px;height:4px;border-radius:50%;background:#333;flex-shrink:0;transition:background .12s}
 .nbadge{margin-right:auto;background:var(--red);color:#fff;font-size:.6rem;font-weight:700;padding:.08rem .38rem;border-radius:10px;display:none}
 .nsep{height:1px;background:var(--bdr);margin:.45rem .7rem}
-/* PAGES */
 .pages{flex:1;overflow-y:auto}
 .page{display:none;padding:1.5rem}
 .page.on{display:block}
-/* CARDS */
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem;margin-bottom:1.2rem}
 .card{background:#fff;border:1px solid var(--gr);border-radius:9px;padding:1.1rem 1.2rem;cursor:pointer;transition:all .15s;position:relative;overflow:hidden}
 .card::before{content:'';position:absolute;top:0;right:0;left:0;height:3px;background:var(--gr);transition:background .15s}
@@ -72,25 +64,19 @@ body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);heig
 .clabel{font-size:.68rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.4rem}
 .cval{font-size:1.7rem;font-weight:800;line-height:1}
 .csub{font-size:.68rem;color:var(--mu);margin-top:.25rem}
-/* FILTER BANNER */
 .fbanner{display:none;background:var(--red);color:#fff;padding:.45rem 1rem;font-size:.8rem;font-weight:600;align-items:center;justify-content:space-between;margin-bottom:.8rem;border-radius:7px}
 .fbanner.on{display:flex}
 .fbanner button{background:rgba(255,255,255,.2);border:none;color:#fff;padding:.2rem .6rem;border-radius:5px;cursor:pointer;font-family:'Tajawal',sans-serif;font-size:.75rem}
-/* TWO COL */
 .twocol{display:grid;grid-template-columns:265px 1fr;gap:.9rem;align-items:start}
-/* PANEL */
 .panel{background:#fff;border:1px solid var(--gr);border-radius:9px;overflow:hidden}
 .phead{padding:.8rem .9rem;border-bottom:1px solid var(--gr);display:flex;align-items:center;justify-content:space-between}
 .ptitle{font-size:.82rem;font-weight:700}
 .pill{background:var(--red);color:#fff;font-size:.65rem;font-weight:700;padding:.12rem .45rem;border-radius:20px}
-/* SEARCH */
 .sbox{padding:.55rem .75rem;border-bottom:1px solid var(--gr);display:flex;align-items:center;gap:.4rem}
 .sbox input{border:none;outline:none;font-family:'Tajawal',sans-serif;font-size:.82rem;width:100%;background:transparent}
-/* CHIPS */
 .chips{padding:.45rem .65rem;border-bottom:1px solid var(--gr);display:flex;gap:.3rem;flex-wrap:wrap}
 .chip{padding:.18rem .6rem;border-radius:20px;font-size:.68rem;font-weight:600;border:1px solid var(--gr);background:transparent;cursor:pointer;font-family:'Tajawal',sans-serif;color:var(--mu);transition:all .12s}
 .chip:hover,.chip.on{background:var(--blk);border-color:var(--blk);color:#fff}
-/* STAFF LIST */
 .slist{max-height:calc(100vh - 340px);overflow-y:auto}
 .sitem{display:flex;align-items:center;gap:.65rem;padding:.65rem .9rem;cursor:pointer;border-bottom:1px solid var(--gr);transition:background .1s}
 .sitem:hover{background:var(--off)}
@@ -103,7 +89,6 @@ body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);heig
 .sdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .sdot.active{background:var(--gn)}.sdot.leave{background:var(--or)}.sdot.inactive{background:var(--gr)}
 .grphdr{padding:.35rem .75rem .2rem;font-size:.62rem;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.06em;background:var(--off);border-bottom:1px solid var(--gr)}
-/* DETAIL */
 .dpanel{background:#fff;border:1px solid var(--gr);border-radius:9px;overflow:hidden}
 .dempty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:400px;color:var(--mu);font-size:.82rem;gap:.5rem}
 .dempty svg{width:36px;height:36px;opacity:.15}
@@ -119,25 +104,21 @@ body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);heig
 .sbadge.active{background:rgba(26,127,60,.15);color:#4CAF74;border:1px solid #1A7F3C}
 .sbadge.leave{background:rgba(196,92,30,.15);color:#E07840;border:1px solid #C45C1E}
 .sbadge.inactive{background:rgba(255,255,255,.05);color:#777;border:1px solid #444}
-/* TABS */
 .tabs{display:flex;border-bottom:1px solid var(--gr);padding:0 .9rem}
 .tab{padding:.65rem .85rem;font-family:'Tajawal',sans-serif;font-size:.77rem;font-weight:600;border:none;background:none;cursor:pointer;color:var(--mu);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .12s}
 .tab.on{color:var(--red);border-bottom-color:var(--red)}
 .tpane{display:none;padding:1rem}
 .tpane.on{display:block}
-/* INFO GRID */
 .igrid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
 .icell{background:var(--off);border-radius:7px;padding:.65rem .85rem}
 .icell.full{grid-column:span 2}
 .ilabel{font-size:.63rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.2rem}
 .ival{font-size:.85rem;font-weight:600}
 .iedit{float:left;font-size:.62rem;color:var(--red);cursor:pointer;font-weight:600}
-/* SALARY HL */
 .salhl{background:var(--blk);border-radius:8px;padding:.9rem 1.1rem;display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem}
 .sallabel{font-size:.68rem;color:var(--mu);margin-bottom:.25rem}
 .salval{font-size:1.4rem;font-weight:800;color:#fff}
 .salcur{font-size:.78rem;color:var(--mu)}
-/* DOC BLOCKS */
 .dblock{border:1px solid var(--gr);border-radius:7px;margin-bottom:.6rem;overflow:hidden}
 .dbhead{display:flex;align-items:center;gap:.7rem;padding:.65rem .85rem;background:#fff;border-bottom:1px solid var(--gr)}
 .dbicon{font-size:1.1rem;flex-shrink:0}
@@ -155,20 +136,17 @@ body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);heig
 .pslot img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
 .pdel{position:absolute;top:3px;left:3px;background:var(--red);color:#fff;border:none;border-radius:50%;width:17px;height:17px;font-size:.58rem;cursor:pointer;display:none;align-items:center;justify-content:center}
 .pslot.hi .pdel{display:flex}
-/* SCHEDULE */
 .sgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:.28rem}
 .sday{background:var(--off);border-radius:5px;padding:.38rem .18rem;text-align:center}
 .sday.work{background:#E8F5ED}
 .sdname{font-size:.58rem;font-weight:700;color:var(--mu);margin-bottom:.18rem}
 .sdst{font-size:.57rem;font-weight:600}
 .sday.work .sdst{color:var(--gn)}.sday.off .sdst{color:#bbb}
-/* ACTIONS */
 .actrow{display:flex;gap:.45rem;padding:.8rem .9rem;border-top:1px solid var(--gr)}
 .abtn{flex:1;padding:.5rem;border-radius:6px;font-family:'Tajawal',sans-serif;font-weight:600;font-size:.75rem;cursor:pointer;border:1px solid var(--gr);background:var(--off);color:var(--tx);transition:all .12s;text-align:center}
 .abtn:hover{border-color:#bbb}
 .abtn.pr{background:var(--blk);color:#fff;border-color:var(--blk)}
 .abtn.dn{background:#FFEBEB;color:var(--red);border-color:#FFCECE}
-/* MODAL */
 .mbg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;align-items:center;justify-content:center;padding:1rem}
 .mbg.open{display:flex}
 .modal{background:#fff;border-radius:11px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25)}
@@ -193,7 +171,6 @@ body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);heig
 .photoup:hover{border-color:var(--red)}
 .pcircle{width:58px;height:58px;border-radius:50%;background:var(--blk);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.3rem;overflow:hidden;border:2px solid var(--red)}
 .pcircle img{width:100%;height:100%;object-fit:cover}
-/* PAYROLL */
 .prsumm{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem;margin-bottom:1.1rem}
 .prcard{background:#fff;border:1px solid var(--gr);border-radius:9px;padding:.9rem 1.1rem}
 .prcard.hl{background:var(--blk);border-color:var(--blk)}
@@ -212,7 +189,6 @@ body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);heig
 .prtbl tr:hover td{background:var(--off)}
 .prtbl tfoot td{background:var(--blk);color:#fff;font-weight:700;padding:.65rem .8rem}
 .eibtn{background:none;border:1px solid var(--gr);border-radius:4px;padding:.08rem .32rem;cursor:pointer;font-size:.62rem;color:var(--red);margin-right:.25rem}
-/* BRANCHES */
 .brgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem;margin-bottom:1.3rem}
 .brcard{background:#fff;border:1px solid var(--gr);border-radius:9px;padding:1.1rem;cursor:pointer;transition:all .15s;border-top:3px solid var(--red)}
 .brcard:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);transform:translateY(-1px)}
@@ -222,7 +198,6 @@ body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);heig
 .bstat{font-size:.65rem;font-weight:600;padding:.12rem .45rem;border-radius:20px}
 .bstat.a{background:#E8F5ED;color:var(--gn)}.bstat.l{background:#FFF3E8;color:var(--or)}.bstat.i{background:#F5F5F5;color:#777}.bstat.x{background:#FFEBEB;color:var(--red)}
 .brfoot{margin-top:.7rem;text-align:center;font-size:.68rem;font-weight:600;color:var(--mu);background:var(--off);padding:.3rem;border-radius:5px}
-/* SETTINGS */
 .sblock{background:#fff;border:1px solid var(--gr);border-radius:9px;overflow:hidden;margin-bottom:.9rem}
 .sbhead{padding:.7rem .9rem;border-bottom:1px solid var(--gr);font-size:.82rem;font-weight:700}
 .sbbody{padding:.9rem}
@@ -233,38 +208,30 @@ body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);heig
 .syscell{background:var(--off);border-radius:6px;padding:.65rem .85rem}
 .arow{display:flex;align-items:center;gap:.7rem;padding:.55rem .85rem;background:var(--off);border-radius:6px;margin-bottom:.4rem;cursor:pointer;border-right:3px solid transparent}
 .arow:hover{background:#eee}
-/* COMPLAINTS */
 .cmpcard{background:#fff;border:1px solid var(--gr);border-radius:8px;padding:.9rem;margin-bottom:.6rem;border-right:3px solid var(--gr)}
 .cmpcard.high{border-right-color:var(--red)}.cmpcard.medium{border-right-color:var(--or)}.cmpcard.low{border-right-color:var(--gn)}
 .ctag{display:inline-block;font-size:.62rem;font-weight:700;padding:.1rem .4rem;border-radius:20px}
 .cfilter{display:flex;gap:.4rem;margin-bottom:.9rem;flex-wrap:wrap}
 .cchip{padding:.28rem .75rem;border-radius:20px;font-size:.7rem;font-weight:600;border:1px solid var(--gr);background:transparent;cursor:pointer;font-family:'Tajawal',sans-serif;color:var(--mu);transition:all .12s}
 .cchip.on,.cchip:hover{background:var(--blk);border-color:var(--blk);color:#fff}
-/* LINK BOX */
 .lbox{background:var(--blk);border-radius:8px;padding:.85rem .95rem;margin-bottom:.9rem;display:flex;align-items:center;gap:.75rem}
 .lboxlbl{color:#666;font-size:.65rem;font-weight:600;margin-bottom:.2rem}
 .lboxval{color:#fff;font-size:.78rem;font-weight:500;direction:ltr;text-align:right;font-family:monospace}
-/* PAGE HEADER */
 .pgh{margin-bottom:1.2rem}
 .pgt{font-size:1.1rem;font-weight:700}
 .pgs{font-size:.78rem;color:var(--mu);margin-top:.2rem}
-
 .vrow{background:#fff;border:1px solid var(--gr);border-radius:7px;padding:.75rem .9rem;margin-bottom:.5rem;border-right:3px solid var(--gr)}
 .vrow.warning{border-right-color:var(--or)}
 .vrow.violation{border-right-color:var(--red)}
 .vrow.suspension{border-right-color:#7B1FA2}
 .vtag{display:inline-block;font-size:.62rem;font-weight:700;padding:.1rem .4rem;border-radius:20px}
 .vadd-form{background:var(--off);border:1px solid var(--gr);border-radius:8px;padding:.9rem;margin-bottom:.9rem}
-/* HIDDEN */
 .hide{display:none!important}
-/* SCROLLBAR */
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--red);border-radius:2px}
 @media(max-width:900px){.twocol{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}.prsumm{grid-template-columns:repeat(2,1fr)}.brgrid{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr}.fg.full{grid-column:span 1}}
 </style>
 </head>
 <body>
-
-<!-- LOGIN -->
 <div id="loginWrap">
   <div class="lcard">
     <div class="lmark"></div>
@@ -276,8 +243,6 @@ body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);heig
     <div class="lerr" id="lerr">اسم المستخدم أو كلمة المرور غير صحيحة</div>
   </div>
 </div>
-
-<!-- LOGOUT DIALOG -->
 <div id="lgDlg">
   <div class="lgbox">
     <h3 id="lg_title">تسجيل الخروج</h3>
@@ -285,13 +250,9 @@ body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);heig
     <div class="lgbtns"><button class="lgyes" id="lg_yes">خروج</button><button class="lgno" id="lg_no">إلغاء</button></div>
   </div>
 </div>
-
-<!-- HIDDEN INPUTS -->
 <input type="file" id="avInput" accept="image/*" class="hide">
 <input type="file" id="docInput" accept="image/*" class="hide">
 <input type="file" id="mavInput" accept="image/*" class="hide">
-
-<!-- SHELL -->
 <div id="shell">
   <div class="topbar">
     <div class="tmark"></div><span class="tbrand">PROSTO</span>
@@ -309,6 +270,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);heig
       <button class="nb" id="nb_pay" onclick="gp('pay')"><span class="ndot"></span><span id="nl_pay">الرواتب</span></button>
       <div class="nsep"></div>
       <button class="nb" id="nb_bra" onclick="gp('bra')"><span class="ndot"></span><span id="nl_bra">الفروع والأقسام</span></button>
+      <button class="nb" id="nb_vio" onclick="gp('vio')"><span class="ndot"></span><span id="nl_vio">المخالفات والإنذارات</span></button>
       <button class="nb" id="nb_cmp" onclick="gp('cmp')"><span class="ndot"></span><span id="nl_cmp">الشكاوي</span><span class="nbadge" id="cmpBadge">0</span></button>
       <button class="nb" id="nb_reg" onclick="gp('reg')"><span class="ndot"></span><span id="nl_reg">طلبات التسجيل</span><span class="nbadge" id="regBadge">0</span></button>
       <div class="nsep"></div>
@@ -368,6 +330,39 @@ body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);heig
         </div>
       </div>
 
+      <!-- VIOLATIONS PAGE -->
+      <div class="page" id="pg_vio">
+        <div class="pgh"><div class="pgt" id="vp_title">المخالفات والإنذارات</div><div class="pgs" id="vp_sub">سجل المخالفات والإنذارات لجميع الموظفين</div></div>
+        <div style="display:flex;gap:.6rem;margin-bottom:1rem;flex-wrap:wrap;align-items:center;">
+          <select id="vp_br_sel" class="fi" style="width:auto;" onchange="renderVioPage()"></select>
+          <select id="vp_type_sel2" class="fi" style="width:auto;" onchange="renderVioPage()">
+            <option value="all" id="vf_all">الكل</option>
+            <option value="warning" id="vf_warn">إنذار</option>
+            <option value="violation" id="vf_viol">مخالفة</option>
+            <option value="suspension" id="vf_susp">إيقاف عن العمل</option>
+          </select>
+        </div>
+        <div class="sblock" style="margin-bottom:1rem;">
+          <div class="sbhead" id="vp_add_title">إضافة مخالفة / إنذار</div>
+          <div class="sbbody">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin-bottom:.6rem;">
+              <div class="fg"><label class="fl" id="vp_emp_lbl">الموظف</label><select id="vp_emp_sel" class="fs"></select></div>
+              <div class="fg"><label class="fl" id="vp_type_lbl">النوع</label>
+                <select id="vp_type_sel" class="fs">
+                  <option value="warning">إنذار</option>
+                  <option value="violation">مخالفة</option>
+                  <option value="suspension">إيقاف عن العمل</option>
+                </select>
+              </div>
+              <div class="fg"><label class="fl" id="vp_date_lbl">التاريخ</label><input id="vp_date_inp" class="fi" type="date"></div>
+            </div>
+            <div class="fg" style="margin-bottom:.6rem;"><label class="fl" id="vp_desc_lbl">التفاصيل</label><textarea id="vp_desc_txt" class="fi" rows="2" style="resize:vertical"></textarea></div>
+            <button class="msave" onclick="addVioPage()" id="vp_save_btn" style="padding:.5rem 1.2rem;">إضافة</button>
+          </div>
+        </div>
+        <div id="vioPageList"></div>
+      </div>
+
       <!-- COMPLAINTS -->
       <div class="page" id="pg_cmp">
         <div class="pgh"><div class="pgt" id="cp_title">الشكاوي والاقتراحات</div><div class="pgs" id="cp_sub">الشكاوي المقدمة من الموظفين</div></div>
@@ -395,7 +390,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);heig
   </div>
 </div>
 
-<!-- ADD/EDIT MODAL -->
+<!-- MODAL -->
 <div class="mbg" id="addModal">
   <div class="modal">
     <div class="mhead"><span class="mtitle" id="modal_title">إضافة موظف</span><button class="mclose" onclick="closeMod()">✕</button></div>
@@ -437,112 +432,136 @@ body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);heig
 </div>
 
 <script>
-// ════════════════════════════════════════════════════════
-// DATA
-// ════════════════════════════════════════════════════════
-var emps = [];
-var photos = {};
+var emps=[];
+var photos={};
 function ps(id){if(!photos[id])photos[id]={av:null,docs:{}};return photos[id];}
-var violations = {};
+var violations={};
 function getVio(id){if(!violations[id])violations[id]=[];return violations[id];}
-
-var branches = JSON.parse(localStorage.getItem('prosto_br')||'null') || [
+var branches=JSON.parse(localStorage.getItem('prosto_br')||'null')||[
   {ar:'الخالدية',en:'Khalidiya',code:'KH'},
   {ar:'بني ياس',en:'Bani Yas',code:'BY'},
   {ar:'الكول سنتر',en:'Call Center',code:'CC'},
   {ar:'المشغل',en:'Workshop',code:'MS'}
 ];
-
-var USERS = [{username:'admin',password:'prosto2024',name:'المدير العام'}];
+var USERS=[{username:'admin',password:'prosto2024',name:'المدير العام'}];
 try{var su=localStorage.getItem('prosto_users');if(su)USERS=JSON.parse(su);}catch(e){}
+var me=null,lang='ar',selId=null,filt='all',br='',q='',cmpF='all',docKey=null,mavData=null,editId=null;
 
-// ════════════════════════════════════════════════════════
-// STATE
-// ════════════════════════════════════════════════════════
-var me=null, lang='ar', selId=null, filt='all', br='', q='', cmpF='all', docKey=null, mavData=null, editId=null;
-
-// ════════════════════════════════════════════════════════
-// TRANSLATIONS
-// ════════════════════════════════════════════════════════
-var TR = {
-  ar:{lsub:'نظام إدارة الموظفين',lusr_lbl:'اسم المستخدم',lpas_lbl:'كلمة المرور',lbtn:'دخول',lerr_msg:'اسم المستخدم أو كلمة المرور غير صحيحة',
-    nav_lbl:'التنقل',nl_emp:'الموظفون',nl_pay:'الرواتب',nl_bra:'الفروع والأقسام',nl_cmp:'الشكاوي',nl_reg:'طلبات التسجيل',nl_set:'الإعدادات',
-    addBtn:'+ إضافة موظف',lgBtn:'خروج',langBtn:'EN',
-    cl_all:'إجمالي الموظفين',cs_all:'جميع الفروع',cl_active:'نشطون',cs_active:'موظف نشط',cl_leave:'في إجازة',cs_leave:'موظف في إجازة',cl_inactive:'غير نشطين',cs_inactive:'موظف غير نشط',
-    stl:'الموظفون',srch_ph:'بحث...',demptyTxt:'اختر موظفاً لعرض بياناته',clearFiltBtn:'إلغاء الفلتر',filt_all:'جميع الموظفين',filt_active:'الموظفون النشطون',filt_leave:'الموظفون في إجازة',filt_inactive:'الموظفون غير النشطين',
-    pp_title:'الرواتب والبايرول',pp_sub:'إجمالي الرواتب الشهرية',pp_tbl:'كشف الرواتب',allBr:'جميع الفروع',expBtn:'تصدير CSV',
-    th0:'#',th1:'الاسم',th2:'الفرع',th3:'الراتب الأساسي',th4:'بدل سكن',th5:'خصومات',th6:'الإجمالي',th7:'الحالة',
-    pr_bas:'الراتب الأساسي',pr_hou:'بدل سكن',pr_ded:'خصومات',pr_tot:'الإجمالي الكلي',
-    bp_title:'الفروع والأقسام',bp_sub:'إدارة فروع بروستو',addBrTitle:'إضافة فرع جديد',brar_lbl:'الاسم بالعربي',brco_lbl:'الكود',addBrBtn:'إضافة',brview:'عرض الموظفين',brdel:'حذف',
-    cp_title:'الشكاوي والاقتراحات',cp_sub:'الشكاوي المقدمة من الموظفين',cp_link_lbl:'رابط الشكاوي — أرسله للموظفين',cp_copy:'نسخ',cf_all:'الكل',cf_new:'جديدة',cf_urg:'عاجلة',cf_res:'تم الحل',
-    rp_title:'طلبات التسجيل',rp_sub:'الطلبات المقدمة عبر رابط التسجيل',rp_link_lbl:'رابط التسجيل — أرسله للموظفين الجدد',rp_copy:'نسخ',
-    sp_title:'الإعدادات',sp_cred:'بيانات تسجيل الدخول',sp_sys:'معلومات النظام',sp_alerts:'تنبيهات انتهاء الوثائق',
-    mt_add:'إضافة موظف',mt_edit:'تعديل بيانات الموظف',mphoto_hint:'صورة شخصية (اختياري)',
-    ms_basic:'البيانات الأساسية',ms_perm:'التصريح والإقامة',ms_sal:'الراتب',ms_not:'ملاحظات',
-    ml_name:'الاسم الكامل *',ml_role:'الوظيفة',ml_dept:'الفرع',ml_nat:'الجنسية',ml_gen:'الجنس',ml_pho:'رقم الهاتف',ml_sta:'الحالة',ml_std:'تاريخ بدء العمل',ml_per:'نوع التصريح',ml_spo:'الكفيل',ml_eid:'رقم البطاقة',ml_res:'انتهاء الإقامة',ml_pex:'انتهاء الجواز',ml_lab:'انتهاء بطاقة العمل',ml_bas:'الراتب الأساسي (درهم)',ml_hou:'بدل سكن',ml_ded:'خصومات',
-    mcan:'إلغاء',msave_add:'حفظ الموظف',msave_edit:'تحديث',
-    lg_title:'تسجيل الخروج',lg_sub:'هل تريد تسجيل الخروج؟',lg_yes:'خروج',lg_no:'إلغاء',
-    tab_per:'الشخصية',tab_fin:'الراتب',tab_sch:'الجدول',tab_doc:'الوثائق',
-    il_pho:'رقم الهاتف',il_nat:'الجنسية',il_gen:'الجنس',il_eid:'رقم البطاقة',il_per:'نوع التصريح',il_spo:'الكفيل',il_std:'تاريخ بدء العمل',il_br:'الفرع',il_not:'ملاحظات',
-    sal_total:'إجمالي الراتب الشهري',sal_bas:'الراتب الأساسي',sal_hou:'بدل سكن',sal_ded:'خصومات',sal_yrs:'سنوات الخدمة',
-    sch_title:'جدول العمل الأسبوعي',sch_work:'أيام عمل/أسبوع',sch_off:'أيام إجازة/أسبوع',
-    days:['الجمعة','السبت','الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس'],
-    work_lbl:'عمل',off_lbl:'إجازة',
-    doc_res:'الهوية / الإقامة',doc_pas:'جواز السفر',doc_lab:'بطاقة العمل',doc_oth:'مرفقات أخرى',
-    doc_valid:'ساري',doc_exp:'ينتهي قريباً',doc_exd:'منتهي',doc_unk:'غير محدد',
-    expires:'تنتهي',id_f:'الهوية (أمام)',id_b:'الهوية (خلف)',pas_f:'الجواز (أمام)',pas_b:'الجواز (خلف)',lab_c:'بطاقة العمل',visa:'التأشيرة',contract:'العقد',att1:'مرفق 1',att2:'مرفق 2',
-    edit_btn:'تعديل',print_btn:'طباعة',del_btn:'حذف',cur:'درهم',edit_lbl:'تعديل',
-    st_active:'نشط',st_leave:'في إجازة',st_inactive:'غير نشط',
-    approve:'موافقة',reject:'رفض',add_staff:'إضافة للموظفين',processed:'تمت المعالجة',
-    resolve:'تم الحل',del_cmp:'حذف',no_cmp:'لا توجد شكاوي',no_reg:'لا توجد طلبات تسجيل',
-    ch_pass:'تغيير الباسورد',ch_user:'تغيير اليوزر',no_alerts:'لا توجد وثائق تنتهي قريباً',
-    files_up:'وثائق مرفوعة',sys_tot:'إجمالي الموظفين',sys_pay:'الرواتب الشهرية',sys_ver:'إصدار النظام',sys_exp:'وثائق تنتهي قريباً',sys_exd:'وثائق منتهية',
-    copy_ok:'تم نسخ الرابط',usr_lbl:'اسم المستخدم',emp_c:'موظف',day_c:'يوم',
-    sev_n:'عادية',sev_m:'متوسطة',sev_h:'عاجلة',
-    new_b:'جديدة',res_b:'تم الحل',pen_b:'في الانتظار',app_b:'تمت الموافقة',rej_b:'مرفوض',anon:'مجهول',
-    filt_br:'الكل',brn_emp:'موظف',tab_vio:'مخالفات وإنذارات',vio_add:'إضافة مخالفة / إنذار',vio_type:'النوع',vio_date:'التاريخ',vio_desc:'التفاصيل',vio_save:'حفظ',vio_empty:'لا توجد مخالفات أو إنذارات',vio_warning:'إنذار',vio_violation:'مخالفة',vio_suspension:'إيقاف عن العمل',vio_del:'حذف'},
-  en:{lsub:'Employee Management System',lusr_lbl:'Username',lpas_lbl:'Password',lbtn:'Sign In',lerr_msg:'Invalid username or password',
-    nav_lbl:'NAVIGATION',nl_emp:'Employees',nl_pay:'Payroll',nl_bra:'Branches',nl_cmp:'Complaints',nl_reg:'Registrations',nl_set:'Settings',
-    addBtn:'+ Add Employee',lgBtn:'Sign Out',langBtn:'عربي',
-    cl_all:'Total Employees',cs_all:'All branches',cl_active:'Active',cs_active:'active employees',cl_leave:'On Leave',cs_leave:'on leave',cl_inactive:'Inactive',cs_inactive:'inactive',
-    stl:'Employees',srch_ph:'Search...',demptyTxt:'Select an employee to view details',clearFiltBtn:'Clear Filter',filt_all:'All Employees',filt_active:'Active Employees',filt_leave:'Employees on Leave',filt_inactive:'Inactive Employees',
-    pp_title:'Payroll',pp_sub:'Monthly salary totals for all branches',pp_tbl:'Payroll Sheet',allBr:'All Branches',expBtn:'Export CSV',
-    th0:'#',th1:'Name',th2:'Branch',th3:'Basic Salary',th4:'Housing',th5:'Deductions',th6:'Total',th7:'Status',
-    pr_bas:'Basic Salary',pr_hou:'Housing',pr_ded:'Deductions',pr_tot:'Grand Total',
-    bp_title:'Branches & Departments',bp_sub:'Manage Prosto locations',addBrTitle:'Add New Branch',brar_lbl:'Name (AR)',brco_lbl:'Code',addBrBtn:'Add',brview:'View Employees',brdel:'Delete',
-    cp_title:'Complaints & Suggestions',cp_sub:'Submitted by employees',cp_link_lbl:'Complaints link — send to employees',cp_copy:'Copy',cf_all:'All',cf_new:'New',cf_urg:'Urgent',cf_res:'Resolved',
-    rp_title:'Registration Requests',rp_sub:'Submitted via registration link',rp_link_lbl:'Registration link — send to new employees',rp_copy:'Copy',
-    sp_title:'Settings',sp_cred:'Login Credentials',sp_sys:'System Information',sp_alerts:'Document Expiry Alerts',
-    mt_add:'Add Employee',mt_edit:'Edit Employee',mphoto_hint:'Profile photo (optional)',
-    ms_basic:'Basic Information',ms_perm:'Permit & Residency',ms_sal:'Salary',ms_not:'Notes',
-    ml_name:'Full Name *',ml_role:'Role',ml_dept:'Branch',ml_nat:'Nationality',ml_gen:'Gender',ml_pho:'Phone',ml_sta:'Status',ml_std:'Start Date',ml_per:'Permit Type',ml_spo:'Sponsor',ml_eid:'Card Number',ml_res:'Residency Expiry',ml_pex:'Passport Expiry',ml_lab:'Labour Card Expiry',ml_bas:'Basic Salary (AED)',ml_hou:'Housing Allowance',ml_ded:'Deductions',
-    mcan:'Cancel',msave_add:'Save Employee',msave_edit:'Update',
-    lg_title:'Sign Out',lg_sub:'Are you sure you want to sign out?',lg_yes:'Sign Out',lg_no:'Cancel',
-    tab_per:'Personal',tab_fin:'Salary',tab_sch:'Schedule',tab_doc:'Documents',
-    il_pho:'Phone',il_nat:'Nationality',il_gen:'Gender',il_eid:'Card Number',il_per:'Permit Type',il_spo:'Sponsor',il_std:'Start Date',il_br:'Branch',il_not:'Notes',
-    sal_total:'Total Monthly Salary',sal_bas:'Basic Salary',sal_hou:'Housing',sal_ded:'Deductions',sal_yrs:'Years of Service',
-    sch_title:'Weekly Schedule',sch_work:'Work days/week',sch_off:'Off days/week',
-    days:['Friday','Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday'],
-    work_lbl:'Work',off_lbl:'Off',
-    doc_res:'ID / Residency',doc_pas:'Passport',doc_lab:'Labour Card',doc_oth:'Other Documents',
-    doc_valid:'Valid',doc_exp:'Expiring Soon',doc_exd:'Expired',doc_unk:'Unknown',
-    expires:'Expires',id_f:'ID (Front)',id_b:'ID (Back)',pas_f:'Passport (Front)',pas_b:'Passport (Back)',lab_c:'Labour Card',visa:'Visa',contract:'Contract',att1:'Attachment 1',att2:'Attachment 2',
-    edit_btn:'Edit',print_btn:'Print',del_btn:'Delete',cur:'AED',edit_lbl:'Edit',
-    st_active:'Active',st_leave:'On Leave',st_inactive:'Inactive',
-    approve:'Approve',reject:'Reject',add_staff:'Add to Staff',processed:'Processed',
-    resolve:'Resolve',del_cmp:'Delete',no_cmp:'No complaints yet',no_reg:'No registration requests yet',
-    ch_pass:'Change Password',ch_user:'Change Username',no_alerts:'No documents expiring soon',
-    files_up:'files uploaded',sys_tot:'Total Employees',sys_pay:'Monthly Payroll',sys_ver:'System Version',sys_exp:'Docs Expiring Soon',sys_exd:'Expired Docs',
-    copy_ok:'Link copied!',usr_lbl:'Username',emp_c:'employees',day_c:'days',
-    sev_n:'Normal',sev_m:'Medium',sev_h:'Urgent',
-    new_b:'New',res_b:'Resolved',pen_b:'Pending',app_b:'Approved',rej_b:'Rejected',anon:'Anonymous',
-    filt_br:'All',brn_emp:'employees',tab_vio:'Violations & Warnings',vio_add:'Add Violation / Warning',vio_type:'Type',vio_date:'Date',vio_desc:'Details',vio_save:'Save',vio_empty:'No violations or warnings',vio_warning:'Warning',vio_violation:'Violation',vio_suspension:'Suspension',vio_del:'Delete'}
+var TR={
+ar:{lsub:'نظام إدارة الموظفين',lusr_lbl:'اسم المستخدم',lpas_lbl:'كلمة المرور',lbtn:'دخول',
+  nav_lbl:'التنقل',nl_emp:'الموظفون',nl_pay:'الرواتب',nl_bra:'الفروع والأقسام',
+  nl_vio:'المخالفات والإنذارات',nl_cmp:'الشكاوي',nl_reg:'طلبات التسجيل',nl_set:'الإعدادات',
+  addBtn:'+ إضافة موظف',lgBtn:'خروج',langBtn:'EN',
+  cl_all:'إجمالي الموظفين',cs_all:'جميع الفروع',cl_active:'نشطون',cs_active:'موظف نشط',
+  cl_leave:'في إجازة',cs_leave:'موظف في إجازة',cl_inactive:'غير نشطين',cs_inactive:'موظف غير نشط',
+  stl:'الموظفون',srch_ph:'بحث...',demptyTxt:'اختر موظفاً لعرض بياناته',clearFiltBtn:'إلغاء الفلتر',
+  filt_all:'جميع الموظفين',filt_active:'الموظفون النشطون',filt_leave:'الموظفون في إجازة',filt_inactive:'الموظفون غير النشطين',
+  pp_title:'الرواتب والبايرول',pp_sub:'إجمالي الرواتب الشهرية',pp_tbl:'كشف الرواتب',allBr:'جميع الفروع',expBtn:'تصدير CSV',
+  th0:'#',th1:'الاسم',th2:'الفرع',th3:'الراتب الأساسي',th4:'بدل سكن',th5:'خصومات',th6:'الإجمالي',th7:'الحالة',
+  pr_bas:'الراتب الأساسي',pr_hou:'بدل سكن',pr_ded:'خصومات',pr_tot:'الإجمالي الكلي',
+  bp_title:'الفروع والأقسام',bp_sub:'إدارة فروع بروستو',addBrTitle:'إضافة فرع جديد',
+  brar_lbl:'الاسم بالعربي',brco_lbl:'الكود',addBrBtn:'إضافة',brview:'عرض الموظفين',
+  vp_title:'المخالفات والإنذارات',vp_sub:'سجل المخالفات والإنذارات لجميع الموظفين',
+  vp_add_title:'إضافة مخالفة / إنذار',vp_emp_lbl:'الموظف',vp_type_lbl:'النوع',
+  vp_date_lbl:'التاريخ',vp_desc_lbl:'التفاصيل',vp_save_btn:'إضافة',
+  vf_all:'الكل',vf_warn:'إنذار',vf_viol:'مخالفة',vf_susp:'إيقاف عن العمل',
+  vio_warning:'إنذار',vio_violation:'مخالفة',vio_suspension:'إيقاف عن العمل',
+  vp_no_vio:'لا توجد مخالفات أو إنذارات',
+  cp_title:'الشكاوي والاقتراحات',cp_sub:'الشكاوي المقدمة من الموظفين',
+  cp_link_lbl:'رابط الشكاوي — أرسله للموظفين',cp_copy:'نسخ',
+  cf_all:'الكل',cf_new:'جديدة',cf_urg:'عاجلة',cf_res:'تم الحل',
+  rp_title:'طلبات التسجيل',rp_sub:'الطلبات المقدمة عبر رابط التسجيل',
+  rp_link_lbl:'رابط التسجيل — أرسله للموظفين الجدد',rp_copy:'نسخ',
+  sp_title:'الإعدادات',sp_cred:'بيانات تسجيل الدخول',sp_sys:'معلومات النظام',sp_alerts:'تنبيهات انتهاء الوثائق',
+  mt_add:'إضافة موظف',mt_edit:'تعديل بيانات الموظف',mphoto_hint:'صورة شخصية (اختياري)',
+  ms_basic:'البيانات الأساسية',ms_perm:'التصريح والإقامة',ms_sal:'الراتب',ms_not:'ملاحظات',
+  ml_name:'الاسم الكامل *',ml_role:'الوظيفة',ml_dept:'الفرع',ml_nat:'الجنسية',ml_gen:'الجنس',
+  ml_pho:'رقم الهاتف',ml_sta:'الحالة',ml_std:'تاريخ بدء العمل',ml_per:'نوع التصريح',ml_spo:'الكفيل',
+  ml_eid:'رقم البطاقة',ml_res:'انتهاء الإقامة',ml_pex:'انتهاء الجواز',ml_lab:'انتهاء بطاقة العمل',
+  ml_bas:'الراتب الأساسي (درهم)',ml_hou:'بدل سكن',ml_ded:'خصومات',
+  mcan:'إلغاء',msave_add:'حفظ الموظف',msave_edit:'تحديث',
+  lg_title:'تسجيل الخروج',lg_sub:'هل تريد تسجيل الخروج؟',lg_yes:'خروج',lg_no:'إلغاء',
+  tab_per:'الشخصية',tab_fin:'الراتب',tab_sch:'الجدول',tab_doc:'الوثائق',tab_vio:'مخالفات وإنذارات',
+  il_pho:'رقم الهاتف',il_nat:'الجنسية',il_gen:'الجنس',il_eid:'رقم البطاقة',il_per:'نوع التصريح',
+  il_spo:'الكفيل',il_std:'تاريخ بدء العمل',il_br:'الفرع',il_not:'ملاحظات',
+  sal_total:'إجمالي الراتب الشهري',sal_bas:'الراتب الأساسي',sal_hou:'بدل سكن',sal_ded:'خصومات',sal_yrs:'سنوات الخدمة',
+  sch_title:'جدول العمل الأسبوعي',sch_work:'أيام عمل/أسبوع',sch_off:'أيام إجازة/أسبوع',
+  days:['الجمعة','السبت','الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس'],
+  work_lbl:'عمل',off_lbl:'إجازة',
+  doc_res:'الهوية / الإقامة',doc_pas:'جواز السفر',doc_lab:'بطاقة العمل',doc_oth:'مرفقات أخرى',
+  doc_valid:'ساري',doc_exp:'ينتهي قريباً',doc_exd:'منتهي',doc_unk:'غير محدد',
+  expires:'تنتهي',id_f:'الهوية (أمام)',id_b:'الهوية (خلف)',pas_f:'الجواز (أمام)',pas_b:'الجواز (خلف)',
+  lab_c:'بطاقة العمل',visa:'التأشيرة',contract:'العقد',att1:'مرفق 1',att2:'مرفق 2',
+  edit_btn:'تعديل',print_btn:'طباعة',del_btn:'حذف',cur:'درهم',edit_lbl:'تعديل',
+  st_active:'نشط',st_leave:'في إجازة',st_inactive:'غير نشط',
+  approve:'موافقة',reject:'رفض',add_staff:'إضافة للموظفين',processed:'تمت المعالجة',
+  resolve:'تم الحل',del_cmp:'حذف',no_cmp:'لا توجد شكاوي',no_reg:'لا توجد طلبات تسجيل',
+  ch_pass:'تغيير الباسورد',ch_user:'تغيير اليوزر',no_alerts:'لا توجد وثائق تنتهي قريباً',
+  files_up:'وثائق مرفوعة',sys_tot:'إجمالي الموظفين',sys_pay:'الرواتب الشهرية',sys_ver:'إصدار النظام',
+  sys_exp:'وثائق تنتهي قريباً',sys_exd:'وثائق منتهية',
+  copy_ok:'تم نسخ الرابط',usr_lbl:'اسم المستخدم',emp_c:'موظف',day_c:'يوم',
+  sev_n:'عادية',sev_m:'متوسطة',sev_h:'عاجلة',
+  new_b:'جديدة',res_b:'تم الحل',pen_b:'في الانتظار',app_b:'تمت الموافقة',rej_b:'مرفوض',anon:'مجهول',
+  filt_br:'الكل',brn_emp:'موظف'},
+en:{lsub:'Employee Management System',lusr_lbl:'Username',lpas_lbl:'Password',lbtn:'Sign In',
+  nav_lbl:'NAVIGATION',nl_emp:'Employees',nl_pay:'Payroll',nl_bra:'Branches',
+  nl_vio:'Violations & Warnings',nl_cmp:'Complaints',nl_reg:'Registrations',nl_set:'Settings',
+  addBtn:'+ Add Employee',lgBtn:'Sign Out',langBtn:'عربي',
+  cl_all:'Total Employees',cs_all:'All branches',cl_active:'Active',cs_active:'active employees',
+  cl_leave:'On Leave',cs_leave:'on leave',cl_inactive:'Inactive',cs_inactive:'inactive',
+  stl:'Employees',srch_ph:'Search...',demptyTxt:'Select an employee to view details',clearFiltBtn:'Clear Filter',
+  filt_all:'All Employees',filt_active:'Active Employees',filt_leave:'Employees on Leave',filt_inactive:'Inactive Employees',
+  pp_title:'Payroll',pp_sub:'Monthly salary totals',pp_tbl:'Payroll Sheet',allBr:'All Branches',expBtn:'Export CSV',
+  th0:'#',th1:'Name',th2:'Branch',th3:'Basic Salary',th4:'Housing',th5:'Deductions',th6:'Total',th7:'Status',
+  pr_bas:'Basic Salary',pr_hou:'Housing',pr_ded:'Deductions',pr_tot:'Grand Total',
+  bp_title:'Branches & Departments',bp_sub:'Manage Prosto locations',addBrTitle:'Add New Branch',
+  brar_lbl:'Name (AR)',brco_lbl:'Code',addBrBtn:'Add',brview:'View Employees',
+  vp_title:'Violations & Warnings',vp_sub:'Violations and warnings log for all employees',
+  vp_add_title:'Add Violation / Warning',vp_emp_lbl:'Employee',vp_type_lbl:'Type',
+  vp_date_lbl:'Date',vp_desc_lbl:'Details',vp_save_btn:'Add',
+  vf_all:'All',vf_warn:'Warning',vf_viol:'Violation',vf_susp:'Suspension',
+  vio_warning:'Warning',vio_violation:'Violation',vio_suspension:'Suspension',
+  vp_no_vio:'No violations or warnings',
+  cp_title:'Complaints & Suggestions',cp_sub:'Submitted by employees',
+  cp_link_lbl:'Complaints link — send to employees',cp_copy:'Copy',
+  cf_all:'All',cf_new:'New',cf_urg:'Urgent',cf_res:'Resolved',
+  rp_title:'Registration Requests',rp_sub:'Submitted via registration link',
+  rp_link_lbl:'Registration link — send to new employees',rp_copy:'Copy',
+  sp_title:'Settings',sp_cred:'Login Credentials',sp_sys:'System Information',sp_alerts:'Document Expiry Alerts',
+  mt_add:'Add Employee',mt_edit:'Edit Employee',mphoto_hint:'Profile photo (optional)',
+  ms_basic:'Basic Information',ms_perm:'Permit & Residency',ms_sal:'Salary',ms_not:'Notes',
+  ml_name:'Full Name *',ml_role:'Role',ml_dept:'Branch',ml_nat:'Nationality',ml_gen:'Gender',
+  ml_pho:'Phone',ml_sta:'Status',ml_std:'Start Date',ml_per:'Permit Type',ml_spo:'Sponsor',
+  ml_eid:'Card Number',ml_res:'Residency Expiry',ml_pex:'Passport Expiry',ml_lab:'Labour Card Expiry',
+  ml_bas:'Basic Salary (AED)',ml_hou:'Housing Allowance',ml_ded:'Deductions',
+  mcan:'Cancel',msave_add:'Save Employee',msave_edit:'Update',
+  lg_title:'Sign Out',lg_sub:'Are you sure you want to sign out?',lg_yes:'Sign Out',lg_no:'Cancel',
+  tab_per:'Personal',tab_fin:'Salary',tab_sch:'Schedule',tab_doc:'Documents',tab_vio:'Violations & Warnings',
+  il_pho:'Phone',il_nat:'Nationality',il_gen:'Gender',il_eid:'Card Number',il_per:'Permit Type',
+  il_spo:'Sponsor',il_std:'Start Date',il_br:'Branch',il_not:'Notes',
+  sal_total:'Total Monthly Salary',sal_bas:'Basic Salary',sal_hou:'Housing',sal_ded:'Deductions',sal_yrs:'Years of Service',
+  sch_title:'Weekly Schedule',sch_work:'Work days/week',sch_off:'Off days/week',
+  days:['Friday','Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday'],
+  work_lbl:'Work',off_lbl:'Off',
+  doc_res:'ID / Residency',doc_pas:'Passport',doc_lab:'Labour Card',doc_oth:'Other Documents',
+  doc_valid:'Valid',doc_exp:'Expiring Soon',doc_exd:'Expired',doc_unk:'Unknown',
+  expires:'Expires',id_f:'ID (Front)',id_b:'ID (Back)',pas_f:'Passport (Front)',pas_b:'Passport (Back)',
+  lab_c:'Labour Card',visa:'Visa',contract:'Contract',att1:'Attachment 1',att2:'Attachment 2',
+  edit_btn:'Edit',print_btn:'Print',del_btn:'Delete',cur:'AED',edit_lbl:'Edit',
+  st_active:'Active',st_leave:'On Leave',st_inactive:'Inactive',
+  approve:'Approve',reject:'Reject',add_staff:'Add to Staff',processed:'Processed',
+  resolve:'Resolve',del_cmp:'Delete',no_cmp:'No complaints yet',no_reg:'No registration requests yet',
+  ch_pass:'Change Password',ch_user:'Change Username',no_alerts:'No documents expiring soon',
+  files_up:'files uploaded',sys_tot:'Total Employees',sys_pay:'Monthly Payroll',sys_ver:'System Version',
+  sys_exp:'Docs Expiring Soon',sys_exd:'Expired Docs',
+  copy_ok:'Link copied!',usr_lbl:'Username',emp_c:'employees',day_c:'days',
+  sev_n:'Normal',sev_m:'Medium',sev_h:'Urgent',
+  new_b:'New',res_b:'Resolved',pen_b:'Pending',app_b:'Approved',rej_b:'Rejected',anon:'Anonymous',
+  filt_br:'All',brn_emp:'employees'}
 };
 function T(k){return (TR[lang]||TR.ar)[k]||k;}
 
-// ════════════════════════════════════════════════════════
 // LOGIN
-// ════════════════════════════════════════════════════════
 function tryLogin(){
   var u=document.getElementById('lusr').value.trim().toLowerCase();
   var p=document.getElementById('lpas').value;
@@ -554,8 +573,7 @@ function tryLogin(){
     document.getElementById('loginWrap').style.display='none';
     document.getElementById('shell').classList.add('on');
     document.getElementById('tuser').textContent=m.name;
-    loadBadges();
-    initShell();
+    loadBadges();initShell();
   } else {
     var e=document.getElementById('lerr');
     e.classList.add('show');
@@ -567,9 +585,7 @@ document.getElementById('lbtn').addEventListener('click',tryLogin);
 document.getElementById('lpas').addEventListener('keydown',function(e){if(e.key==='Enter')tryLogin();});
 document.getElementById('lusr').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('lpas').focus();});
 
-// ════════════════════════════════════════════════════════
 // LOGOUT
-// ════════════════════════════════════════════════════════
 document.getElementById('lgBtn').addEventListener('click',function(){document.getElementById('lgDlg').classList.add('open');});
 document.getElementById('lg_yes').addEventListener('click',function(){
   document.getElementById('lgDlg').classList.remove('open');
@@ -580,22 +596,23 @@ document.getElementById('lg_yes').addEventListener('click',function(){
 });
 document.getElementById('lg_no').addEventListener('click',function(){document.getElementById('lgDlg').classList.remove('open');});
 
-// ════════════════════════════════════════════════════════
 // LANGUAGE
-// ════════════════════════════════════════════════════════
 function applyLang(){
   var en=lang==='en';
   document.documentElement.setAttribute('lang',lang);
   document.documentElement.setAttribute('dir',en?'ltr':'rtl');
   document.body.style.direction=en?'ltr':'rtl';
-  var ids=['lsub','lusr_lbl','lpas_lbl','nav_lbl','nl_emp','nl_pay','nl_bra','nl_cmp','nl_reg','nl_set',
+  var ids=['lsub','lusr_lbl','lpas_lbl','nav_lbl','nl_emp','nl_pay','nl_bra','nl_vio','nl_cmp','nl_reg','nl_set',
     'addBtn','lgBtn','langBtn','cl_all','cs_all','cl_active','cs_active','cl_leave','cs_leave','cl_inactive','cs_inactive',
     'stl','demptyTxt','clearFiltBtn','pp_title','pp_sub','pp_tbl','expBtn',
     'th0','th1','th2','th3','th4','th5','th6','th7','bp_title','bp_sub','addBrTitle','brar_lbl','brco_lbl','addBrBtn',
+    'vp_title','vp_sub','vp_add_title','vp_emp_lbl','vp_type_lbl','vp_date_lbl','vp_desc_lbl','vp_save_btn',
+    'vf_all','vf_warn','vf_viol','vf_susp',
     'cp_title','cp_sub','cp_link_lbl','cp_copy','cf_all','cf_new','cf_urg','cf_res',
     'rp_title','rp_sub','rp_link_lbl','rp_copy','sp_title','sp_cred','sp_sys','sp_alerts',
     'mphoto_hint','ms_basic','ms_perm','ms_sal','ms_not',
-    'ml_name','ml_role','ml_dept','ml_nat','ml_gen','ml_pho','ml_sta','ml_std','ml_per','ml_spo','ml_eid','ml_res','ml_pex','ml_lab','ml_bas','ml_hou','ml_ded','mcan',
+    'ml_name','ml_role','ml_dept','ml_nat','ml_gen','ml_pho','ml_sta','ml_std','ml_per','ml_spo',
+    'ml_eid','ml_res','ml_pex','ml_lab','ml_bas','ml_hou','ml_ded','mcan',
     'lg_title','lg_sub','lg_yes','lg_no'];
   ids.forEach(function(id){var el=document.getElementById(id);if(el){var v=T(id);if(v!==id)el.textContent=v;}});
   document.getElementById('lbtn').textContent=T('lbtn');
@@ -609,13 +626,12 @@ function applyLang(){
     if(id==='pg_cmp')renderCmp();
     if(id==='pg_reg')renderReg();
     if(id==='pg_bra')renderBrCards();
+    if(id==='pg_vio'){updVioSelects();renderVioPage();}
   }
 }
 document.getElementById('langBtn').addEventListener('click',function(){lang=lang==='ar'?'en':'ar';applyLang();});
 
-// ════════════════════════════════════════════════════════
 // NAVIGATION
-// ════════════════════════════════════════════════════════
 function gp(name){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('on');});
   document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('on');});
@@ -628,41 +644,28 @@ function gp(name){
   if(name==='cmp')renderCmp();
   if(name==='reg')renderReg();
   if(name==='bra')renderBrCards();
+  if(name==='vio'){updVioSelects();renderVioPage();}
 }
 
-// ════════════════════════════════════════════════════════
-// INIT SHELL
-// ════════════════════════════════════════════════════════
-function initShell(){
-  updStats();buildBrFilter();renderList();updBrSel();applyLang();
-}
+function initShell(){updStats();buildBrFilter();renderList();updBrSel();applyLang();}
 
-// ════════════════════════════════════════════════════════
 // STATS
-// ════════════════════════════════════════════════════════
 function updStats(){
-  var tot=emps.length;
-  var act=emps.filter(function(e){return e.status==='active';}).length;
-  var lv=emps.filter(function(e){return e.status==='leave';}).length;
-  var ina=emps.filter(function(e){return e.status==='inactive';}).length;
-  document.getElementById('cv_all').textContent=tot;
-  document.getElementById('cv_active').textContent=act;
-  document.getElementById('cv_leave').textContent=lv;
-  document.getElementById('cv_inactive').textContent=ina;
+  document.getElementById('cv_all').textContent=emps.length;
+  document.getElementById('cv_active').textContent=emps.filter(function(e){return e.status==='active';}).length;
+  document.getElementById('cv_leave').textContent=emps.filter(function(e){return e.status==='leave';}).length;
+  document.getElementById('cv_inactive').textContent=emps.filter(function(e){return e.status==='inactive';}).length;
 }
 
-// ════════════════════════════════════════════════════════
 // CARD FILTER
-// ════════════════════════════════════════════════════════
 function setFilt(type){
   if(filt===type&&type!=='all'){clearFilt();return;}
   filt=type;
   document.querySelectorAll('.card').forEach(function(c){c.classList.remove('act');});
   document.getElementById('card_'+type).classList.add('act');
   var fb=document.getElementById('fbanner');
-  var ft=document.getElementById('fbannerTxt');
   if(type==='all'){fb.classList.remove('on');}
-  else{ft.textContent=T('filt_'+type);fb.classList.add('on');}
+  else{document.getElementById('fbannerTxt').textContent=T('filt_'+type);fb.classList.add('on');}
   renderList();
 }
 function clearFilt(){
@@ -672,9 +675,7 @@ function clearFilt(){
   renderList();
 }
 
-// ════════════════════════════════════════════════════════
 // BRANCH FILTER
-// ════════════════════════════════════════════════════════
 function buildBrFilter(){
   var h='<button class="chip'+(br===''?' on':'')+'" onclick="setBr(\'\')">'+T('filt_br')+'</button>';
   branches.forEach(function(b){
@@ -684,15 +685,9 @@ function buildBrFilter(){
   document.getElementById('brFilter').innerHTML=h;
 }
 function setBr(ar){br=ar;buildBrFilter();renderList();}
-
-// ════════════════════════════════════════════════════════
-// SEARCH
-// ════════════════════════════════════════════════════════
 function doSrch(){q=document.getElementById('srch').value.toLowerCase();renderList();}
 
-// ════════════════════════════════════════════════════════
-// RENDER STAFF LIST
-// ════════════════════════════════════════════════════════
+// STAFF LIST
 function getFilt(){
   return emps.filter(function(e){
     var mb=!br||e.dept===br;
@@ -718,7 +713,7 @@ function renderList(){
     h+='<div class="grphdr">'+bn+' ('+grouped[ar].length+')</div>';
     grouped[ar].forEach(function(e){
       var p=ps(e.id);
-      var av=p.av?'<img src="'+p.av+'" alt="">': (emps.indexOf(e)+1);
+      var av=p.av?'<img src="'+p.av+'" alt="">':(emps.indexOf(e)+1);
       var dn=lang==='en'&&e.nameEn?e.nameEn:e.name;
       h+='<div class="sitem'+(selId===e.id?' on':'')+'" onclick="selEmp(\''+e.id+'\')">';
       h+='<div class="savatar">'+av+'</div>';
@@ -726,7 +721,6 @@ function renderList(){
       h+='<div class="sdot '+(e.status||'active')+'"></div></div>';
     });
   });
-  // extra depts
   Object.keys(grouped).forEach(function(ar){
     if(brOrd.indexOf(ar)===-1&&grouped[ar].length){
       h+='<div class="grphdr">'+ar+'</div>';
@@ -743,9 +737,7 @@ function renderList(){
   list.innerHTML=h;
 }
 
-// ════════════════════════════════════════════════════════
 // SELECT EMPLOYEE
-// ════════════════════════════════════════════════════════
 function selEmp(id){selId=id;renderList();showDetail(id);}
 
 function dstatus(d){
@@ -755,12 +747,7 @@ function dstatus(d){
   if(diff<90)return{cls:'expiring',lbl:T('doc_exp')};
   return{cls:'valid',lbl:T('doc_valid')};
 }
-
-function fdate(d){
-  if(!d)return'—';
-  try{return new Date(d).toLocaleDateString(lang==='ar'?'ar-AE':'en-GB',{year:'numeric',month:'long',day:'numeric'});}catch(e){return d;}
-}
-
+function fdate(d){if(!d)return'—';try{return new Date(d).toLocaleDateString(lang==='ar'?'ar-AE':'en-GB',{year:'numeric',month:'long',day:'numeric'});}catch(e){return d;}}
 function yrs(d){if(!d)return'0';return((new Date()-new Date(d))/31557600000).toFixed(1);}
 
 function pslotHtml(eid,key,lbl){
@@ -775,8 +762,7 @@ function showDetail(id){
   var e=null;for(var i=0;i<emps.length;i++){if(emps[i].id===id){e=emps[i];break;}}
   if(!e)return;
   document.getElementById('dempty').classList.add('hide');
-  var dc=document.getElementById('dcontent');
-  dc.classList.remove('hide');
+  var dc=document.getElementById('dcontent');dc.classList.remove('hide');
   var en=lang==='en';
   var p=ps(e.id);
   var tot=Math.max(0,(e.salary||0)+(e.housing||0)-(e.transport||0));
@@ -788,11 +774,9 @@ function showDetail(id){
   var ri=dstatus(e.residencyExp),pi=dstatus(e.passportExp),li=dstatus(e.labourCardExp);
   var sch=e.schedule||['work','work','work','work','work','off','off'];
   var h='';
-  // HEAD
   h+='<div class="dhead"><div class="dav" onclick="document.getElementById(\'avInput\').click()">'+av+'<div class="camo">+</div></div>';
   h+='<div><div class="dname">'+dn+'</div><div class="dtag">'+(e.role||'—')+'</div><div class="did">'+e.id+' · '+dpt+'</div></div>';
   h+='<span class="sbadge '+(e.status||'active')+'">'+(stl[e.status||'active'])+'</span></div>';
-  // TABS
   h+='<div class="tabs"><button class="tab on" onclick="swTab(\'per\',this)">'+T('tab_per')+'</button><button class="tab" onclick="swTab(\'fin\',this)">'+T('tab_fin')+'</button><button class="tab" onclick="swTab(\'sch\',this)">'+T('tab_sch')+'</button><button class="tab" onclick="swTab(\'doc\',this)">'+T('tab_doc')+'</button><button class="tab" onclick="swTab(\'vio\',this)">'+T('tab_vio')+'</button></div>';
   // PERSONAL
   h+='<div class="tpane on" id="tp_per"><div class="igrid">';
@@ -819,7 +803,7 @@ function showDetail(id){
   h+='<div class="tpane" id="tp_sch"><div style="font-size:.72rem;font-weight:600;color:var(--mu);margin-bottom:.5rem">'+T('sch_title')+'</div><div class="sgrid">';
   sch.forEach(function(s,i){h+='<div class="sday '+s+'"><div class="sdname">'+T('days')[i]+'</div><div class="sdst">'+(s==='work'?T('work_lbl'):T('off_lbl'))+'</div></div>';});
   var wc=sch.filter(function(s){return s==='work';}).length;
-  h+='</div><div class="igrid" style="margin-top:.6rem"><div class="icell"><div class="ilabel">'+T('sch_work')+'</div><div class="ival">'+wc+'</div></div><div class="icell"><div class="ilabel">'+T('sch_off')+'</div><div class="ival">'+( sch.length-wc)+'</div></div></div></div>';
+  h+='</div><div class="igrid" style="margin-top:.6rem"><div class="icell"><div class="ilabel">'+T('sch_work')+'</div><div class="ival">'+wc+'</div></div><div class="icell"><div class="ilabel">'+T('sch_off')+'</div><div class="ival">'+(sch.length-wc)+'</div></div></div></div>';
   // DOCS
   h+='<div class="tpane" id="tp_doc">';
   h+='<div class="dblock"><div class="dbhead"><span class="dbicon">&#128274;</span><div class="dbinfo"><div class="dbtitle">'+T('doc_res')+'</div><div class="dbnum">'+(e.eid||'—')+'</div><div class="dbdate">'+T('expires')+': '+fdate(e.residencyExp)+'</div></div><span class="dstatus '+ri.cls+'">'+ri.lbl+'</span></div><div class="dphotos">'+pslotHtml(e.id,'id_f',T('id_f'))+pslotHtml(e.id,'id_b',T('id_b'))+'</div></div>';
@@ -827,23 +811,23 @@ function showDetail(id){
   h+='<div class="dblock"><div class="dbhead"><span class="dbicon">&#128203;</span><div class="dbinfo"><div class="dbtitle">'+T('doc_lab')+'</div><div class="dbdate">'+T('expires')+': '+fdate(e.labourCardExp)+'</div></div><span class="dstatus '+li.cls+'">'+li.lbl+'</span></div><div class="dphotos">'+pslotHtml(e.id,'lab',T('lab_c'))+pslotHtml(e.id,'visa',T('visa'))+'</div></div>';
   h+='<div class="dblock"><div class="dbhead"><span class="dbicon">&#128206;</span><div class="dbinfo"><div class="dbtitle">'+T('doc_oth')+'</div></div></div><div class="dphotos">'+pslotHtml(e.id,'cont',T('contract'))+pslotHtml(e.id,'oth1',T('att1'))+pslotHtml(e.id,'oth2',T('att2'))+'</div></div>';
   h+='</div>';
-  // VIOLATIONS PANE
-  var vios2=getVio(e.id);
-  var vtypes2={warning:T('vio_warning'),violation:T('vio_violation'),suspension:T('vio_suspension')};
-  var vc2={warning:'var(--or)',violation:'var(--red)',suspension:'#7B1FA2'};
-  var vb2={warning:'#FFF3E8',violation:'#FFEBEB',suspension:'#F3E8FF'};
+  // VIOLATIONS TAB
+  var vios=getVio(e.id);
+  var vtypes={warning:T('vio_warning'),violation:T('vio_violation'),suspension:T('vio_suspension')};
+  var vc={warning:'var(--or)',violation:'var(--red)',suspension:'#7B1FA2'};
+  var vbg={warning:'#FFF3E8',violation:'#FFEBEB',suspension:'#F3E8FF'};
   h+='<div class="tpane" id="tp_vio">';
   h+='<div class="vadd-form">';
-  h+='<div style="font-size:.75rem;font-weight:700;margin-bottom:.55rem">'+T('vio_add')+'</div>';
+  h+='<div style="font-size:.75rem;font-weight:700;margin-bottom:.55rem">'+T('vp_add_title')+'</div>';
   h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:.5rem">';
-  h+='<div class="fg"><label class="fl">'+T('vio_type')+'</label><select id="vstype" class="fs"><option value="warning">'+T('vio_warning')+'</option><option value="violation">'+T('vio_violation')+'</option><option value="suspension">'+T('vio_suspension')+'</option></select></div>';
-  h+='<div class="fg"><label class="fl">'+T('vio_date')+'</label><input id="vsdate" class="fi" type="date" value="'+new Date().toISOString().slice(0,10)+'"></div>';
+  h+='<div class="fg"><label class="fl">'+T('vp_type_lbl')+'</label><select id="vstype" class="fs"><option value="warning">'+T('vio_warning')+'</option><option value="violation">'+T('vio_violation')+'</option><option value="suspension">'+T('vio_suspension')+'</option></select></div>';
+  h+='<div class="fg"><label class="fl">'+T('vp_date_lbl')+'</label><input id="vsdate" class="fi" type="date" value="'+new Date().toISOString().slice(0,10)+'"></div>';
   h+='</div>';
-  h+='<textarea id="vsdesc" class="fi" rows="2" style="resize:vertical;margin-bottom:.5rem" placeholder="'+T('vio_desc')+'..."></textarea>';
-  h+='<button class="msave" onclick="addVio(\''+e.id+'\')" style="padding:.42rem .9rem;font-size:.78rem">'+T('vio_save')+'</button>';
+  h+='<textarea id="vsdesc" class="fi" rows="2" style="resize:vertical;margin-bottom:.5rem" placeholder="'+T('vp_desc_lbl')+'..."></textarea>';
+  h+='<button class="msave" onclick="addVio(\''+e.id+'\')" style="padding:.42rem .9rem;font-size:.78rem">'+T('vp_save_btn')+'</button>';
   h+='</div>';
-  if(!vios2.length){h+='<div style="text-align:center;padding:1.5rem;color:var(--mu);font-size:.8rem">'+T('vio_empty')+'</div>';}
-  else{vios2.slice().reverse().forEach(function(v,vi){var ri2=vios2.length-1-vi;h+='<div class="vrow '+(v.type)+'"><div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.3rem"><span class="vtag" style="background:'+(vb2[v.type])+';color:'+(vc2[v.type])+'">'+(vtypes2[v.type])+'</span><span style="font-size:.72rem;color:var(--mu)">'+v.date+'</span><button style="margin-right:auto;background:none;border:none;color:var(--mu);cursor:pointer;font-size:.7rem" onclick="delVio(\''+e.id+'\','+ri2+')">'+T('vio_del')+'</button></div><div style="font-size:.82rem;line-height:1.6">'+v.desc+'</div></div>';});}
+  if(!vios.length){h+='<div style="text-align:center;padding:1.5rem;color:var(--mu);font-size:.8rem">'+T('vp_no_vio')+'</div>';}
+  else{vios.slice().reverse().forEach(function(v,vi){var ri2=vios.length-1-vi;h+='<div class="vrow '+v.type+'"><div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.3rem"><span class="vtag" style="background:'+vbg[v.type]+';color:'+vc[v.type]+'">'+vtypes[v.type]+'</span><span style="font-size:.72rem;color:var(--mu)">'+v.date+'</span><button style="margin-right:auto;background:none;border:none;color:var(--mu);cursor:pointer;font-size:.7rem" onclick="delVio(\''+e.id+'\','+ri2+')">'+T('del_btn')+'</button></div><div style="font-size:.82rem;line-height:1.6">'+v.desc+'</div></div>';});}
   h+='</div>';
   // ACTIONS
   h+='<div class="actrow"><button class="abtn" onclick="openEdit(\''+e.id+'\')">'+T('edit_btn')+'</button><button class="abtn pr" onclick="window.print()">'+T('print_btn')+'</button><button class="abtn dn" onclick="delEmp(\''+e.id+'\')">'+T('del_btn')+'</button></div>';
@@ -857,9 +841,118 @@ function swTab(name,btn){
   btn.classList.add('on');
 }
 
-// ════════════════════════════════════════════════════════
+// VIOLATIONS IN EMPLOYEE TAB
+function addVio(empId){
+  var t=document.getElementById('vstype').value;
+  var d=document.getElementById('vsdate').value;
+  var dc=document.getElementById('vsdesc').value.trim();
+  if(!dc){alert(lang==='ar'?'يرجى كتابة التفاصيل':'Please enter details');return;}
+  if(!d){alert(lang==='ar'?'يرجى تحديد التاريخ':'Please select a date');return;}
+  getVio(empId).push({type:t,date:d,desc:dc});
+  showDetail(empId);
+  setTimeout(function(){
+    document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('on');});
+    document.querySelectorAll('.tpane').forEach(function(p){p.classList.remove('on');});
+    var vt=document.querySelector('.tab:last-child');var vp=document.getElementById('tp_vio');
+    if(vt)vt.classList.add('on');if(vp)vp.classList.add('on');
+  },30);
+}
+function delVio(empId,idx){
+  if(!confirm(lang==='ar'?'حذف هذا الإنذار/المخالفة؟':'Delete?'))return;
+  getVio(empId).splice(idx,1);showDetail(empId);
+  setTimeout(function(){
+    document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('on');});
+    document.querySelectorAll('.tpane').forEach(function(p){p.classList.remove('on');});
+    var vt=document.querySelector('.tab:last-child');var vp=document.getElementById('tp_vio');
+    if(vt)vt.classList.add('on');if(vp)vp.classList.add('on');
+  },30);
+}
+
+// VIOLATIONS PAGE
+function updVioSelects(){
+  var empSel=document.getElementById('vp_emp_sel');
+  if(empSel){
+    empSel.innerHTML=emps.map(function(e){
+      var b=branches.find(function(x){return x.ar===e.dept;});
+      var bn=b?(lang==='en'?b.en:b.ar):e.dept;
+      var dn=(lang==='en'&&e.nameEn?e.nameEn:e.name)+' ('+bn+')';
+      return'<option value="'+e.id+'">'+dn+'</option>';
+    }).join('');
+  }
+  var brSel=document.getElementById('vp_br_sel');
+  if(brSel){
+    brSel.innerHTML='<option value="all">'+T('filt_br')+'</option>'+
+      branches.map(function(b){return'<option value="'+b.ar+'">'+(lang==='en'?b.en:b.ar)+'</option>';}).join('');
+  }
+  var di=document.getElementById('vp_date_inp');
+  if(di&&!di.value)di.value=new Date().toISOString().slice(0,10);
+}
+
+function addVioPage(){
+  var empId=document.getElementById('vp_emp_sel').value;
+  var type=document.getElementById('vp_type_sel').value;
+  var date=document.getElementById('vp_date_inp').value;
+  var desc=document.getElementById('vp_desc_txt').value.trim();
+  if(!empId){alert(lang==='ar'?'يرجى اختيار موظف':'Please select an employee');return;}
+  if(!desc){alert(lang==='ar'?'يرجى كتابة التفاصيل':'Please enter details');return;}
+  if(!date){alert(lang==='ar'?'يرجى تحديد التاريخ':'Please select a date');return;}
+  getVio(empId).push({type:type,date:date,desc:desc});
+  document.getElementById('vp_desc_txt').value='';
+  renderVioPage();
+}
+
+function renderVioPage(){
+  var en=lang==='en';
+  var brSel=document.getElementById('vp_br_sel');
+  var brVal=brSel?brSel.value:'all';
+  var typeSel=document.getElementById('vp_type_sel2');
+  var typeVal=typeSel?typeSel.value:'all';
+  var vtypes={warning:T('vio_warning'),violation:T('vio_violation'),suspension:T('vio_suspension')};
+  var vc={warning:'var(--or)',violation:'var(--red)',suspension:'#7B1FA2'};
+  var vbg={warning:'#FFF3E8',violation:'#FFEBEB',suspension:'#F3E8FF'};
+  var container=document.getElementById('vioPageList');if(!container)return;
+  var rows=[];
+  emps.forEach(function(e){
+    if(brVal!=='all'&&e.dept!==brVal)return;
+    getVio(e.id).forEach(function(v,idx){
+      if(typeVal!=='all'&&v.type!==typeVal)return;
+      rows.push({emp:e,vio:v,idx:idx});
+    });
+  });
+  rows.sort(function(a,b){return new Date(b.vio.date)-new Date(a.vio.date);});
+  if(!rows.length){container.innerHTML='<div style="text-align:center;padding:2rem;color:var(--mu);font-size:.82rem;">'+T('vp_no_vio')+'</div>';return;}
+  var h='<div style="background:#fff;border:1px solid var(--gr);border-radius:9px;overflow:hidden;">';
+  rows.forEach(function(row,i){
+    var e=row.emp;var v=row.vio;var idx=row.idx;
+    var b=branches.find(function(x){return x.ar===e.dept;});
+    var bn=b?(en?b.en:b.ar):e.dept;
+    var dn=en&&e.nameEn?e.nameEn:e.name;
+    h+='<div style="display:flex;align-items:center;gap:.8rem;padding:.75rem 1rem;border-bottom:1px solid var(--gr);background:'+(i%2===0?'#fff':'var(--off)')+'">';
+    h+='<div style="width:3px;height:36px;border-radius:2px;background:'+vc[v.type]+';flex-shrink:0;"></div>';
+    h+='<div style="flex:1;min-width:0;">';
+    h+='<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.2rem;flex-wrap:wrap;">';
+    h+='<strong style="font-size:.82rem;">'+dn+'</strong>';
+    h+='<span style="font-size:.68rem;color:var(--mu);">'+bn+'</span>';
+    h+='<span style="background:'+vbg[v.type]+';color:'+vc[v.type]+';font-size:.62rem;font-weight:700;padding:.1rem .4rem;border-radius:20px;">'+vtypes[v.type]+'</span>';
+    h+='<span style="font-size:.68rem;color:var(--mu);">'+v.date+'</span>';
+    h+='</div>';
+    h+='<div style="font-size:.78rem;color:#444;line-height:1.5;">'+v.desc+'</div>';
+    h+='</div>';
+    h+='<div style="display:flex;gap:.4rem;flex-shrink:0;">';
+    h+='<button class="tbtn" onclick="gp(\'emp\');selEmp(\''+e.id+'\')" style="font-size:.68rem;">'+(en?'View':'عرض')+'</button>';
+    h+='<button class="tbtn" onclick="delVioPage(\''+e.id+'\','+idx+')" style="font-size:.68rem;color:var(--red);">'+(en?'Delete':'حذف')+'</button>';
+    h+='</div></div>';
+  });
+  h+='</div>';
+  container.innerHTML=h;
+}
+
+function delVioPage(empId,idx){
+  if(!confirm(lang==='ar'?'حذف هذا الإنذار/المخالفة؟':'Delete?'))return;
+  getVio(empId).splice(idx,1);renderVioPage();
+}
+
 // PHOTO HANDLERS
-// ════════════════════════════════════════════════════════
 document.getElementById('avInput').addEventListener('change',function(e){
   var f=e.target.files[0];if(!f||!selId)return;
   var r=new FileReader();r.onload=function(ev){ps(selId).av=ev.target.result;renderList();showDetail(selId);};
@@ -879,9 +972,7 @@ document.getElementById('mavInput').addEventListener('change',function(e){
   r.readAsDataURL(f);e.target.value='';
 });
 
-// ════════════════════════════════════════════════════════
 // EDIT SALARY
-// ════════════════════════════════════════════════════════
 function edSal(eid,field,cur){
   var lbl={salary:T('sal_bas'),housing:T('sal_hou'),transport:T('sal_ded')}[field];
   var v=prompt(lbl+' ('+T('cur')+'):',cur);
@@ -891,9 +982,7 @@ function edSal(eid,field,cur){
   e[field]=n;updStats();showDetail(eid);
 }
 
-// ════════════════════════════════════════════════════════
 // MODAL
-// ════════════════════════════════════════════════════════
 function updBrSel(){
   var s=document.getElementById('fde');if(!s)return;
   s.innerHTML=branches.map(function(b){return'<option value="'+b.ar+'">'+(lang==='en'?b.en:b.ar)+'</option>';}).join('');
@@ -967,9 +1056,7 @@ function delEmp(id){
 }
 document.getElementById('addBtn').addEventListener('click',openAdd);
 
-// ════════════════════════════════════════════════════════
 // PAYROLL
-// ════════════════════════════════════════════════════════
 function renderPay(){
   var bv=document.getElementById('prBr').value;
   var f=bv==='all'?emps:emps.filter(function(e){return e.dept===bv;});
@@ -1018,9 +1105,7 @@ function exportCSV(){
   var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='payroll_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
 }
 
-// ════════════════════════════════════════════════════════
 // BRANCHES
-// ════════════════════════════════════════════════════════
 function renderBrCards(){
   var en=lang==='en';
   document.getElementById('brCards').innerHTML=branches.map(function(b){
@@ -1054,9 +1139,7 @@ function addBranch(){
   buildBrFilter();updBrSel();renderBrCards();
 }
 
-// ════════════════════════════════════════════════════════
 // COMPLAINTS
-// ════════════════════════════════════════════════════════
 function getBase(){return window.location.href.replace(/index\.html.*/,'').replace(/\/$/,'');}
 function renderCmp(){
   var base=getBase();
@@ -1074,8 +1157,7 @@ function renderCmp(){
     var stBg=c.status==='resolved'?'#E8F5ED':'#FFEBEB';var stCo=c.status==='resolved'?'var(--gn)':'var(--red)';var stLb=c.status==='resolved'?T('res_b'):T('new_b');
     var h='<div class="cmpcard '+(c.severity||'low')+'">';
     h+='<div style="display:flex;align-items:flex-start;gap:.7rem;justify-content:space-between;flex-wrap:wrap">';
-    h+='<div style="flex:1">';
-    h+='<div style="display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:.45rem">';
+    h+='<div style="flex:1"><div style="display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:.45rem">';
     h+='<strong style="font-size:.82rem">'+(c.category||'—')+'</strong>';
     h+='<span class="ctag" style="background:#FFF3E8;color:'+(svc[c.severity||'low'])+';">'+(svm[c.severity||'low'])+'</span>';
     if(c.branch&&c.branch!=='—')h+='<span class="ctag" style="background:var(--off);color:var(--mu)">'+c.branch+'</span>';
@@ -1092,9 +1174,7 @@ function setCF(f2,btn){cmpF=f2;document.querySelectorAll('.cchip').forEach(funct
 function resCmp(ri){var all=JSON.parse(localStorage.getItem('prosto_complaints')||'[]');if(all[ri])all[ri].status='resolved';localStorage.setItem('prosto_complaints',JSON.stringify(all));renderCmp();}
 function delCmp(ri){if(!confirm(lang==='ar'?'حذف هذه الشكوى؟':'Delete?'))return;var all=JSON.parse(localStorage.getItem('prosto_complaints')||'[]');all.splice(ri,1);localStorage.setItem('prosto_complaints',JSON.stringify(all));renderCmp();}
 
-// ════════════════════════════════════════════════════════
 // REGISTRATIONS
-// ════════════════════════════════════════════════════════
 function renderReg(){
   var base=getBase();
   document.getElementById('regLink').textContent=base+'/register.html';
@@ -1129,17 +1209,13 @@ function appReg(i){var all=JSON.parse(localStorage.getItem('prosto_registrations
 function rejReg(i){var all=JSON.parse(localStorage.getItem('prosto_registrations')||'[]');if(all[i])all[i].status='rejected';localStorage.setItem('prosto_registrations',JSON.stringify(all));renderReg();}
 function addToStaff(i){
   var all=JSON.parse(localStorage.getItem('prosto_registrations')||'[]');var r=all[i];if(!r)return;
-  var bobj=branches.find(function(b2){return b2.ar===r.branch;});var co=bobj?bobj.code:'EMP';
-  var cnt=emps.filter(function(e){return e.dept===r.branch;}).length;
   emps.push({id:r.reqNum||('REG-'+Date.now()),name:r.name,nameEn:r.nameEn||'',role:r.role||'موظف',dept:r.branch,branch:r.branch,status:'active',nationality:r.nationality||'—',gender:r.gender||'ذكر',phone:r.phone||'—',email:r.email||'',salary:0,housing:0,transport:0,startDate:r.startDate||'',eid:r.eid||'—',permitType:r.permitType||'—',sponsor:r.sponsor||'—',residencyExp:r.residencyExp||'',passportExp:r.passportExp||'',labourCardExp:'',schedule:['work','work','work','work','work','off','off'],notes:(lang==='ar'?'تمت الإضافة من طلب التسجيل ':'Added from registration ')+r.reqNum,initials:r.name?r.name.trim().split(' ').slice(0,2).map(function(w){return w[0];}).join(''):'??'});
   all[i].status='approved';localStorage.setItem('prosto_registrations',JSON.stringify(all));
   updStats();buildBrFilter();renderList();renderReg();
   alert((lang==='ar'?'تمت إضافة ':'Added ')+r.name);
 }
 
-// ════════════════════════════════════════════════════════
 // SETTINGS
-// ════════════════════════════════════════════════════════
 function renderSet(){
   var en=lang==='en';
   document.getElementById('credList').innerHTML=USERS.map(function(u,i){
@@ -1162,40 +1238,11 @@ function renderSet(){
     return'<div class="arow" onclick="gp(\'emp\');selEmp(\''+e.id+'\')" style="border-right-color:'+color+';border-right-width:3px"><div style="flex:1"><div style="font-weight:600;font-size:.82rem">'+dn+'</div><div style="font-size:.68rem;color:var(--mu)">'+bn+' · '+(e.eid||'—')+'</div></div><div style="text-align:center"><div style="font-weight:700;color:'+color+'">'+dl+'</div><div style="font-size:.65rem;color:var(--mu)">'+fdate(e.residencyExp)+'</div></div></div>';
   }).join('');
 }
-function chPass(i){
-  var v=prompt(lang==='ar'?'كلمة المرور الجديدة لـ '+USERS[i].username:'New password for '+USERS[i].username);
-  if(!v||v.length<4)return;USERS[i].password=v;localStorage.setItem('prosto_users',JSON.stringify(USERS));
-  alert(lang==='ar'?'تم تغيير كلمة المرور':'Password changed');
-}
-function chUser(i){
-  var v=prompt(lang==='ar'?'اسم المستخدم الجديد:':'New username:',USERS[i].username);
-  if(!v||v.length<3)return;USERS[i].username=v.trim().toLowerCase();localStorage.setItem('prosto_users',JSON.stringify(USERS));
-  alert(lang==='ar'?'تم تغيير اسم المستخدم':'Username changed');renderSet();
-}
+function chPass(i){var v=prompt(lang==='ar'?'كلمة المرور الجديدة لـ '+USERS[i].username:'New password for '+USERS[i].username);if(!v||v.length<4)return;USERS[i].password=v;localStorage.setItem('prosto_users',JSON.stringify(USERS));alert(lang==='ar'?'تم تغيير كلمة المرور':'Password changed');}
+function chUser(i){var v=prompt(lang==='ar'?'اسم المستخدم الجديد:':'New username:',USERS[i].username);if(!v||v.length<3)return;USERS[i].username=v.trim().toLowerCase();localStorage.setItem('prosto_users',JSON.stringify(USERS));alert(lang==='ar'?'تم تغيير اسم المستخدم':'Username changed');renderSet();}
 
-// ════════════════════════════════════════════════════════
 // UTILITIES
-// ════════════════════════════════════════════════════════
-function copyLnk(type){
-  var url=getBase()+'/'+type+'.html';
-  navigator.clipboard.writeText(url).then(function(){alert(T('copy_ok'));}).catch(function(){prompt('Copy:',url);});
-}
-function addVio(empId){
-  var t=document.getElementById('vstype').value;
-  var d=document.getElementById('vsdate').value;
-  var dc=document.getElementById('vsdesc').value.trim();
-  if(!dc){alert(lang==='ar'?'يرجى كتابة التفاصيل':'Please enter details');return;}
-  if(!d){alert(lang==='ar'?'يرجى تحديد التاريخ':'Please select a date');return;}
-  getVio(empId).push({type:t,date:d,desc:dc});
-  showDetail(empId);
-  setTimeout(function(){document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('on');});document.querySelectorAll('.tpane').forEach(function(p){p.classList.remove('on');});var vt=document.querySelector('.tab:last-child');var vp=document.getElementById('tp_vio');if(vt)vt.classList.add('on');if(vp)vp.classList.add('on');},30);
-}
-function delVio(empId,idx){
-  if(!confirm(lang==='ar'?'حذف هذا الإنذار/المخالفة؟':'Delete this record?'))return;
-  getVio(empId).splice(idx,1);
-  showDetail(empId);
-  setTimeout(function(){document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('on');});document.querySelectorAll('.tpane').forEach(function(p){p.classList.remove('on');});var vt=document.querySelector('.tab:last-child');var vp=document.getElementById('tp_vio');if(vt)vt.classList.add('on');if(vp)vp.classList.add('on');},30);
-}
+function copyLnk(type){var url=getBase()+'/'+type+'.html';navigator.clipboard.writeText(url).then(function(){alert(T('copy_ok'));}).catch(function(){prompt('Copy:',url);});}
 function loadBadges(){
   var nc=JSON.parse(localStorage.getItem('prosto_complaints')||'[]').filter(function(c){return c.status==='new';}).length;
   var nr=JSON.parse(localStorage.getItem('prosto_registrations')||'[]').filter(function(r){return r.status==='pending';}).length;
