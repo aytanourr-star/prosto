@@ -1178,13 +1178,13 @@ function delCmp(ri){if(!confirm(lang==='ar'?'حذف هذه الشكوى؟':'Dele
 function renderReg(){
   var base=getBase();
   document.getElementById('regLink').textContent=base+'/register.html';
-  var all=JSON.parse(localStorage.getItem('prosto_registrations')||'[]');
-  all.reverse();
-  var nc=all.filter(function(r){return r.status==='pending';}).length;
+  var allOrig=JSON.parse(localStorage.getItem('prosto_registrations')||'[]');
+  var nc=allOrig.filter(function(r){return r.status==='pending';}).length;
   var b=document.getElementById('regBadge');b.textContent=nc;b.style.display=nc>0?'inline-block':'none';
-  if(!all.length){document.getElementById('regList').innerHTML='<div style="text-align:center;padding:2rem;color:var(--mu);font-size:.82rem">'+T('no_reg')+'</div>';return;}
+  if(!allOrig.length){document.getElementById('regList').innerHTML='<div style="text-align:center;padding:2rem;color:var(--mu);font-size:.82rem">'+T('no_reg')+'</div>';return;}
   var en=lang==='en';
-  var totalLen=all.length;
+  var all=allOrig.slice().reverse();
+  var totalLen=allOrig.length;
   document.getElementById('regList').innerHTML=all.map(function(r,i){
     var realIdx=totalLen-1-i;
     var stBg={approved:'#E8F5ED',rejected:'#FFEBEB',pending:'#FFF3E8'}[r.status]||'#FFF3E8';
@@ -1214,8 +1214,10 @@ function renderReg(){
 function delReg(i){
   if(!confirm(lang==='ar'?'حذف هذا الطلب؟':'Delete this request?'))return;
   var all=JSON.parse(localStorage.getItem('prosto_registrations')||'[]');
-  all.splice(i,1);
-  localStorage.setItem('prosto_registrations',JSON.stringify(all));
+  if(i>=0 && i<all.length){
+    all.splice(i,1);
+    localStorage.setItem('prosto_registrations',JSON.stringify(all));
+  }
   renderReg();
 }
 function appReg(i){var all=JSON.parse(localStorage.getItem('prosto_registrations')||'[]');if(all[i])all[i].status='approved';localStorage.setItem('prosto_registrations',JSON.stringify(all));renderReg();}
