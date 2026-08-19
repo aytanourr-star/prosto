@@ -8,22 +8,22 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
 :root {
-  --red: #CC1F1F; --red-2: #E02020;
-  --black: #0D0D0D; --black-2: #1A1A1A; --black-3: #252525;
+  --red: #1A5FBF; --red-2:#0EA5B0;
+  --black:#0F3D80; --black-2: #fff; --black-3: #252525;
   --white: #FFFFFF; --off-white: #F5F5F5;
   --grey: #E0E0E0; --grey-2: #BDBDBD; --grey-3: #757575;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'Tajawal',sans-serif; background:var(--off-white); color:var(--black); min-height:100vh; }
+body{ font-family:'Tajawal',sans-serif; background:linear-gradient(135deg,#0F3D80 0%,#1A5FBF 100%); color:var(--black); min-height:100vh; }
 
 header {
-  background:var(--black); padding:0 1.5rem; height:60px;
+  background:#0F3D80; padding:0 1.5rem; height:60px;
   display:flex; align-items:center; gap:0.8rem;
-  border-bottom:2px solid var(--red);
+  border-bottom:3px solid #0EA5B0;
 }
 .logo-icon { width:34px;height:34px;background:#1A5FBF;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem; }
-.logo-text { font-size:1.2rem;font-weight:800;color:#0D2444;letter-spacing:2px; }
-.logo-sub { font-size:0.7rem;color:#3D6494; }
+.logo-text { font-size:1.2rem;font-weight:800;color:#fff;letter-spacing:2px; }
+.logo-sub { font-size:0.7rem;color:rgba(255,255,255,.65); }
 
 .page-wrap { max-width:680px;margin:2rem auto;padding:0 1rem 3rem; }
 
@@ -32,23 +32,23 @@ header {
   box-shadow:0 4px 20px rgba(0,0,0,0.08);margin-bottom:1.2rem;
 }
 .card-header {
-  background:var(--black);padding:0.9rem 1.3rem;
-  border-bottom:2px solid var(--red);
+  background:#0F3D80;padding:0.9rem 1.3rem;
+  border-bottom:3px solid #0EA5B0;
   display:flex;align-items:center;gap:0.6rem;
 }
-.card-title { color:#0D2444;font-weight:700;font-size:0.95rem; }
+.card-title { color:#fff;font-weight:700;font-size:0.95rem; }
 .card-body { padding:1.3rem; }
 
 .form-grid { display:grid;grid-template-columns:1fr 1fr;gap:0.9rem; }
 .form-group { display:flex;flex-direction:column;gap:0.35rem; }
 .form-group.full { grid-column:span 2; }
-.form-label { font-size:0.77rem;font-weight:700;color:var(--grey-3); }
+.form-label { font-size:0.77rem;font-weight:700;color:#1A5FBF; }
 .form-label .req { color:var(--red); }
 
 .form-input, .form-select, .form-textarea {
   padding:0.7rem 0.9rem;border:1.5px solid var(--grey);
   border-radius:9px;font-family:'Tajawal',sans-serif;font-size:0.88rem;
-  color:var(--black);background:var(--off-white);outline:none;
+  color:#0D2444;background:#F4F8FE;outline:none;
   transition:border-color 0.15s;direction:rtl;width:100%;
 }
 .form-input:focus,.form-select:focus,.form-textarea:focus { border-color:var(--red);background:white; }
@@ -58,7 +58,7 @@ header {
 .file-upload-area {
   border:2px dashed var(--grey);border-radius:10px;
   padding:1.2rem;text-align:center;cursor:pointer;
-  transition:border-color 0.2s;background:var(--off-white);
+  transition:border-color 0.2s;background:#F4F8FE;
   position:relative;
 }
 .file-upload-area:hover { border-color:var(--red); }
@@ -69,7 +69,7 @@ header {
 .file-preview { margin-top:0.6rem;font-size:0.78rem;color:var(--red);font-weight:700; }
 
 .submit-btn {
-  width:100%;padding:1rem;background:#1A5FBF;color:#0D2444;
+  width:100%;padding:1rem;background:#1A5FBF;color:#fff;
   border:none;border-radius:12px;font-family:'Tajawal',sans-serif;
   font-size:1rem;font-weight:800;cursor:pointer;
   transition:background 0.2s,transform 0.1s;margin-top:0.5rem;
@@ -296,7 +296,7 @@ header {
     <div class="success-icon">🎉</div>
     <div class="success-title">تم إرسال بياناتك بنجاح!</div>
     <div class="success-sub">شكرًا. تم استلام بياناتك ووثائقك وسيتم مراجعتها من قِبل الإدارة.<br>سيتم التواصل معك قريبًا.</div>
-    <div style="margin-top:1.5rem;padding:1rem;background:var(--off-white);border-radius:10px;font-size:0.82rem;color:var(--grey-3);">
+    <div style="margin-top:1.5rem;padding:1rem;background:#F4F8FE;border-radius:10px;font-size:0.82rem;color:var(--grey-3);">
       رقم الطلب: <strong id="reqNum"></strong>
     </div>
   </div>
@@ -392,7 +392,7 @@ function buildReview() {
   document.getElementById('reviewContent').innerHTML = `
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;margin-bottom:1rem;">
       ${fields.map(([k,v]) => `
-        <div style="background:var(--off-white);border-radius:8px;padding:0.7rem 0.9rem;">
+        <div style="background:#F4F8FE;border-radius:8px;padding:0.7rem 0.9rem;">
           <div style="font-size:0.7rem;font-weight:700;color:var(--grey-3);margin-bottom:0.2rem;">${k}</div>
           <div style="font-weight:600;font-size:0.88rem;">${v}</div>
         </div>`).join('')}
@@ -402,7 +402,7 @@ function buildReview() {
       ${Object.entries(docKeys).map(([k, label]) =>
         `<span style="padding:0.3rem 0.8rem;border-radius:20px;font-size:0.75rem;font-weight:700;
           background:${uploadedFiles[k] ? '#E8F5E9' : '#FFF3F3'};
-          color:${uploadedFiles[k] ? '#2E7D32' : '#CC1F1F'};">
+          color:${uploadedFiles[k] ? '#2E7D32' : '#1A5FBF'};">
           ${uploadedFiles[k] ? '✅' : '○'} ${label}
         </span>`).join('')}
     </div>
