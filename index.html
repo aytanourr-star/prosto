@@ -6,52 +6,59 @@
 <title>PROSTO</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800&display=swap');
-:root{--red:#C41E1E;--rh:#A81818;--blk:#0A0A0A;--d1:#111;--d2:#1A1A1A;--d3:#242424;--bdr:#2E2E2E;--wh:#fff;--off:#F8F8F8;--gr:#E4E4E4;--mu:#888;--tx:#111;--gn:#1A7F3C;--or:#C45C1E}
+:root{--red:#1E6FC4;--rh:#1559A0;--blk:#1E6FC4;--d1:#F0F6FF;--d2:#E3EEFF;--d3:#D0E4FF;--bdr:#B8D4F8;--wh:#fff;--off:#F5F9FF;--gr:#E0ECFF;--mu:#6B8BB5;--tx:#0D2A4A;--gn:#1A7F3C;--or:#C45C1E}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);height:100vh;overflow:hidden}
-#loginWrap{position:fixed;inset:0;background:var(--blk);display:flex;align-items:center;justify-content:center;z-index:9999}
-.lcard{background:var(--d1);border:1px solid var(--bdr);border-radius:12px;padding:2.5rem 2rem;width:340px}
-.lmark{width:44px;height:44px;background:var(--red);border-radius:10px;margin:0 auto .8rem}
-.lbrand{font-size:1.6rem;font-weight:800;color:#fff;letter-spacing:2px;text-align:center}
-.lsub{font-size:.75rem;color:var(--mu);text-align:center;margin-bottom:1.8rem;margin-top:.2rem}
-.lfield{margin-bottom:.8rem}
-.llabel{display:block;font-size:.72rem;font-weight:700;color:var(--mu);margin-bottom:.35rem;letter-spacing:.04em}
-.linput{width:100%;padding:.7rem .85rem;background:var(--d3);border:1px solid var(--bdr);border-radius:7px;color:#fff;font-family:'Tajawal',sans-serif;font-size:.9rem;outline:none;direction:ltr;text-align:right;transition:border-color .15s}
-.linput:focus{border-color:var(--red)}
-.lbtn{width:100%;padding:.75rem;background:var(--red);color:#fff;border:none;border-radius:7px;font-family:'Tajawal',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:.5rem;transition:background .15s}
-.lbtn:hover{background:var(--rh)}
-.lerr{display:none;margin-top:.6rem;padding:.5rem .8rem;background:rgba(196,30,30,.1);border:1px solid rgba(196,30,30,.3);border-radius:6px;color:#FF7B7B;font-size:.78rem;text-align:center}
+#loginWrap{position:fixed;inset:0;background:#1E6FC4;display:flex;align-items:center;justify-content:center;z-index:9999}
+.lcard{background:#fff;border:none;border-radius:16px;padding:2.5rem 2rem;width:380px;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+.lmark{width:56px;height:56px;background:#1E6FC4;border-radius:12px;margin:0 auto .8rem;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:900;color:#fff;letter-spacing:-1px}
+.lbrand{font-size:1.4rem;font-weight:800;color:#1E6FC4;letter-spacing:1px;text-align:center}
+.lsub{font-size:.78rem;color:#6B8BB5;text-align:center;margin-bottom:.5rem;margin-top:.2rem}
+.lwelcome{font-size:1.1rem;font-weight:700;color:#0D2A4A;text-align:right;margin-bottom:.2rem;margin-top:1.2rem}
+.lwelcome-sub{font-size:.78rem;color:#6B8BB5;text-align:right;margin-bottom:1.2rem}
+.lfield{margin-bottom:.9rem;position:relative}
+.llabel{display:block;font-size:.72rem;font-weight:700;color:#1E6FC4;margin-bottom:.35rem;letter-spacing:.04em;text-align:right}
+.linput-wrap{position:relative}
+.linput{width:100%;padding:.75rem 2.5rem .75rem .75rem;background:#F0F6FF;border:1.5px solid #B8D4F8;border-radius:8px;color:#0D2A4A;font-family:'Tajawal',sans-serif;font-size:.9rem;outline:none;direction:rtl;text-align:right;transition:border-color .15s}
+.linput:focus{border-color:#1E6FC4;background:#fff}
+.linput-icon{position:absolute;left:.75rem;top:50%;transform:translateY(-50%);color:#B8D4F8;font-size:.9rem;pointer-events:none}
+.leye{position:absolute;left:.75rem;top:50%;transform:translateY(-50%);color:#B8D4F8;font-size:.9rem;cursor:pointer;background:none;border:none;padding:0;display:flex;align-items:center}
+.leye:hover{color:#1E6FC4}
+.lbtn{width:100%;padding:.85rem;background:#1E6FC4;color:#fff;border:none;border-radius:8px;font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;margin-top:.5rem;transition:background .15s}
+.lbtn:hover{background:#1559A0}
+.lfooter{text-align:center;font-size:.72rem;color:#aaa;margin-top:1.2rem}
+.lerr{display:none;margin-top:.6rem;padding:.5rem .8rem;background:rgba(30,111,196,.08);border:1px solid rgba(30,111,196,.3);border-radius:6px;color:#C41E1E;font-size:.78rem;text-align:center}
 .lerr.show{display:block}
 #lgDlg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9998;align-items:center;justify-content:center}
 #lgDlg.open{display:flex}
-.lgbox{background:var(--d2);border:1px solid var(--bdr);border-radius:10px;padding:1.8rem;width:280px;text-align:center}
-.lgbox h3{color:#fff;font-size:1rem;margin-bottom:.4rem}
-.lgbox p{color:var(--mu);font-size:.8rem;margin-bottom:1.2rem}
+.lgbox{background:#fff;border:1px solid #B8D4F8;border-radius:10px;padding:1.8rem;width:280px;text-align:center}
+.lgbox h3{color:#0D2A4A;font-size:1rem;margin-bottom:.4rem}
+.lgbox p{color:#6B8BB5;font-size:.8rem;margin-bottom:1.2rem}
 .lgbtns{display:flex;gap:.6rem}
 .lgbtns button{flex:1;padding:.6rem;border-radius:7px;font-family:'Tajawal',sans-serif;font-weight:700;cursor:pointer;border:none;font-size:.85rem}
 .lgyes{background:var(--red);color:#fff}
-.lgno{background:var(--d3);color:#aaa;border:1px solid var(--bdr)!important}
+.lgno{background:#F0F6FF;color:#6B8BB5;border:1px solid #B8D4F8!important}
 #shell{display:none;height:100vh;flex-direction:column}
 #shell.on{display:flex}
-.topbar{height:54px;background:var(--blk);border-bottom:1px solid var(--bdr);display:flex;align-items:center;padding:0 1.2rem;gap:.8rem;flex-shrink:0}
+.topbar{height:54px;background:#1E6FC4;border-bottom:1px solid rgba(255,255,255,.15);display:flex;align-items:center;padding:0 1.2rem;gap:.8rem;flex-shrink:0}
 .tmark{width:26px;height:26px;background:var(--red);border-radius:6px;flex-shrink:0}
 .tbrand{font-size:1rem;font-weight:800;color:#fff;letter-spacing:2px}
 .tright{margin-right:auto;display:flex;align-items:center;gap:.6rem}
-.tuser{font-size:.75rem;color:var(--mu);background:var(--d3);padding:.25rem .6rem;border-radius:5px}
-.tbtn{padding:.3rem .7rem;border-radius:6px;font-family:'Tajawal',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer;border:1px solid var(--bdr);background:transparent;color:var(--mu);transition:all .15s}
-.tbtn:hover{color:#fff;border-color:#555}
-.tbtn.red{background:var(--red);color:#fff;border-color:var(--red)}
-.tbtn.red:hover{background:var(--rh)}
+.tuser{font-size:.75rem;color:rgba(255,255,255,.85);background:rgba(255,255,255,.15);padding:.25rem .6rem;border-radius:5px}
+.tbtn{padding:.3rem .7rem;border-radius:6px;font-family:'Tajawal',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.3);background:transparent;color:rgba(255,255,255,.85);transition:all .15s}
+.tbtn:hover{color:#fff;border-color:#fff}
+.tbtn.red{background:#fff;color:#1E6FC4;border-color:#fff}
+.tbtn.red:hover{background:#E3EEFF}
 .body{display:flex;flex:1;overflow:hidden}
-.sidebar{width:195px;background:var(--blk);border-left:1px solid var(--bdr);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;padding:.8rem 0}
-.snav{font-size:.62rem;font-weight:700;color:#3a3a3a;letter-spacing:.08em;padding:.5rem .8rem .3rem;text-transform:uppercase}
-.nb{display:flex;align-items:center;gap:.55rem;padding:.55rem .7rem;margin:.05rem .45rem;border-radius:7px;cursor:pointer;font-size:.82rem;font-weight:500;color:var(--mu);border:none;background:none;font-family:'Tajawal',sans-serif;width:calc(100% - .9rem);text-align:right;transition:all .12s}
-.nb:hover{background:var(--d3);color:#fff}
-.nb.on{background:var(--d2);color:#fff}
+.sidebar{width:195px;background:#1559A0;border-left:1px solid rgba(255,255,255,.15);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;padding:.8rem 0}
+.snav{font-size:.62rem;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.08em;padding:.5rem .8rem .3rem;text-transform:uppercase}
+.nb{display:flex;align-items:center;gap:.55rem;padding:.55rem .7rem;margin:.05rem .45rem;border-radius:7px;cursor:pointer;font-size:.82rem;font-weight:500;color:rgba(255,255,255,.7);border:none;background:none;font-family:'Tajawal',sans-serif;width:calc(100% - .9rem);text-align:right;transition:all .12s}
+.nb:hover{background:rgba(255,255,255,.15);color:#fff}
+.nb.on{background:rgba(255,255,255,.2);color:#fff}
 .nb.on .ndot{background:var(--red)}
-.ndot{width:4px;height:4px;border-radius:50%;background:#333;flex-shrink:0;transition:background .12s}
+.ndot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.3);flex-shrink:0;transition:background .12s}
 .nbadge{margin-right:auto;background:var(--red);color:#fff;font-size:.6rem;font-weight:700;padding:.08rem .38rem;border-radius:10px;display:none}
-.nsep{height:1px;background:var(--bdr);margin:.45rem .7rem}
+.nsep{height:1px;background:rgba(255,255,255,.15);margin:.45rem .7rem}
 .pages{flex:1;overflow-y:auto}
 .page{display:none;padding:1.5rem}
 .page.on{display:block}
@@ -234,13 +241,28 @@ body{font-family:'Tajawal',sans-serif;background:var(--off);color:var(--tx);heig
 <body>
 <div id="loginWrap">
   <div class="lcard">
-    <div class="lmark"></div>
-    <div class="lbrand">PROSTO</div>
-    <div class="lsub" id="lsub">نظام إدارة الموظفين</div>
-    <div class="lfield"><label class="llabel" id="lusr_lbl">اسم المستخدم</label><input id="lusr" class="linput" type="text" placeholder="admin" autocomplete="username"></div>
-    <div class="lfield"><label class="llabel" id="lpas_lbl">كلمة المرور</label><input id="lpas" class="linput" type="password" placeholder="••••••••" autocomplete="current-password"></div>
-    <button class="lbtn" id="lbtn">دخول</button>
+    <div class="lmark">P</div>
+    <div class="lbrand">Prosto</div>
+    <div class="lsub" id="lsub">نظام إدارة الموارد البشرية</div>
+    <div class="lwelcome" id="lwelcome">أهلاً بعودتك</div>
+    <div class="lwelcome-sub" id="lwelcome_sub">سجّل دخولك للوصول إلى مساحة العمل</div>
+    <div class="lfield">
+      <label class="llabel" id="lusr_lbl">اسم المستخدم *</label>
+      <div class="linput-wrap">
+        <input id="lusr" class="linput" type="text" placeholder="admin" autocomplete="username">
+        <span class="linput-icon">&#128100;</span>
+      </div>
+    </div>
+    <div class="lfield">
+      <label class="llabel" id="lpas_lbl">كلمة المرور *</label>
+      <div class="linput-wrap">
+        <input id="lpas" class="linput" type="password" placeholder="••••••••" autocomplete="current-password">
+        <button class="leye" onclick="togglePass()" id="eyeBtn">&#128065;</button>
+      </div>
+    </div>
+    <button class="lbtn" id="lbtn">تسجيل الدخول</button>
     <div class="lerr" id="lerr">اسم المستخدم أو كلمة المرور غير صحيحة</div>
+    <div class="lfooter">تسجيل دخول مؤسسي آمن<br>© Prosto 2026. جميع الحقوق محفوظة.</div>
   </div>
 </div>
 <div id="lgDlg">
@@ -562,6 +584,12 @@ en:{lsub:'Employee Management System',lusr_lbl:'Username',lpas_lbl:'Password',lb
 function T(k){return (TR[lang]||TR.ar)[k]||k;}
 
 // LOGIN
+function togglePass(){
+  var inp=document.getElementById('lpas');
+  var eye=document.getElementById('eyeBtn');
+  if(inp.type==='password'){inp.type='text';eye.innerHTML='&#128064;';}
+  else{inp.type='password';eye.innerHTML='&#128065;';}
+}
 function tryLogin(){
   var u=document.getElementById('lusr').value.trim().toLowerCase();
   var p=document.getElementById('lpas').value;
@@ -602,7 +630,7 @@ function applyLang(){
   document.documentElement.setAttribute('lang',lang);
   document.documentElement.setAttribute('dir',en?'ltr':'rtl');
   document.body.style.direction=en?'ltr':'rtl';
-  var ids=['lsub','lusr_lbl','lpas_lbl','nav_lbl','nl_emp','nl_pay','nl_bra','nl_vio','nl_cmp','nl_reg','nl_set',
+  var ids=['lsub','lusr_lbl','lpas_lbl','lwelcome','lwelcome_sub','nav_lbl','nl_emp','nl_pay','nl_bra','nl_vio','nl_cmp','nl_reg','nl_set',
     'addBtn','lgBtn','langBtn','cl_all','cs_all','cl_active','cs_active','cl_leave','cs_leave','cl_inactive','cs_inactive',
     'stl','demptyTxt','clearFiltBtn','pp_title','pp_sub','pp_tbl','expBtn',
     'th0','th1','th2','th3','th4','th5','th6','th7','bp_title','bp_sub','addBrTitle','brar_lbl','brco_lbl','addBrBtn',
