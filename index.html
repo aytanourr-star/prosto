@@ -82,7 +82,7 @@ body{font-family:'Tajawal',sans-serif;background:#EEF4FF;color:#0D2444;height:10
 .sbox{padding:.55rem .75rem;border-bottom:1px solid #C2D8F5;display:flex;align-items:center;gap:.4rem;background:#F4F8FE}
 .sbox input{border:none;outline:none;font-family:'Tajawal',sans-serif;font-size:.82rem;width:100%;background:transparent}
 .chips{padding:.45rem .65rem;border-bottom:1px solid var(--gr);display:flex;gap:.3rem;flex-wrap:wrap}
-.chip{padding:.18rem .6rem;border-radius:20px;font-size:.68rem;font-weight:600;border:1px solid #C2D8F5;background:transparent;cursor:pointer;font-family:'Tajawal',sans-serif;color:var(--mu);transition:all .12s}
+.chip{padding:.18rem .6rem;border-radius:20px;font-size:.68rem;font-weight:600;border:1px solid #1A5FBF;background:transparent;cursor:pointer;font-family:'Tajawal',sans-serif;color:#1A5FBF;transition:all .12s}
 .chip:hover,.chip.on{background:var(--red);border-color:var(--red);color:#fff}
 .slist{max-height:calc(100vh - 340px);overflow-y:auto}
 .sitem{display:flex;align-items:center;gap:.65rem;padding:.65rem .9rem;cursor:pointer;border-bottom:1px solid #E0EAF8;transition:background .1s}
@@ -181,12 +181,12 @@ body{font-family:'Tajawal',sans-serif;background:#EEF4FF;color:#0D2444;height:10
 .prsumm{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem;margin-bottom:1.1rem}
 .prcard{background:#fff;border:1px solid var(--bdr);border-radius:9px;padding:.9rem 1.1rem;box-shadow:0 1px 4px rgba(26,95,191,.08)}
 .prcard.hl{background:var(--blk);border-color:var(--blk)}
-.prlabel{font-size:.65rem;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.35rem}
-.prcard.hl .prlabel{color:#555}
-.prval{font-size:1.25rem;font-weight:800}
-.prcard.hl .prval{color:#fff}
+.prlabel{font-size:.65rem;font-weight:700;color:#1A5FBF;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.35rem}
+.prcard.hl .prlabel{color:rgba(255,255,255,.8)}
+.prval{font-size:1.25rem;font-weight:800;color:#0D2444}
+.prcard.hl .prval{color:#fff;font-size:1.5rem}
 .prunit{font-size:.68rem;color:var(--mu)}
-.prcard.hl .prunit{color:#555}
+.prcard.hl .prunit{color:rgba(255,255,255,.7)}
 .tbwrap{background:#fff;border:1px solid var(--bdr);border-radius:9px;overflow:hidden;box-shadow:0 2px 8px rgba(26,95,191,.08)}
 .tbhbar{padding:.75rem .9rem;border-bottom:2px solid var(--red);background:var(--blk);display:flex;align-items:center;justify-content:space-between}
 .tbtitle{font-size:.85rem;font-weight:700;color:#fff}
@@ -194,7 +194,7 @@ body{font-family:'Tajawal',sans-serif;background:#EEF4FF;color:#0D2444;height:10
 .prtbl th{padding:.55rem .8rem;text-align:right;font-weight:700;color:var(--tx);font-size:.68rem;background:var(--d1);border-bottom:2px solid var(--bdr);white-space:nowrap}
 .prtbl td{padding:.6rem .8rem;border-bottom:1px solid var(--gr)}
 .prtbl tr:hover td{background:var(--off)}
-.prtbl tfoot td{background:var(--blk);color:#fff;font-weight:700;padding:.65rem .8rem}
+.prtbl tfoot td{background:#0F3D80;color:#fff;font-weight:700;padding:.65rem .8rem}
 .eibtn{background:var(--d1);border:1px solid var(--bdr);border-radius:4px;padding:.08rem .32rem;cursor:pointer;font-size:.62rem;color:var(--red);margin-right:.25rem;font-weight:600}
 .brgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem;margin-bottom:1.3rem}
 .brcard{background:#fff;border:1px solid var(--bdr);border-radius:9px;padding:1.1rem;cursor:pointer;transition:all .15s;border-top:3px solid var(--red);box-shadow:0 1px 4px rgba(26,95,191,.08)}
@@ -227,6 +227,13 @@ body{font-family:'Tajawal',sans-serif;background:#EEF4FF;color:#0D2444;height:10
 .pgh{margin-bottom:1.2rem}
 .pgt{font-size:1.1rem;font-weight:700;color:var(--tx)}
 .pgs{font-size:.78rem;color:var(--mu);margin-top:.2rem}
+
+.sbbody .tbtn{border:1px solid #C2D8F5;color:#1A5FBF;background:#fff}
+.sbbody .tbtn:hover{border-color:#1A5FBF;color:#0F3D80;background:#EEF4FF}
+.cmp-filter .cchip{color:#3D6494;border-color:#C2D8F5}
+.pgh .tbtn{border:1px solid #C2D8F5;color:#1A5FBF;background:#fff}
+.pgh .tbtn:hover{border-color:#1A5FBF;background:#EEF4FF}
+
 .vrow{background:#fff;border:1px solid var(--gr);border-radius:7px;padding:.75rem .9rem;margin-bottom:.5rem;border-right:3px solid var(--gr)}
 .vrow.warning{border-right-color:var(--or)}
 .vrow.violation{border-right-color:var(--red)}
@@ -324,7 +331,7 @@ body{font-family:'Tajawal',sans-serif;background:#EEF4FF;color:#0D2444;height:10
       <div class="page" id="pg_pay">
         <div class="pgh"><div class="pgt" id="pp_title">الرواتب والبايرول</div><div class="pgs" id="pp_sub">إجمالي الرواتب الشهرية</div></div>
         <div style="display:flex;gap:.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap;">
-          <select id="prBr" class="fi" style="width:auto;" onchange="renderPay()"></select>
+          <select id="prBr" class="fi" style="width:auto;border-color:#1A5FBF;color:#0D2444;" onchange="renderPay()"></select>
           <button class="tbtn" onclick="exportCSV()" id="expBtn">تصدير CSV</button>
         </div>
         <div class="prsumm" id="prSumm"></div>
@@ -1260,7 +1267,7 @@ function renderSet(){
   var en=lang==='en';
   document.getElementById('credList').innerHTML=USERS.map(function(u,i){
     return'<div class="credrow"><div><div class="credname">'+u.name+'</div><div class="creduser">'+T('usr_lbl')+': '+u.username+'</div></div>'+
-    '<div style="display:flex;gap:.45rem"><button class="tbtn" onclick="chPass('+i+')">'+T('ch_pass')+'</button><button class="tbtn" onclick="chUser('+i+')">'+T('ch_user')+'</button></div></div>';
+    '<div style="display:flex;gap:.45rem"><button style="padding:.3rem .7rem;border-radius:6px;font-size:.75rem;font-weight:600;cursor:pointer;border:1px solid #C2D8F5;color:#1A5FBF;background:#fff;font-family:Tajawal,sans-serif;" onclick="chPass('+i+')">''+T('ch_pass')+'</button><button style="padding:.3rem .7rem;border-radius:6px;font-size:.75rem;font-weight:600;cursor:pointer;border:1px solid #C2D8F5;color:#1A5FBF;background:#fff;font-family:Tajawal,sans-serif;" onclick="chUser('+i+')">'+T('ch_user')+'</button></div></div>';
   }).join('');
   var totPay=emps.reduce(function(s,e){return s+Math.max(0,(e.salary||0)+(e.housing||0)-(e.transport||0));},0);
   var expi=emps.filter(function(e){if(!e.residencyExp)return false;return(new Date(e.residencyExp)-new Date())/86400000<90;}).length;
