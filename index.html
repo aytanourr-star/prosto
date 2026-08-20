@@ -1589,44 +1589,6 @@ function handleAttFile(input){
   }
   input.value='';
 }
-function handleAttFile(input){
-  var file=input.files[0];if(!file)return;
-  var status=document.getElementById('attFileStatus');
-  status.style.display='block';
-  status.textContent=(lang==='ar'?'تم رفع الملف: ':'File uploaded: ')+file.name;
-  // Parse CSV/Excel - for CSV we can read directly
-  var reader=new FileReader();
-  reader.onload=function(e){
-    var text=e.target.result;
-    var lines=text.split('
-').filter(function(l){return l.trim();});
-    var branchSel=document.getElementById('att_branch');
-    var brVal=branchSel?branchSel.value:'all';
-    var month=document.getElementById('att_month').value||new Date().toISOString().slice(0,7);
-    var added=0;
-    // Try to parse CSV rows (assumes: name/id, date, time_in, time_out or similar)
-    lines.slice(1).forEach(function(line){
-      var cols=line.split(',').map(function(c){return c.trim().replace(/"/g,'');});
-      if(cols.length<2)return;
-      // Try to find employee by name or ID
-      var identifier=cols[0];
-      var emp=emps.find(function(e){return e.id===identifier||e.name===identifier||(e.nameEn&&e.nameEn===identifier);});
-      if(!emp)return;
-      var date=cols[1]||month+'-01';
-      var timeIn=cols[2]||'';
-      var timeOut=cols[3]||'';
-      var statusVal=cols[4]||'present';
-      attendance.push({empId:emp.id,date:date,timeIn:timeIn,timeOut:timeOut,status:statusVal,branch:brVal==='all'?emp.dept:brVal,source:'upload'});
-      added++;
-    });
-    status.textContent=(lang==='ar'?'تم إضافة '+added+' سجل حضور':'Added '+added+' attendance records');
-    renderAtt();
-  };
-  reader.onerror=function(){status.textContent=(lang==='ar'?'خطأ في قراءة الملف':'Error reading file');};
-  if(file.name.endsWith('.csv')){reader.readAsText(file);}
-  else{status.textContent=(lang==='ar'?'ملف مرفوع، يُرجى استخدام CSV للمعالجة التلقائية':'File uploaded. Use CSV for auto-processing.');}
-  input.value='';
-}
 
 function addManualAtt(){
   var empId=document.getElementById('man_emp').value;
