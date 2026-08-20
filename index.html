@@ -248,6 +248,7 @@ body{font-family:'Tajawal',sans-serif;background:#EEF4FF;color:#0D2444;height:10
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--red);border-radius:2px}
 @media(max-width:900px){.twocol{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}.prsumm{grid-template-columns:repeat(2,1fr)}.brgrid{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr}.fg.full{grid-column:span 1}}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 <div id="loginWrap">
@@ -298,6 +299,8 @@ body{font-family:'Tajawal',sans-serif;background:#EEF4FF;color:#0D2444;height:10
       <div class="snav" id="nav_lbl">التنقل</div>
       <button class="nb on" id="nb_emp" onclick="gp('emp')"><svg class="nicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span id="nl_emp">الموظفون</span></button>
       <button class="nb" id="nb_pay" onclick="gp('pay')"><svg class="nicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span id="nl_pay">الرواتب</span></button>
+      <button class="nb" id="nb_loans" onclick="gp('loans')"><svg class="nicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span id="nl_loans">إدارة السلف</span></button>
+      <button class="nb" id="nb_att" onclick="gp('att')"><svg class="nicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg><span id="nl_att">الحضور والانصراف</span></button>
       <div class="nsep"></div>
       <button class="nb" id="nb_bra" onclick="gp('bra')"><svg class="nicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span id="nl_bra">الفروع والأقسام</span></button>
       <button class="nb" id="nb_vio" onclick="gp('vio')"><svg class="nicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span id="nl_vio">المخالفات والإنذارات</span></button>
@@ -393,6 +396,120 @@ body{font-family:'Tajawal',sans-serif;background:#EEF4FF;color:#0D2444;height:10
         <div id="vioPageList"></div>
       </div>
 
+
+      <!-- LOANS PAGE -->
+      <div class="page" id="pg_loans">
+        <div class="pgh"><div class="pgt" id="lp_title">إدارة السلف</div><div class="pgs" id="lp_sub">سلف الموظفين وجداول السداد</div></div>
+
+        <!-- Add loan form -->
+        <div class="sblock" style="margin-bottom:1rem;">
+          <div class="sbhead" id="lp_add_title">إضافة سلفة جديدة</div>
+          <div class="sbbody">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:.7rem;margin-bottom:.7rem;flex-wrap:wrap;">
+              <div class="fg"><label class="fl" id="ll_emp">الموظف</label><select id="loan_emp" class="fs"></select></div>
+              <div class="fg"><label class="fl" id="ll_amount">مبلغ السلفة (درهم)</label><input id="loan_amount" class="fi" type="number" placeholder="0" min="0"></div>
+              <div class="fg"><label class="fl" id="ll_monthly">القسط الشهري (درهم)</label><input id="loan_monthly" class="fi" type="number" placeholder="0" min="0"></div>
+              <div class="fg"><label class="fl" id="ll_date">تاريخ السلفة</label><input id="loan_date" class="fi" type="date"></div>
+            </div>
+            <div class="fg" style="margin-bottom:.7rem;"><label class="fl" id="ll_notes">ملاحظات</label><input id="loan_notes" class="fi" placeholder="سبب السلفة..."></div>
+            <button class="msave" onclick="addLoan()" id="ll_save_btn" style="padding:.5rem 1.2rem;">إضافة السلفة</button>
+          </div>
+        </div>
+
+        <!-- Filter -->
+        <div style="display:flex;gap:.6rem;margin-bottom:1rem;flex-wrap:wrap;align-items:center;">
+          <select id="loan_br_filter" class="fi" style="width:auto;" onchange="renderLoans()"></select>
+          <select id="loan_status_filter" class="fi" style="width:auto;" onchange="renderLoans()">
+            <option value="all" id="lf_all">الكل</option>
+            <option value="active" id="lf_active">نشطة</option>
+            <option value="done" id="lf_done">مسددة</option>
+          </select>
+        </div>
+
+        <div id="loansList"></div>
+      </div>
+
+      <!-- ATTENDANCE PAGE -->
+      <div class="page" id="pg_att">
+        <div class="pgh"><div class="pgt" id="ap_title">الحضور والانصراف</div><div class="pgs" id="ap_sub">رفع بيانات البصمة الإلكترونية وتتبع الحضور</div></div>
+
+        <!-- Upload section -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+          <div class="sblock">
+            <div class="sbhead" id="ap_upload_title">رفع ملف البصمة</div>
+            <div class="sbbody">
+              <div style="margin-bottom:.7rem;">
+                <label class="fl" id="ap_branch_lbl">الفرع</label>
+                <select id="att_branch" class="fs" style="margin-top:.3rem;"></select>
+              </div>
+              <div style="margin-bottom:.7rem;">
+                <label class="fl" id="ap_month_lbl">الشهر</label>
+                <input id="att_month" class="fi" type="month" style="margin-top:.3rem;">
+              </div>
+              <div class="att-upload" onclick="document.getElementById('attFile').click()">
+                <div style="font-size:1.5rem;margin-bottom:.4rem;">📂</div>
+                <div style="font-size:.82rem;font-weight:600;color:#1A5FBF;" id="ap_upload_hint">اضغط لرفع ملف Excel أو CSV من البصمة</div>
+                <div style="font-size:.72rem;color:#6B8BB5;margin-top:.2rem;">.xlsx / .xls / .csv</div>
+              </div>
+              <input type="file" id="attFile" accept=".xlsx,.xls,.csv" class="hide" onchange="handleAttFile(this)">
+              <div id="attFileStatus" style="font-size:.78rem;color:#1A7F3C;text-align:center;display:none;"></div>
+            </div>
+          </div>
+          <div class="sblock">
+            <div class="sbhead" id="ap_manual_title">تسجيل يدوي</div>
+            <div class="sbbody">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:.6rem;">
+                <div class="fg"><label class="fl">الموظف</label><select id="man_emp" class="fs"></select></div>
+                <div class="fg"><label class="fl">التاريخ</label><input id="man_date" class="fi" type="date"></div>
+                <div class="fg"><label class="fl">وقت الدخول</label><input id="man_in" class="fi" type="time"></div>
+                <div class="fg"><label class="fl">وقت الخروج</label><input id="man_out" class="fi" type="time"></div>
+              </div>
+              <div class="fg" style="margin-bottom:.6rem;">
+                <label class="fl">الحالة</label>
+                <select id="man_status" class="fs">
+                  <option value="present">حاضر</option>
+                  <option value="absent">غائب</option>
+                  <option value="late">متأخر</option>
+                  <option value="leave">إجازة</option>
+                </select>
+              </div>
+              <button class="msave" onclick="addManualAtt()" style="padding:.5rem 1rem;width:100%;">تسجيل</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Attendance filter -->
+        <div style="display:flex;gap:.6rem;margin-bottom:1rem;flex-wrap:wrap;align-items:center;">
+          <select id="att_br_filter" class="fi" style="width:auto;" onchange="renderAtt()"></select>
+          <input id="att_month_filter" class="fi" type="month" style="width:auto;" onchange="renderAtt()">
+        </div>
+
+        <!-- Summary cards -->
+        <div class="att-summary" id="attSummary"></div>
+
+        <!-- Attendance table -->
+        <div class="tbwrap">
+          <div class="tbhbar">
+            <span class="tbtitle" id="ap_tbl_title">سجل الحضور</span>
+            <button class="tbtn" onclick="exportAttCSV()" style="font-size:.72rem;">تصدير CSV</button>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="att-table">
+              <thead><tr>
+                <th>#</th>
+                <th id="at_name">الموظف</th>
+                <th id="at_branch">الفرع</th>
+                <th id="at_date">التاريخ</th>
+                <th id="at_in">وقت الدخول</th>
+                <th id="at_out">وقت الخروج</th>
+                <th id="at_status">الحالة</th>
+                <th></th>
+              </tr></thead>
+              <tbody id="attBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
       <!-- COMPLAINTS -->
       <div class="page" id="pg_cmp">
         <div class="pgh"><div class="pgt" id="cp_title">الشكاوي والاقتراحات</div><div class="pgs" id="cp_sub">الشكاوي المقدمة من الموظفين</div></div>
@@ -466,6 +583,8 @@ var emps=[];
 var photos={};
 function ps(id){if(!photos[id])photos[id]={av:null,docs:{}};return photos[id];}
 var violations={};
+var loans=[];
+var attendance=[];
 function getVio(id){if(!violations[id])violations[id]=[];return violations[id];}
 var branches=JSON.parse(localStorage.getItem('prosto_br')||'null')||[
   {ar:'الخالدية',en:'Khalidiya',code:'KH'},
@@ -480,7 +599,7 @@ var me=null,lang='ar',selId=null,filt='all',br='',q='',cmpF='all',docKey=null,ma
 var TR={
 ar:{lsub:'نظام إدارة الموارد البشرية',lusr_lbl:'اسم المستخدم',lpas_lbl:'كلمة المرور',lbtn:'تسجيل الدخول',lwelcome:'أهلاً بعودتك',lwelcome_sub:'سجّل دخولك للوصول إلى مساحة العمل',
   nav_lbl:'التنقل',nl_emp:'الموظفون',nl_pay:'الرواتب',nl_bra:'الفروع والأقسام',
-  nl_vio:'المخالفات والإنذارات',nl_cmp:'الشكاوي',nl_reg:'طلبات التسجيل',nl_set:'الإعدادات',
+  nl_vio:'المخالفات والإنذارات',nl_loans:'إدارة السلف',nl_att:'الحضور والانصراف',nl_cmp:'الشكاوي',nl_reg:'طلبات التسجيل',nl_set:'الإعدادات',
   addBtn:'+ إضافة موظف',lgBtn:'خروج',langBtn:'EN',
   cl_all:'إجمالي الموظفين',cs_all:'جميع الفروع',cl_active:'نشطون',cs_active:'موظف نشط',
   cl_leave:'في إجازة',cs_leave:'موظف في إجازة',cl_inactive:'غير نشطين',cs_inactive:'موظف غير نشط',
@@ -535,7 +654,7 @@ ar:{lsub:'نظام إدارة الموارد البشرية',lusr_lbl:'اسم ا
   filt_br:'الكل',brn_emp:'موظف'},
 en:{lsub:'Employee Management System',lusr_lbl:'Username',lpas_lbl:'Password',lbtn:'Sign In',lwelcome:'Welcome Back',lwelcome_sub:'Sign in to access your workspace',
   nav_lbl:'NAVIGATION',nl_emp:'Employees',nl_pay:'Payroll',nl_bra:'Branches',
-  nl_vio:'Violations & Warnings',nl_cmp:'Complaints',nl_reg:'Registrations',nl_set:'Settings',
+  nl_vio:'Violations & Warnings',nl_loans:'Loan Management',nl_att:'Attendance',nl_cmp:'Complaints',nl_reg:'Registrations',nl_set:'Settings',
   addBtn:'+ Add Employee',lgBtn:'Sign Out',langBtn:'عربي',
   cl_all:'Total Employees',cs_all:'All branches',cl_active:'Active',cs_active:'active employees',
   cl_leave:'On Leave',cs_leave:'on leave',cl_inactive:'Inactive',cs_inactive:'inactive',
@@ -638,7 +757,7 @@ function applyLang(){
   document.documentElement.setAttribute('lang',lang);
   document.documentElement.setAttribute('dir',en?'ltr':'rtl');
   document.body.style.direction=en?'ltr':'rtl';
-  var ids=['lsub','lusr_lbl','lpas_lbl','lwelcome','lwelcome_sub','nav_lbl','nl_emp','nl_pay','nl_bra','nl_vio','nl_cmp','nl_reg','nl_set',
+  var ids=['lsub','lusr_lbl','lpas_lbl','lwelcome','lwelcome_sub','nav_lbl','nl_emp','nl_pay','nl_bra','nl_vio','nl_loans','nl_att','nl_cmp','nl_reg','nl_set',
     'addBtn','lgBtn','langBtn','cl_all','cs_all','cl_active','cs_active','cl_leave','cs_leave','cl_inactive','cs_inactive',
     'stl','demptyTxt','clearFiltBtn','pp_title','pp_sub','pp_tbl','expBtn',
     'th0','th1','th2','th3','th4','th5','th6','th7','bp_title','bp_sub','addBrTitle','brar_lbl','brco_lbl','addBrBtn',
@@ -676,6 +795,8 @@ function gp(name){
   if(pg)pg.classList.add('on');
   if(nb)nb.classList.add('on');
   if(name==='pay')renderPay();
+  if(name==='loans'){updLoanSelects();renderLoans();}
+  if(name==='att'){updAttSelects();renderAtt();}
   if(name==='set')renderSet();
   if(name==='cmp')renderCmp();
   if(name==='reg')renderReg();
@@ -1099,14 +1220,14 @@ function renderPay(){
   var bas=f.reduce(function(s,e){return s+(e.salary||0);},0);
   var hou=f.reduce(function(s,e){return s+(e.housing||0);},0);
   var ded=f.reduce(function(s,e){return s+(e.transport||0);},0);
-  var tot=f.reduce(function(s,e){return s+Math.max(0,(e.salary||0)+(e.housing||0)-(e.transport||0));},0);
+  var tot=f.reduce(function(s,e){return s+Math.max(0,(e.salary||0)+(e.housing||0)-(e.transport||0)-getLoanDeduction(e.id));},0);
   var cur=T('cur');var en=lang==='en';
   var sd=[{l:T('pr_bas'),v:bas,hl:false},{l:T('pr_hou'),v:hou,hl:false},{l:T('pr_ded'),v:ded,hl:false},{l:T('pr_tot'),v:tot,hl:true}];
   document.getElementById('prSumm').innerHTML=sd.map(function(c){return'<div class="prcard'+(c.hl?' hl':'')+'"><div class="prlabel">'+c.l+'</div><div class="prval">'+c.v.toLocaleString()+' <span class="prunit">'+cur+'</span></div></div>';}).join('');
   document.getElementById('prCnt').textContent=f.length+' '+T('emp_c');
   var stl={active:T('st_active'),leave:T('st_leave'),inactive:T('st_inactive')};
   document.getElementById('prBody').innerHTML=f.map(function(e,i){
-    var t=Math.max(0,(e.salary||0)+(e.housing||0)-(e.transport||0));
+    var loanDed=getLoanDeduction(e.id);var t=Math.max(0,(e.salary||0)+(e.housing||0)-(e.transport||0)-loanDed);
     var bobj=branches.find(function(x){return x.ar===e.dept;});
     var bn=bobj?(en?bobj.en:bobj.ar):e.dept;
     var dn=en&&e.nameEn?e.nameEn:e.name;
@@ -1133,7 +1254,7 @@ function exportCSV(){
   var hdr=en?['#','Name','Name AR','Branch','Basic','Housing','Deductions','Total','Status']:['رقم','الاسم','الاسم الإنجليزي','الفرع','الراتب الأساسي','بدل سكن','خصومات','الإجمالي','الحالة'];
   var rows=f.map(function(e,i){
     var bobj=branches.find(function(x){return x.ar===e.dept;});var bn=bobj?(en?bobj.en:bobj.ar):e.dept;
-    var t=Math.max(0,(e.salary||0)+(e.housing||0)-(e.transport||0));
+    var loanDed=getLoanDeduction(e.id);var t=Math.max(0,(e.salary||0)+(e.housing||0)-(e.transport||0)-loanDed);
     return[i+1,(en&&e.nameEn?e.nameEn:e.name),(en?e.name:e.nameEn||''),bn,e.salary||0,e.housing||0,e.transport||0,t,{active:T('st_active'),leave:T('st_leave'),inactive:T('st_inactive')}[e.status||'active']];
   });
   var csv=[hdr].concat(rows).map(function(r){return r.join(',');}).join('\n');
@@ -1294,6 +1415,299 @@ function chUser(i){var v=prompt(lang==='ar'?'اسم المستخدم الجدي�
 
 // UTILITIES
 function copyLnk(type){var url=getBase()+'/'+type+'.html';navigator.clipboard.writeText(url).then(function(){alert(T('copy_ok'));}).catch(function(){prompt('Copy:',url);});}
+
+// ═══════════════ LOANS ═══════════════
+function updLoanSelects(){
+  var empSel=document.getElementById('loan_emp');
+  if(empSel){
+    empSel.innerHTML=emps.map(function(e){
+      var b=branches.find(function(x){return x.ar===e.dept;});
+      var bn=b?(lang==='en'?b.en:b.ar):e.dept;
+      var dn=(lang==='en'&&e.nameEn?e.nameEn:e.name)+' ('+bn+')';
+      return'<option value="'+e.id+'">'+dn+'</option>';
+    }).join('');
+  }
+  var brSel=document.getElementById('loan_br_filter');
+  if(brSel){brSel.innerHTML='<option value="all">'+T('filt_br')+'</option>'+branches.map(function(b){return'<option value="'+b.ar+'">'+(lang==='en'?b.en:b.ar)+'</option>';}).join('');}
+  var di=document.getElementById('loan_date');
+  if(di&&!di.value)di.value=new Date().toISOString().slice(0,10);
+}
+
+function addLoan(){
+  var empId=document.getElementById('loan_emp').value;
+  var amount=parseInt(document.getElementById('loan_amount').value)||0;
+  var monthly=parseInt(document.getElementById('loan_monthly').value)||0;
+  var date=document.getElementById('loan_date').value;
+  var notes=document.getElementById('loan_notes').value.trim();
+  if(!empId){alert(lang==='ar'?'يرجى اختيار موظف':'Select employee');return;}
+  if(!amount||amount<=0){alert(lang==='ar'?'يرجى إدخال مبلغ السلفة':'Enter loan amount');return;}
+  if(!monthly||monthly<=0){alert(lang==='ar'?'يرجى إدخال القسط الشهري':'Enter monthly installment');return;}
+  if(!date){alert(lang==='ar'?'يرجى تحديد التاريخ':'Select date');return;}
+  loans.push({id:'LN-'+Date.now(),empId:empId,amount:amount,monthly:monthly,paid:0,date:date,notes:notes,status:'active'});
+  document.getElementById('loan_amount').value='';
+  document.getElementById('loan_monthly').value='';
+  document.getElementById('loan_notes').value='';
+  renderLoans();
+  updStats();
+}
+
+function getLoanDeduction(empId){
+  var total=0;
+  loans.forEach(function(l){if(l.empId===empId&&l.status==='active')total+=l.monthly;});
+  return total;
+}
+
+function payInstallment(loanId){
+  var loan=loans.find(function(l){return l.id===loanId;});
+  if(!loan)return;
+  loan.paid+=loan.monthly;
+  if(loan.paid>=loan.amount){loan.paid=loan.amount;loan.status='done';}
+  renderLoans();
+}
+
+function deleteLoan(loanId){
+  if(!confirm(lang==='ar'?'حذف هذه السلفة؟':'Delete this loan?'))return;
+  loans=loans.filter(function(l){return l.id!==loanId;});
+  renderLoans();
+}
+
+function renderLoans(){
+  var en=lang==='en';
+  var brVal=document.getElementById('loan_br_filter')?document.getElementById('loan_br_filter').value:'all';
+  var stVal=document.getElementById('loan_status_filter')?document.getElementById('loan_status_filter').value:'all';
+  var container=document.getElementById('loansList');if(!container)return;
+
+  var filtered=loans.filter(function(l){
+    var e=emps.find(function(x){return x.id===l.empId;});if(!e)return false;
+    if(brVal!=='all'&&e.dept!==brVal)return false;
+    if(stVal!=='all'&&l.status!==stVal)return false;
+    return true;
+  });
+
+  if(!filtered.length){
+    container.innerHTML='<div style="text-align:center;padding:2rem;color:#6B8BB5;font-size:.85rem;">'+(en?'No loans found':'لا توجد سلف')+'</div>';
+    return;
+  }
+
+  container.innerHTML=filtered.map(function(l){
+    var e=emps.find(function(x){return x.id===l.empId;})||{};
+    var b=branches.find(function(x){return x.ar===e.dept;})||{};
+    var dn=en&&e.nameEn?e.nameEn:e.name||'—';
+    var bn=en?b.en:b.ar||'—';
+    var remaining=l.amount-l.paid;
+    var pct=Math.round((l.paid/l.amount)*100)||0;
+    var months=l.monthly>0?Math.ceil(remaining/l.monthly):0;
+    var isDone=l.status==='done';
+    var cur=T('cur');
+    return'<div class="loan-card'+(isDone?' done':'')+'">'+
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;">'+
+      '<div><strong style="font-size:.88rem;">'+dn+'</strong> <span style="font-size:.72rem;color:#6B8BB5;">'+bn+'</span></div>'+
+      '<div style="display:flex;gap:.4rem;align-items:center;">'+
+      (isDone?'<span style="background:#E8F5ED;color:#1A7F3C;font-size:.68rem;font-weight:700;padding:.15rem .5rem;border-radius:20px;">'+(en?'Settled':'مسددة')+'</span>':
+        '<span style="background:#EEF4FF;color:#1A5FBF;font-size:.68rem;font-weight:700;padding:.15rem .5rem;border-radius:20px;">'+(en?'Active':'نشطة')+'</span>')+
+      (!isDone?'<button onclick="payInstallment(''+l.id+'')" style="background:#1A5FBF;color:#fff;border:none;border-radius:6px;padding:.25rem .7rem;font-size:.7rem;cursor:pointer;font-family:Tajawal,sans-serif;">'+(en?'Pay Installment':'دفع قسط')+'</button>':'')+
+      '<button onclick="deleteLoan(''+l.id+'')" style="background:#FFEBEB;color:#C41E1E;border:none;border-radius:6px;padding:.25rem .6rem;font-size:.7rem;cursor:pointer;">✕</button>'+
+      '</div></div>'+
+      '<div class="loan-grid">'+
+      '<div class="loan-stat"><div class="loan-stat-label">'+(en?'Total Loan':'إجمالي السلفة')+'</div><div class="loan-stat-val">'+l.amount.toLocaleString()+' <span style="font-size:.65rem;color:#6B8BB5;">'+cur+'</span></div></div>'+
+      '<div class="loan-stat"><div class="loan-stat-label">'+(en?'Paid':'المدفوع')+'</div><div class="loan-stat-val" style="color:#1A7F3C;">'+l.paid.toLocaleString()+' <span style="font-size:.65rem;color:#6B8BB5;">'+cur+'</span></div></div>'+
+      '<div class="loan-stat"><div class="loan-stat-label">'+(en?'Remaining':'المتبقي')+'</div><div class="loan-stat-val" style="color:'+(isDone?'#1A7F3C':'#C41E1E')+';">'+remaining.toLocaleString()+' <span style="font-size:.65rem;color:#6B8BB5;">'+cur+'</span></div></div>'+
+      '</div>'+
+      '<div class="loan-progress"><div class="loan-bar" style="width:'+pct+'%"></div></div>'+
+      '<div style="display:flex;justify-content:space-between;font-size:.7rem;color:#6B8BB5;">'+
+      '<span>'+(en?'Monthly: ':'القسط: ')+l.monthly.toLocaleString()+' '+cur+'</span>'+
+      '<span>'+pct+'% '+(en?'paid':'مدفوع')+'</span>'+
+      (!isDone?'<span>'+(en?'~'+months+' months left':'~'+months+' شهر متبقي')+'</span>':'<span style="color:#1A7F3C;">'+(en?'Fully paid':'تم السداد الكامل')+'</span>')+
+      '</div>'+
+      (l.notes?'<div style="font-size:.72rem;color:#6B8BB5;margin-top:.4rem;border-top:1px solid #E0EAF8;padding-top:.4rem;">'+l.notes+'</div>':'')+
+      '</div>';
+  }).join('');
+}
+
+// ═══════════════ ATTENDANCE ═══════════════
+function updAttSelects(){
+  var empSel=document.getElementById('man_emp');
+  if(empSel){empSel.innerHTML=emps.map(function(e){var dn=lang==='en'&&e.nameEn?e.nameEn:e.name;return'<option value="'+e.id+'">'+dn+'</option>';}).join('');}
+  var brSels=['att_branch','att_br_filter'];
+  brSels.forEach(function(sid){
+    var s=document.getElementById(sid);
+    if(!s)return;
+    s.innerHTML='<option value="all">'+T('filt_br')+'</option>'+branches.map(function(b){return'<option value="'+b.ar+'">'+(lang==='en'?b.en:b.ar)+'</option>';}).join('');
+  });
+  var md=document.getElementById('att_month_filter');
+  if(md&&!md.value)md.value=new Date().toISOString().slice(0,7);
+  var md2=document.getElementById('att_month');
+  if(md2&&!md2.value)md2.value=new Date().toISOString().slice(0,7);
+  var dd=document.getElementById('man_date');
+  if(dd&&!dd.value)dd.value=new Date().toISOString().slice(0,10);
+}
+
+function handleAttFile(input){
+  var file=input.files[0];if(!file)return;
+  var status=document.getElementById('attFileStatus');
+  status.style.display='block';
+  status.textContent=lang==='ar'?'جاري قراءة الملف...':'Reading file...';
+  var brVal=document.getElementById('att_branch')?document.getElementById('att_branch').value:'all';
+  var month=document.getElementById('att_month')?document.getElementById('att_month').value:new Date().toISOString().slice(0,7);
+  function processRows(rows){
+    var added=0;
+    rows.forEach(function(cols){
+      if(!cols||cols.length<2)return;
+      var identifier=String(cols[0]||'').trim();if(!identifier)return;
+      var emp=emps.find(function(e){return e.id===identifier||e.name===identifier||(e.nameEn&&e.nameEn===identifier);});
+      if(!emp)return;
+      var rawDate=String(cols[1]||'').trim();
+      var date=rawDate;
+      if(!isNaN(rawDate)&&rawDate.length<7){var d=new Date(Math.round((parseFloat(rawDate)-25569)*86400000));date=d.toISOString().slice(0,10);}
+      if(date.indexOf('/')>-1){var pts=date.split('/');if(pts.length===3){date=pts[2].length===4?pts[2]+'-'+pts[1].padStart(2,'0')+'-'+pts[0].padStart(2,'0'):pts[0]+'-'+pts[1].padStart(2,'0')+'-'+pts[2].padStart(2,'0');}}
+      var timeIn=String(cols[2]||'').trim();
+      var timeOut=String(cols[3]||'').trim();
+      var rs=String(cols[4]||'present').trim().toLowerCase();
+      var sv=rs==='absent'||rs==='غائب'?'absent':rs==='late'||rs==='متأخر'?'late':rs==='leave'||rs==='إجازة'?'leave':'present';
+      attendance.push({empId:emp.id,date:date,timeIn:timeIn,timeOut:timeOut,status:sv,branch:brVal==='all'?emp.dept:brVal,source:'upload'});
+      added++;
+    });
+    status.textContent=(lang==='ar'?'✅ تم إضافة '+added+' سجل':'✅ Added '+added+' records');
+    renderAtt();
+  }
+  var reader=new FileReader();
+  if(file.name.endsWith('.csv')){
+    reader.onload=function(e){
+      var rows=e.target.result.split('\n').filter(Boolean).slice(1).map(function(l){return l.split(',').map(function(c){return c.trim().replace(/"/g,'');});});
+      processRows(rows);
+    };
+    reader.readAsText(file,'UTF-8');
+  } else {
+    reader.onload=function(e){
+      try{
+        var wb=window.XLSX.read(new Uint8Array(e.target.result),{type:'array'});
+        var ws=wb.Sheets[wb.SheetNames[0]];
+        processRows(window.XLSX.utils.sheet_to_json(ws,{header:1,defval:''}).slice(1));
+      }catch(err){status.textContent='❌ '+err.message;}
+    };
+    reader.readAsArrayBuffer(file);
+  }
+  input.value='';
+}
+function handleAttFile(input){
+  var file=input.files[0];if(!file)return;
+  var status=document.getElementById('attFileStatus');
+  status.style.display='block';
+  status.textContent=(lang==='ar'?'تم رفع الملف: ':'File uploaded: ')+file.name;
+  // Parse CSV/Excel - for CSV we can read directly
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var text=e.target.result;
+    var lines=text.split('
+').filter(function(l){return l.trim();});
+    var branchSel=document.getElementById('att_branch');
+    var brVal=branchSel?branchSel.value:'all';
+    var month=document.getElementById('att_month').value||new Date().toISOString().slice(0,7);
+    var added=0;
+    // Try to parse CSV rows (assumes: name/id, date, time_in, time_out or similar)
+    lines.slice(1).forEach(function(line){
+      var cols=line.split(',').map(function(c){return c.trim().replace(/"/g,'');});
+      if(cols.length<2)return;
+      // Try to find employee by name or ID
+      var identifier=cols[0];
+      var emp=emps.find(function(e){return e.id===identifier||e.name===identifier||(e.nameEn&&e.nameEn===identifier);});
+      if(!emp)return;
+      var date=cols[1]||month+'-01';
+      var timeIn=cols[2]||'';
+      var timeOut=cols[3]||'';
+      var statusVal=cols[4]||'present';
+      attendance.push({empId:emp.id,date:date,timeIn:timeIn,timeOut:timeOut,status:statusVal,branch:brVal==='all'?emp.dept:brVal,source:'upload'});
+      added++;
+    });
+    status.textContent=(lang==='ar'?'تم إضافة '+added+' سجل حضور':'Added '+added+' attendance records');
+    renderAtt();
+  };
+  reader.onerror=function(){status.textContent=(lang==='ar'?'خطأ في قراءة الملف':'Error reading file');};
+  if(file.name.endsWith('.csv')){reader.readAsText(file);}
+  else{status.textContent=(lang==='ar'?'ملف مرفوع، يُرجى استخدام CSV للمعالجة التلقائية':'File uploaded. Use CSV for auto-processing.');}
+  input.value='';
+}
+
+function addManualAtt(){
+  var empId=document.getElementById('man_emp').value;
+  var date=document.getElementById('man_date').value;
+  var timeIn=document.getElementById('man_in').value;
+  var timeOut=document.getElementById('man_out').value;
+  var statusVal=document.getElementById('man_status').value;
+  if(!empId||!date){alert(lang==='ar'?'يرجى اختيار الموظف والتاريخ':'Select employee and date');return;}
+  var emp=emps.find(function(e){return e.id===empId;});
+  attendance.push({empId:empId,date:date,timeIn:timeIn,timeOut:timeOut,status:statusVal,branch:emp?emp.dept:'',source:'manual'});
+  renderAtt();
+}
+
+function deleteAtt(idx){
+  attendance.splice(idx,1);renderAtt();
+}
+
+function renderAtt(){
+  var en=lang==='en';
+  var brVal=document.getElementById('att_br_filter')?document.getElementById('att_br_filter').value:'all';
+  var monthVal=document.getElementById('att_month_filter')?document.getElementById('att_month_filter').value:'';
+  var filtered=attendance.filter(function(a){
+    if(brVal!=='all'&&a.branch!==brVal)return false;
+    if(monthVal&&!a.date.startsWith(monthVal))return false;
+    return true;
+  });
+
+  // Summary
+  var present=filtered.filter(function(a){return a.status==='present';}).length;
+  var absent=filtered.filter(function(a){return a.status==='absent';}).length;
+  var late=filtered.filter(function(a){return a.status==='late';}).length;
+  var leave=filtered.filter(function(a){return a.status==='leave';}).length;
+  var summEl=document.getElementById('attSummary');
+  if(summEl){
+    summEl.innerHTML=[
+      {l:en?'Present':'حاضر',v:present,c:'#1A7F3C'},
+      {l:en?'Absent':'غائب',v:absent,c:'#C41E1E'},
+      {l:en?'Late':'متأخر',v:late,c:'#C45C1E'},
+      {l:en?'On Leave':'إجازة',v:leave,c:'#1A5FBF'}
+    ].map(function(s){
+      return'<div class="att-sum-card"><div class="att-sum-label" style="color:'+s.c+'">'+s.l+'</div><div class="att-sum-val" style="color:'+s.c+'">'+s.v+'</div></div>';
+    }).join('');
+  }
+
+  var tbody=document.getElementById('attBody');if(!tbody)return;
+  if(!filtered.length){tbody.innerHTML='<tr><td colspan="8" style="text-align:center;padding:1.5rem;color:#6B8BB5;">'+(en?'No attendance records':'لا توجد سجلات حضور')+'</td></tr>';return;}
+
+  var stMap={present:{l:en?'Present':'حاضر',c:'att-present'},absent:{l:en?'Absent':'غائب',c:'att-absent'},late:{l:en?'Late':'متأخر',c:'att-late'},leave:{l:en?'Leave':'إجازة',c:''}};
+  tbody.innerHTML=filtered.map(function(a,i){
+    var emp=emps.find(function(e){return e.id===a.empId;})||{};
+    var b=branches.find(function(x){return x.ar===a.branch;})||{};
+    var dn=en&&emp.nameEn?emp.nameEn:emp.name||'—';
+    var bn=en?b.en:b.ar||a.branch||'—';
+    var st=stMap[a.status]||{l:a.status,c:''};
+    return'<tr>'+
+      '<td>'+(i+1)+'</td>'+
+      '<td><strong>'+dn+'</strong></td>'+
+      '<td>'+bn+'</td>'+
+      '<td>'+a.date+'</td>'+
+      '<td>'+(a.timeIn||'—')+'</td>'+
+      '<td>'+(a.timeOut||'—')+'</td>'+
+      '<td><span class="'+st.c+'">'+st.l+'</span></td>'+
+      '<td><button onclick="deleteAtt('+i+')" style="background:none;border:none;color:#C41E1E;cursor:pointer;font-size:.8rem;">✕</button></td>'+
+      '</tr>';
+  }).join('');
+}
+
+function exportAttCSV(){
+  var en=lang==='en';
+  var hdr=en?['#','Name','Branch','Date','Time In','Time Out','Status']:['رقم','الاسم','الفرع','التاريخ','وقت الدخول','وقت الخروج','الحالة'];
+  var rows=attendance.map(function(a,i){
+    var emp=emps.find(function(e){return e.id===a.empId;})||{};
+    var b=branches.find(function(x){return x.ar===a.branch;})||{};
+    return[i+1,en&&emp.nameEn?emp.nameEn:emp.name||'',en?b.en:b.ar||a.branch,a.date,a.timeIn||'',a.timeOut||'',a.status];
+  });
+  var csv=[hdr].concat(rows).map(function(r){return r.join(',');}).join('
+');
+  var blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8;'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='attendance_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+}
+
 function loadBadges(){
   var nc=JSON.parse(localStorage.getItem('prosto_complaints')||'[]').filter(function(c){return c.status==='new';}).length;
   var nr=JSON.parse(localStorage.getItem('prosto_registrations')||'[]').filter(function(r){return r.status==='pending';}).length;
