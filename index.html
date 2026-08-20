@@ -1664,9 +1664,8 @@ function exportAttCSV(){
     var b=branches.find(function(x){return x.ar===a.branch;})||{};
     return[i+1,en&&emp.nameEn?emp.nameEn:emp.name||'',en?b.en:b.ar||a.branch,a.date,a.timeIn||'',a.timeOut||'',a.status];
   });
-  var csv=[hdr].concat(rows).map(function(r){return r.join(',');}).join('
-');
-  var blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8;'});
+  var csv=[hdr].concat(rows).map(function(r){return r.join(',');}).join('\n');
+  var blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
   var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='attendance_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
 }
 
