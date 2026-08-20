@@ -1505,8 +1505,8 @@ function renderLoans(){
       '<div style="display:flex;gap:.4rem;align-items:center;">'+
       (isDone?'<span style="background:#E8F5ED;color:#1A7F3C;font-size:.68rem;font-weight:700;padding:.15rem .5rem;border-radius:20px;">'+(en?'Settled':'مسددة')+'</span>':
         '<span style="background:#EEF4FF;color:#1A5FBF;font-size:.68rem;font-weight:700;padding:.15rem .5rem;border-radius:20px;">'+(en?'Active':'نشطة')+'</span>')+
-      (!isDone?'<button onclick="payInstallment(''+l.id+'')" style="background:#1A5FBF;color:#fff;border:none;border-radius:6px;padding:.25rem .7rem;font-size:.7rem;cursor:pointer;font-family:Tajawal,sans-serif;">'+(en?'Pay Installment':'دفع قسط')+'</button>':'')+
-      '<button onclick="deleteLoan(''+l.id+'')" style="background:#FFEBEB;color:#C41E1E;border:none;border-radius:6px;padding:.25rem .6rem;font-size:.7rem;cursor:pointer;">✕</button>'+
+      (!isDone?'<button onclick="payInstallment('+l.id+')" style="background:#1A5FBF;color:#fff;border:none;border-radius:6px;padding:.25rem .7rem;font-size:.7rem;cursor:pointer;font-family:Tajawal,sans-serif;">'+(en?'Pay Installment':'دفع قسط')+'</button>':'')+
+      '<button onclick="deleteLoan('+l.id+')" style="background:#FFEBEB;color:#C41E1E;border:none;border-radius:6px;padding:.25rem .6rem;font-size:.7rem;cursor:pointer;">✕</button>'+
       '</div></div>'+
       '<div class="loan-grid">'+
       '<div class="loan-stat"><div class="loan-stat-label">'+(en?'Total Loan':'إجمالي السلفة')+'</div><div class="loan-stat-val">'+l.amount.toLocaleString()+' <span style="font-size:.65rem;color:#6B8BB5;">'+cur+'</span></div></div>'+
