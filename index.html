@@ -1277,7 +1277,7 @@ function renderReg(){
     if(r.status==='pending'){
       h+='<button class="tbtn red" onclick="appReg('+realIdx+')">'+T('approve')+'</button>';
       h+='<button class="tbtn" onclick="rejReg('+realIdx+')" style="color:var(--red)">'+T('reject')+'</button>';
-      h+='<button class="tbtn" onclick="addToStaff('+realIdx+')">'+T('add_staff')+'</button>';
+      
     } else {
       h+='<span style="font-size:.7rem;color:var(--mu)">'+T('processed')+'</span>';
     }
@@ -1294,7 +1294,7 @@ function delReg(i){
   }
   renderReg();
 }
-function appReg(i){var all=JSON.parse(localStorage.getItem('prosto_registrations')||'[]');if(all[i])all[i].status='approved';localStorage.setItem('prosto_registrations',JSON.stringify(all));renderReg();}
+function appReg(i){addToStaff(i);}
 function rejReg(i){var all=JSON.parse(localStorage.getItem('prosto_registrations')||'[]');if(all[i])all[i].status='rejected';localStorage.setItem('prosto_registrations',JSON.stringify(all));renderReg();}
 function addToStaff(i){
   var all=JSON.parse(localStorage.getItem('prosto_registrations')||'[]');var r=all[i];if(!r)return;
